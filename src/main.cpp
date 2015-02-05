@@ -987,58 +987,24 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 }
 
 // miner's coin stake reward based on coin age spent (coin-days)
-int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, bool bCoinYearOnly)
+int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees)
 {
-    CBigNum bnRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE; // Base stake mint rate, 10% year interest
-    int64_t nRewardCoinYearLimit = MAX_MINT_PROOF_OF_STAKE;
-    CBigNum bnTarget;
-    bnTarget.SetCompact(nBits);
-    CBigNum bnTargetLimit = bnProofOfStakeLimit;
-    bnTargetLimit.SetCompact(bnTargetLimit.GetCompact());
-    int64_t nSubsidyLimit = 5000 * COIN;
-	
-    // PayCon: reward for coin-year is cut in half every 64x multiply of PoS difficulty
-    // A reasonably continuous curve is used to avoid shock to market
-    // (bnRewardCoinYearLimit / nRewardCoinYear) ** 4 == bnProofOfStakeLimit2 / bnTarget
-    //
-    // Human readable form:
-    //
-    // nRewardCoinYear = 1 / (posdiff ^ 1/4)
+    int64 nRewardCoinYear, nSubsidyLimit = 5000 * COIN;
 
-    CBigNum bnLowerBound;
-    bnLowerBound = 5 * CENT; // Lower interest bound is 5% per year
-
-    CBigNum bnUpperBound = bnRewardCoinYearLimit;
-    while (bnLowerBound + CENT <= bnUpperBound)
-    {
-	    CBigNum bnMidValue = (bnLowerBound + bnUpperBound) / 2;
-        if (fDebug && GetBoolArg("-printcreation"))
-            printf("GetProofOfStakeReward() : lower=%"PRId64" upper=%"PRId64" mid=%"PRId64"\n", bnLowerBound.getuint64(), bnUpperBound.getuint64(), bnMidValue.getuint64());
-
-        if (bnMidValue * bnMidValue * bnMidValue * bnMidValue * bnTargetLimit > bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnRewardCoinYearLimit * bnTarget)
-            bnUpperBound = bnMidValue;
-        else
-            bnLowerBound = bnMidValue;
-    }
-
-    int64_t nRewardCoinYear = bnUpperBound.getuint64();
-    nRewardCoinYear = min((nRewardCoinYear / CENT) * CENT, nRewardCoinYearLimit);
-
-    if(bCoinYearOnly)
-        return nRewardCoinYear;
+	nRewardCoinYear = MAX_MINT_PROOF_OF_STAKEV2;
 
     int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
 
-    nSubsidy = min((nSubsidy + (nFees / 10)), nSubsidyLimit);
+	nSubsidy = min(nSubsidy, nSubsidyLimit);
 
     return nSubsidy + nFees;
 }
 
 static const int nTargetTimespan = 30 * 60; // 15 blocks  
-static const int nTargetSpacingWorkMax = 2 * nStakeTargetSpacing; 
+static const int nTargetSpacingWorkMax = 2 * nStakeTargetSpacing; // 4 minutes
 //
 // maximum nBits value could possible be required nTime after
 //
