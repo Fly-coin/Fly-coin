@@ -989,9 +989,9 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees)
 {
-    int64 nRewardCoinYear, nSubsidyLimit = 5000 * COIN;
+    int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
 
-	nRewardCoinYear = MAX_MINT_PROOF_OF_STAKEV2;
+	int64_t nSubsidyLimit = 5000 * COIN;
 
     int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
 
