@@ -139,7 +139,13 @@ public:
         nWalletDBUpdated++;
         return Write(std::string("orderposnext"), nOrderPosNext);
     }
-
+	
+	bool WriteStakeSplitThreshold(uint64_t nStakeSplitThreshold)
+	{
+		nWalletDBUpdated++;
+		return Write(std::string("stakeSplitThreshold"), nStakeSplitThreshold);
+	}
+	
     bool WriteDefaultKey(const CPubKey& vchPubKey)
     {
         nWalletDBUpdated++;

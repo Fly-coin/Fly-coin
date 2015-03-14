@@ -392,23 +392,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>(un)select all</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioTreeMode">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Tree mode</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
+          <string>clear selections</string>
          </property>
         </widget>
        </item>
@@ -422,6 +406,22 @@
          </property>
          <property name="text">
           <string>List mode</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioTreeMode">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Tree mode</string>
          </property>
         </widget>
        </item>
@@ -469,6 +469,21 @@
        <string>Amount</string>
       </property>
      </column>
+
+     <column>
+      <property name="text">
+       <string>Confirmations</string>
+      </property>
+      <property name="toolTip">
+       <string>Confirmed</string>
+      </property>
+     </column>
+
+     <column>
+      <property name="text">
+       <string>Weight</string>
+      </property>
+     </column>
      <column>
       <property name="text">
        <string>Label</string>
@@ -479,19 +494,15 @@
        <string>Address</string>
       </property>
      </column>
+	 
      <column>
       <property name="text">
        <string>Date</string>
       </property>
      </column>
-     <column>
-      <property name="text">
-       <string>Confirmations</string>
-      </property>
-      <property name="toolTip">
-       <string>Confirmed</string>
-      </property>
-     </column>
+	 
+     
+	 
      <column>
       <property name="text">
        <string>Priority</string>

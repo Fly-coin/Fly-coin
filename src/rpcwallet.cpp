@@ -7,8 +7,12 @@
 #include "wallet.h"
 #include "walletdb.h"
 #include "bitcoinrpc.h"
+#include "main.h"
 #include "init.h"
 #include "base58.h"
+
+#include <sstream>
+#include <boost/lexical_cast.hpp>
 
 using namespace json_spirit;
 using namespace std;
@@ -111,6 +115,114 @@ Value getinfo(const Array& params, bool fHelp)
     return obj;
 }
 
+//presstab
+double GetMoneySupply(int nHeight)
+{
+	CBlockIndex* pindex = FindBlockByHeight(nHeight);
+	double nSupply = pindex->nMoneySupply;	
+	return nSupply / COIN;	
+}
+
+//presstab
+double GetSupplyChange(int nHeight, int pHeight)
+{
+	double nSupply = GetMoneySupply(nHeight); //present supply
+	double pSupply = GetMoneySupply(pHeight); //previous supply
+	double nChange = nSupply - pSupply; //difference
+	return nChange;
+}
+
+//presstab
+double GetBlockSpeed(int nHeight, int pHeight)
+{
+	CBlockIndex* pIndex = FindBlockByHeight(nHeight);
+	CBlockIndex* ppIndex = FindBlockByHeight(pHeight);
+	double nTime = pIndex->nTime;
+	double pTime = ppIndex->nTime;
+	double nTimeChange = (nTime - pTime) / 60 / 60 / 24; //in days
+	return nTimeChange;
+}
+
+//presstab
+double GetRate(int nHeight, int pHeight)
+{
+	double nSupplyChange = GetSupplyChange(nHeight, pHeight);
+	double nTimeChange = GetBlockSpeed(nHeight, pHeight);
+	double nMoneySupply = GetMoneySupply(nHeight);
+	double nRate = nSupplyChange / nMoneySupply / nTimeChange;
+	
+	return nRate;
+}
+
+//new rpccommand presstab
+Value getmoneysupply(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() > 1)
+        throw runtime_error(
+            "getmoneysupply [height]\n"
+            "Returns money supply at certain block, current money supply as default");
+	
+	GetLastBlockIndex(pindexBest, false);
+
+	int nHeight = 0;
+	double nMoneySupply = 0;
+	
+    if (params.size() > 0)
+	{
+		nHeight = pindexBest->nHeight;
+		int pHeight = params[0].get_int();
+		if (pHeight > nHeight || pHeight < 0)
+			nMoneySupply = 0;
+		else
+			nMoneySupply = GetMoneySupply(pHeight);
+	}
+	else
+	{
+		nHeight = pindexBest->nHeight;
+		nMoneySupply = GetMoneySupply(nHeight);
+	}	
+	Object obj;
+	obj.push_back(Pair("money supply", nMoneySupply));
+    return obj;
+}
+
+//Presstab's Preferred Money Supply Information
+Value moneysupply(const Array& params, bool fHelp)
+{
+	if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "moneysupply\n"
+            "Show important money supply variables.\n");
+	
+	// grab block index of last block
+	GetLastBlockIndex(pindexBest, false);
+	
+	//height of blocks
+	int64_t nHeight = pindexBest->nHeight; //present
+	int64_t n1Height = nHeight - 720; // day -- 720 blocks should be about 1 day if blocks have 120 sec spacing
+	int64_t n7Height = nHeight - 720 * 7; // week
+	int64_t n30Height = nHeight - 720 * 30; // month
+	
+	//print to console
+	Object obj;
+	obj.push_back(Pair("moneysupply - present", GetMoneySupply(nHeight)));
+	obj.push_back(Pair("moneysupply - 720 blocks ago", GetMoneySupply(n1Height)));
+	obj.push_back(Pair("moneysupply - 5,040 blocks ago", GetMoneySupply(n7Height)));
+	obj.push_back(Pair("moneysupply - 21,600 blocks ago", GetMoneySupply(n30Height)));
+	
+	obj.push_back(Pair("supply change(last 720 blocks)", GetSupplyChange(nHeight, n1Height)));
+	obj.push_back(Pair("supply change(last 5,040 blocks)", GetSupplyChange(nHeight, n7Height)));
+	obj.push_back(Pair("supply change(last 21,600 blocks)", GetSupplyChange(nHeight, n30Height)));
+	
+	obj.push_back(Pair("time change over 720 blocks", GetBlockSpeed(nHeight, n1Height)));
+	obj.push_back(Pair("time change over 5,040 blocks", GetBlockSpeed(nHeight, n7Height)));
+	obj.push_back(Pair("time change over 21,600 blocks", GetBlockSpeed(nHeight, n30Height)));
+	
+	obj.push_back(Pair("avg daily rate of change (last 720 blocks)", GetRate(nHeight, n1Height)));
+	obj.push_back(Pair("avg daily rate of change (last 5,040 blocks)", GetRate(nHeight, n7Height)));
+	obj.push_back(Pair("avg daily rate of change (last 21,600 blocks)", GetRate(nHeight, n30Height)));
+	return obj;
+}
 
 Value getnewpubkey(const Array& params, bool fHelp)
 {
@@ -224,7 +336,48 @@ Value getaccountaddress(const Array& params, bool fHelp)
     return ret;
 }
 
+Value stakeforcharity(const Array &params, bool fHelp)
+{
+    if (fHelp || params.size() != 2)
+        throw runtime_error(
+            "stakeforcharity <ColossusCoin2 address> <percent>\n"
+            "Gives a percentage of a found stake to a different address, after stake matures\n"
+            "Percent is a whole number 1 to 50.\n"
+            "Set percentage to zero to turn off"
+            + HelpRequiringPassphrase());
 
+    CBitcoinAddress address(params[0].get_str());
+    if (!address.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ColossusCoin2 address");
+
+    if (params[1].get_int() < 0)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid percentage");
+
+    if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
+
+    unsigned int nPer = (unsigned int) params[1].get_int();
+
+    //Turn off if we set to zero.
+    //Future: After we allow multiple addresses, only turn of this address
+    if(nPer == 0)
+    {
+        pwalletMain->fStakeForCharity = false;
+        pwalletMain->StakeForCharityAddress = "";
+        pwalletMain->nStakeForCharityPercent = 0;
+        return Value::null;
+    }
+
+    //For now max percentage is 50.
+    if (nPer > 50 )
+       nPer = 50;
+
+    pwalletMain->StakeForCharityAddress = address;
+    pwalletMain->nStakeForCharityPercent = nPer;
+    pwalletMain->fStakeForCharity = true;
+
+    return Value::null;
+}
 
 Value setaccount(const Array& params, bool fHelp)
 {
@@ -321,7 +474,7 @@ Value sendtoaddress(const Array& params, bool fHelp)
     if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
 
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, false);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -692,7 +845,7 @@ Value sendfrom(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
     // Send
-    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx);
+    string strError = pwalletMain->SendMoneyToDestination(address.Get(), nAmount, wtx, false, false);
     if (strError != "")
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
 
@@ -1705,14 +1858,16 @@ Value checkwallet(const Array& params, bool fHelp)
 
     int nMismatchSpent;
     int64_t nBalanceInQuestion;
-    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion, true);
+    int nOrphansFound;
+    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion, nOrphansFound, true);
     Object result;
-    if (nMismatchSpent == 0)
+    if (nMismatchSpent == 0 && nOrphansFound == 0)
         result.push_back(Pair("wallet check passed", true));
     else
     {
         result.push_back(Pair("mismatched spent coins", nMismatchSpent));
         result.push_back(Pair("amount in question", ValueFromAmount(nBalanceInQuestion)));
+        result.push_back(Pair("orphan blocks found", nOrphansFound));
     }
     return result;
 }
@@ -1728,14 +1883,16 @@ Value repairwallet(const Array& params, bool fHelp)
 
     int nMismatchSpent;
     int64_t nBalanceInQuestion;
-    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion);
+    int nOrphansFound;
+    pwalletMain->FixSpentCoins(nMismatchSpent, nBalanceInQuestion, nOrphansFound);
     Object result;
-    if (nMismatchSpent == 0)
+    if (nMismatchSpent == 0 && nOrphansFound == 0)
         result.push_back(Pair("wallet check passed", true));
     else
     {
         result.push_back(Pair("mismatched spent coins", nMismatchSpent));
         result.push_back(Pair("amount affected by repair", ValueFromAmount(nBalanceInQuestion)));
+        result.push_back(Pair("orphan blocks removed", nOrphansFound));
     }
     return result;
 }
@@ -1775,4 +1932,68 @@ Value makekeypair(const Array& params, bool fHelp)
     result.push_back(Pair("PrivateKey", HexStr<CPrivKey::iterator>(vchPrivKey.begin(), vchPrivKey.end())));
     result.push_back(Pair("PublicKey", HexStr(key.GetPubKey().Raw())));
     return result;
+}
+
+// presstab HyperStake
+Value setstakesplitthreshold(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "setstakesplitthreshold <1 - 999,999>\n"
+            "This will set the output size of your stakes to never be below this number\n");
+    
+	uint64_t nStakeSplitThreshold = boost::lexical_cast<int>(params[0].get_str());
+	if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Unlock wallet to use this feature");
+	if (nStakeSplitThreshold > 999999)
+		return "out of range - setting split threshold failed";
+	
+	CWalletDB walletdb(pwalletMain->strWalletFile);
+	LOCK(pwalletMain->cs_wallet);
+	{
+		bool fFileBacked = pwalletMain->fFileBacked;
+		
+		Object result;
+		pwalletMain->nStakeSplitThreshold = nStakeSplitThreshold;
+		result.push_back(Pair("split stake threshold set to ", int(pwalletMain->nStakeSplitThreshold)));
+		if(fFileBacked)
+		{
+			walletdb.WriteStakeSplitThreshold(nStakeSplitThreshold);
+			result.push_back(Pair("saved to wallet.dat ", "true"));
+		}
+		else
+			result.push_back(Pair("saved to wallet.dat ", "false"));
+		
+		return result;
+	}
+}
+
+// presstab HyperStake
+Value getstakesplitthreshold(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "getstakesplitthreshold\n"
+            "Returns the set splitstakethreshold\n");
+
+	Object result;
+	result.push_back(Pair("split stake threshold set to ", int(pwalletMain->nStakeSplitThreshold)));
+	return result;
+
+}
+
+Value rescanfromblock(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "rescanfromblock <block height>\n"
+            "This will rescan for transactions after a specified block\n");
+    int nHeight = params[0].get_int();
+	if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Unlock wallet to use this feature");
+	if (nHeight > int(nBestHeight) || nHeight < 0)
+		return "out of range";
+		
+	pwalletMain->ScanForWalletTransactions(FindBlockByHeight(nHeight), true);
+	return "done";
 }

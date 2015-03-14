@@ -91,6 +91,7 @@ private:
     QAction *signMessageAction;
     QAction *verifyMessageAction;
     QAction *aboutAction;
+	QAction *charityAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
     QAction *toggleHideAction;
@@ -100,6 +101,8 @@ private:
     QAction *changePassphraseAction;
     QAction *unlockWalletAction;
     QAction *lockWalletAction;
+	QAction *checkWalletAction;
+	QAction *repairWalletAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
 
@@ -170,6 +173,8 @@ private slots:
     void optionsClicked();
     /** Show about dialog */
     void aboutClicked();
+	/** Show Stake For Charity Dialog */
+    void charityClicked();
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -181,6 +186,10 @@ private slots:
     void incomingTransaction(const QModelIndex & parent, int start, int end);
     /** Encrypt the wallet */
     void encryptWallet(bool status);
+	/** Check the wallet */
+	void checkWallet();
+	/** Repair the wallet */
+	void repairWallet();
     /** Backup the wallet */
     void backupWallet();
     /** Change encrypted wallet passphrase */
