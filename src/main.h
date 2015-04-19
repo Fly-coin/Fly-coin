@@ -38,7 +38,10 @@ static const int64_t MIN_TX_FEE = 20 * COIN;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MAX_MONEY = 50000000000 * COIN;
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 50 * CENT; // 50% per year
+static const int MAX_TIME_SINCE_BEST_BLOCK = 10; // how many seconds to wait before sending next PushGetBlocks()
 static const int MODIFIER_INTERVAL_SWITCH = 100;
+
+static const unsigned int BLOCK_SWITCH_TIME = 1430438400; // 05/01/2015 @ 12:00am (UTC)
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -53,8 +56,14 @@ static const int fHaveUPnP = false;
 static const uint256 hashGenesisBlock("0x000004a22df2e43c33e7c7f4252dca6ebe949659fdecccac38f366d11f5585c0");
 static const uint256 hashGenesisBlockTestNet("0x00005f0f75e9d469da37bce09f7bd3ff09bc68752144da155a68fc032c69c445");
 
-inline int64_t PastDrift(int64_t nTime)   { return nTime - 30 * 60; } // up to 20 minutes from the past
-inline int64_t FutureDrift(int64_t nTime) { return nTime + 30 * 60; } // up to 20 minutes from the future
+//static const uint256 CheckBlock1 ("0"); // Checkpoint at block 0
+inline int64_t GetClockDrift(int64_t nTime)
+{
+	if(nTime < BLOCK_SWITCH_TIME)
+		return 30 * 60;
+	else
+		return 60;
+}
 
 extern int64_t devCoin;
 extern CScript COINBASE_FLAGS;
@@ -80,6 +89,7 @@ extern CCriticalSection cs_setpwalletRegistered;
 extern std::set<CWallet*> setpwalletRegistered;
 extern unsigned char pchMessageStart[4];
 extern std::map<uint256, CBlock*> mapOrphanBlocks;
+extern std::map<unsigned int, unsigned int> mapHashedBlocks; // for liteStake
 
 // Settings
 extern int64_t nTransactionFee;

@@ -206,6 +206,14 @@ extern json_spirit::Value getnewpubkey(const json_spirit::Array& params, bool fH
 extern json_spirit::Value stakeforcharity(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value setstakesplitthreshold(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getstakesplitthreshold(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value cclistcoins(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value ccselect(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value cclistselected(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value ccreturnchange(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value cccustomchange(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value ccreset(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value ccsend(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value multisend(const json_spirit::Array& params, bool fHelp);
 
 extern json_spirit::Value getrawtransaction(const json_spirit::Array& params, bool fHelp); // in rcprawtransaction.cpp
 extern json_spirit::Value listunspent(const json_spirit::Array& params, bool fHelp);

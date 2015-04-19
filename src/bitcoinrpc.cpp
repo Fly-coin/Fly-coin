@@ -315,6 +315,14 @@ static const CRPCCommand vRPCCommands[] =
     { "sendalert",              &sendalert,              false,  false},
 	{ "setstakesplitthreshold",  &setstakesplitthreshold,  false,  false},
 	{ "getstakesplitthreshold",  &getstakesplitthreshold,  false,  false},
+	{ "cclistcoins", 			&cclistcoins, 			 false,  false },
+	{ "ccselect",        		&ccselect,               false,  false },
+	{ "cclistselected",        	&cclistselected,         false,  false },
+    { "ccreturnchange",		&ccreturnchange,	false,	false },
+    { "cccustomchange",		&cccustomchange,	false,	false },
+    { "ccreset",		&ccreset,	false,	false },
+	{ "ccsend",		&ccsend,	false,	false },
+	{ "multisend",        &multisend,        false,  false },
 };
 
 CRPCTable::CRPCTable()
@@ -1223,6 +1231,9 @@ Array RPCConvertValues(const std::string &strMethod, const std::vector<std::stri
     if (strMethod == "walletpassphrase"       && n > 2) ConvertTo<bool>(params[2]);
     if (strMethod == "getblocktemplate"       && n > 0) ConvertTo<Object>(params[0]);
     if (strMethod == "listsinceblock"         && n > 1) ConvertTo<boost::int64_t>(params[1]);
+	if (strMethod == "ccselect" 					&& n > 1)	ConvertTo<int>(params[1]);
+	if (strMethod == "ccreturnchange" 	&& n > 0)	ConvertTo<bool>(params[0]);
+	if (strMethod == "ccsend" 					&& n > 1)	ConvertTo<int>(params[1]);
 
     if (strMethod == "sendalert"              && n > 2) ConvertTo<boost::int64_t>(params[2]);
     if (strMethod == "sendalert"              && n > 3) ConvertTo<boost::int64_t>(params[3]);

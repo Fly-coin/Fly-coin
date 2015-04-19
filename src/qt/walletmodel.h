@@ -17,6 +17,7 @@ class COutput;
 class COutPoint;
 class uint256;
 class CCoinControl;
+class CBitcoinAddress;
 
 QT_BEGIN_NAMESPACE
 class QTimer;
@@ -86,7 +87,7 @@ public:
     };
 
     // Send coins to a list of recipients
-    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, const CCoinControl *coinControl=NULL);
+    SendCoinsReturn sendCoins(const QList<SendCoinsRecipient> &recipients, int nSplitBlock, const CCoinControl *coinControl=NULL);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);
@@ -98,11 +99,14 @@ public:
 	// Wallet Repair
 	void checkWallet(int& nMismatchSpent, int64_t& nBalanceInQuestion, int& nOrphansFound);
 	void repairWallet(int& nMismatchSpent, int64_t& nBalanceInQuestion, int& nOrphansFound);
-	//Stake Weight for coin control dialog
+	// Pass coin control information
 	void getStakeWeightFromValue(const int64_t nTime, const int64_t nValue, uint64_t& nWeight);
+	void setSplitBlock(bool fSplitBlock);
+	bool getSplitBlock();	
 	//Wallet Information about StakeForCharity
 	int getStakeForCharityPercent();
 	QString getStakeForCharityAddress();
+
     // RAI object for unlocking wallet, returned by requestUnlock()
     class UnlockContext
     {
@@ -132,6 +136,7 @@ public:
     void lockCoin(COutPoint& output);
     void unlockCoin(COutPoint& output);
     void listLockedCoins(std::vector<COutPoint>& vOutpts);
+	bool isMine(const CBitcoinAddress &address);
 
 private:
     CWallet *wallet;
