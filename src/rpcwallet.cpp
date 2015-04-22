@@ -10,6 +10,7 @@
 #include "main.h"
 #include "init.h"
 #include "base58.h"
+#include "coincontrol.h"
 
 #include <sstream>
 #include <boost/lexical_cast.hpp>
@@ -18,6 +19,7 @@ using namespace json_spirit;
 using namespace std;
 
 int64_t nWalletUnlockTime;
+CCoinControl* coinControl = new CCoinControl;
 static CCriticalSection cs_nWalletUnlockTime;
 
 extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, json_spirit::Object& entry);
@@ -1996,4 +1998,429 @@ Value rescanfromblock(const Array& params, bool fHelp)
 		
 	pwalletMain->ScanForWalletTransactions(FindBlockByHeight(nHeight), true);
 	return "done";
+}
+
+/** COIN CONTROL RPC **/
+// presstab HyperStake
+Value cclistcoins(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "cclistcoins\n"
+			"CoinControl: list your spendable coins and their information\n");
+	
+	Array result;
+	
+	std::vector<COutput> vCoins;
+    pwalletMain->AvailableCoins(vCoins);
+	
+	BOOST_FOREACH(const COutput& out, vCoins)
+    {
+		Object coutput;
+		int64_t nHeight = nBestHeight - out.nDepth;
+		CBlockIndex* pindex = FindBlockByHeight(nHeight);
+		
+		CTxDestination outputAddress;
+		ExtractDestination(out.tx->vout[out.i].scriptPubKey, outputAddress);
+		coutput.push_back(Pair("Address", CBitcoinAddress(outputAddress).ToString()));
+		coutput.push_back(Pair("Output Hash", out.tx->GetHash().ToString()));
+		coutput.push_back(Pair("blockIndex", out.i));
+		double dAmount = double(out.tx->vout[out.i].nValue) / double(COIN);
+		coutput.push_back(Pair("Value", dAmount));
+		coutput.push_back(Pair("Confirmations", int(out.nDepth)));
+		double dAge = double(GetTime() - pindex->nTime);
+		coutput.push_back(Pair("Age (days)", (dAge/(60*60*24))));
+		uint64_t nWeight = 0;
+		pwalletMain->GetStakeWeightFromValue(out.tx->GetTxTime(), out.tx->vout[out.i].nValue, nWeight);
+		if(dAge < nStakeMinAge)
+			nWeight = 0;
+		coutput.push_back(Pair("Weight", int(nWeight)));
+		double nReward = (MAX_MINT_PROOF_OF_STAKE/COIN) / 365 * dAge * dAmount;
+		nReward = min(nReward, double(30));
+		coutput.push_back(Pair("Potential Stake", nReward));
+		result.push_back(coutput);
+	}
+	return result;
+}
+
+// presstab HyperStake
+Value ccselect(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 2)
+        throw runtime_error(
+            "ccselect <Output Hash> <Output Index>\n"
+			"CoinControl: select a coin");
+	
+	uint256 hash;
+    hash.SetHex(params[0].get_str());
+	unsigned int nIndex = params[1].get_int();
+	COutPoint outpt(hash, nIndex);
+	coinControl->Select(outpt);
+
+	return "Outpoint Selected";
+}
+
+// presstab HyperStake
+Value cclistselected(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "cclistselected\n"
+			"CoinControl: list selected coins");
+	
+	std::vector<COutPoint> vOutpoints;
+	coinControl->ListSelected(vOutpoints);
+	
+	Array result;
+	BOOST_FOREACH(COutPoint& outpt, vOutpoints)
+	{
+		result.push_back(outpt.hash.ToString());
+	}
+
+	return result;
+}
+
+// ssta HyperStake
+Value ccreturnchange(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "ccreturnchange <true|false>\n"
+                        "CoinControl: sets returnchange to true or false");
+    bool rc = params[0].get_bool();
+    coinControl->fReturnChange=rc;
+    string ret = "Set ReturnChange to: ";
+    
+	if(coinControl->fReturnChange )
+		ret+= "true";
+	else
+		ret+= "false";
+		
+    return ret;
+}
+
+// ssta HyperStake
+Value cccustomchange(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "cccustomchange <address>\n"
+                        "CoinControl: sets address to return change to");
+    CBitcoinAddress address(params[0].get_str());
+    // check it's a valid address
+    if(!address.IsValid()) throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid ColossusCoin2 address");
+
+    coinControl->destChange=address.Get();
+
+    string ret = "Set change address to: ";
+    ret+=(CBitcoinAddress(coinControl->destChange).ToString());
+    return ret;
+}
+
+// ssta HyperStake
+Value ccreset(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "ccreset\n"
+                        "CoinControl: resets coin control (clears selected coins and change address)");
+    coinControl->SetNull();
+    return Value::null;
+}
+
+// presstab HyperStake
+Value ccsend(const Array& params, bool fHelp)
+{
+    if (fHelp || params.size() != 2)
+        throw runtime_error(
+		"ccsend <ColossusCoin2 Address> <amount>\n"
+            "<amount> is a real and is rounded to the nearest 0.000001"
+            + HelpRequiringPassphrase());
+
+    CBitcoinAddress address(params[0].get_str());
+    if (!address.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ColossusCoin2 address");
+
+    // Amount
+    int64_t nAmount = AmountFromValue(params[1]);
+
+    if (nAmount < MIN_TX_FEE + 1)
+        throw JSONRPCError(-101, "Send amount too small");
+
+    if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
+
+	// Initialize things needed for the transaction
+   vector<pair<CScript, int64_t> > vecSend;
+	CWalletTx wtx;
+    CReserveKey keyChange(pwalletMain);
+    int64_t nFeeRequired = 0;
+	CScript scriptPubKey;
+        scriptPubKey.SetDestination(address.Get());
+    vecSend.push_back(make_pair(scriptPubKey, nAmount));
+	
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, 1, coinControl); // 1 = no splitblock, false for s4c, coinControl
+    if (!fCreated)
+    {
+        if (nAmount + nFeeRequired > pwalletMain->GetBalance())
+            throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Insufficient funds");
+        throw JSONRPCError(RPC_WALLET_ERROR, "Transaction creation failed");
+    }
+    if (!pwalletMain->CommitTransaction(wtx, keyChange))
+        throw JSONRPCError(RPC_WALLET_ERROR, "Transaction commit failed");
+	
+	coinControl->SetNull();
+    return wtx.GetHash().GetHex();
+}
+
+/** END COIN CONTROL RPC **/
+
+//presstab HyperStake
+Array printMultiSend()
+{
+	Array ret;
+	Object act;
+	act.push_back(Pair("MultiSend Activated?", pwalletMain->fMultiSend));
+	ret.push_back(act);
+	if(pwalletMain->vDisabledAddresses.size() >= 1)
+	{
+		Object disAdd;
+		for(unsigned int i = 0; i < pwalletMain->vDisabledAddresses.size(); i++)
+		{
+			disAdd.push_back(Pair("Disabled From Sending", pwalletMain->vDisabledAddresses[i]));
+		}
+		ret.push_back(disAdd);
+	}
+	
+	ret.push_back("MultiSend Addresses to Send To:");
+	Object vMS;
+	for(unsigned int i = 0; i < pwalletMain->vMultiSend.size(); i++)
+	{
+		vMS.push_back(Pair("Address " + boost::lexical_cast<std::string>(i), pwalletMain->vMultiSend[i].first));
+		vMS.push_back(Pair("Percent", pwalletMain->vMultiSend[i].second));
+	}
+	ret.push_back(vMS);
+	return ret;
+}
+
+//presstab HyperStake
+Array printAddresses()
+{
+	std::vector<COutput> vCoins;
+    pwalletMain->AvailableCoins(vCoins);
+	std::map<std::string, double> mapAddresses;
+	
+	BOOST_FOREACH(const COutput& out, vCoins)
+    {
+		CTxDestination utxoAddress;
+		ExtractDestination(out.tx->vout[out.i].scriptPubKey, utxoAddress);
+		std::string strAdd = CBitcoinAddress(utxoAddress).ToString();
+
+		if(mapAddresses.find(strAdd) == mapAddresses.end()) //if strAdd is not already part of the map
+		{
+			mapAddresses[strAdd] = (double)out.tx->vout[out.i].nValue / (double)COIN;
+		}
+		else
+		{
+			mapAddresses[strAdd] += (double)out.tx->vout[out.i].nValue / (double)COIN;
+		}
+	}
+	Array ret;
+	for (map<std::string, double>::const_iterator it = mapAddresses.begin(); it != mapAddresses.end(); ++it)
+	{
+		Object obj;
+		const std::string* strAdd = &(*it).first;
+		const double* nBalance = &(*it).second;
+		obj.push_back(Pair("Address ", *strAdd));
+		obj.push_back(Pair("Balance ", *nBalance));
+		ret.push_back(obj);
+	}
+	return ret;
+}
+
+//presstab HyperStake
+unsigned int sumMultiSend()
+{
+	unsigned int sum = 0;
+	for(unsigned int i = 0; i < pwalletMain->vMultiSend.size(); i++)
+	{
+		sum += pwalletMain->vMultiSend[i].second;
+	}
+	return sum;
+}
+
+// presstab HyperStake
+Value multisend(const Array &params, bool fHelp)
+{
+    CWalletDB walletdb(pwalletMain->strWalletFile);
+	bool fFileBacked;
+	
+	//MultiSend Commands
+	if(params.size() == 1)
+	{
+		string strCommand = params[0].get_str();
+		Object ret;
+		if(strCommand == "print")
+		{
+			return printMultiSend();
+		}
+		else if(strCommand == "printaddress" || strCommand == "printaddresses")
+		{
+			return printAddresses();
+		}
+		else if(strCommand == "clear")
+		{
+			LOCK(pwalletMain->cs_wallet);
+			{
+				fFileBacked = pwalletMain->fFileBacked;
+				string strRet;
+				if(fFileBacked)
+				{
+					if(walletdb.EraseMultiSend(pwalletMain->vMultiSend))						
+						strRet += "erased MultiSend vector from database & ";
+					
+				}
+				pwalletMain->vMultiSend.clear();
+				pwalletMain->fMultiSend = false;
+				strRet += "cleared MultiSend vector from RAM";
+				return strRet;
+			}
+		}
+		else if (strCommand == "enable" || strCommand == "activate" )
+		{
+			if(pwalletMain->vMultiSend.size() < 1)
+				return "Unable to activate MultiSend, check MultiSend vector";
+			if(CBitcoinAddress(pwalletMain->vMultiSend[0].first).IsValid())
+			{
+				pwalletMain->fMultiSend = true;
+				if(!walletdb.WriteMSettings(true, pwalletMain->nLastMultiSendHeight))
+					return "MultiSend activated but writing settings to DB failed";
+				else
+				return "MultiSend activated";
+			}
+			else
+				return "Unable to activate MultiSend, check MultiSend vector";
+		}
+		else if (strCommand == "disable" || strCommand == "deactivate" )
+		{
+			pwalletMain->fMultiSend = false;
+			if(!walletdb.WriteMSettings(false, pwalletMain->nLastMultiSendHeight))
+					return "MultiSend deactivated but writing settings to DB failed";
+			return "MultiSend deactivated";
+		}
+		else if(strCommand == "enableall")
+		{
+			if(!walletdb.EraseMSDisabledAddresses(pwalletMain->vDisabledAddresses))
+				return "failed to clear old vector from walletDB";
+			else
+			{
+				pwalletMain->vDisabledAddresses.clear();
+				return "all addresses will now send MultiSend transactions";
+			}
+		}
+	}
+	if(params.size() == 2 && params[0].get_str() == "delete")
+	{
+		int del = boost::lexical_cast<int>(params[1].get_str());
+		if(!walletdb.EraseMultiSend(pwalletMain->vMultiSend))
+		   return "failed to delete old MultiSend vector from database";
+		
+		pwalletMain->vMultiSend.erase(pwalletMain->vMultiSend.begin() + del);
+		
+		if(!walletdb.WriteMultiSend(pwalletMain->vMultiSend))
+			return "walletdb WriteMultiSend failed!";
+		return printMultiSend();
+	}
+	if(params.size() == 2 && params[0].get_str() == "disable")
+	{
+		std::string disAddress = params[1].get_str();
+		if(!CBitcoinAddress(disAddress).IsValid())
+			return "address you want to disable is not valid";
+		else
+		{
+			pwalletMain->vDisabledAddresses.push_back(disAddress);
+			if(!walletdb.EraseMSDisabledAddresses(pwalletMain->vDisabledAddresses))
+				return "disabled address from sending, but failed to clear old vector from walletDB";
+			if(!walletdb.WriteMSDisabledAddresses(pwalletMain->vDisabledAddresses))
+				return "disabled address from sending, but failed to store it to walletDB";
+			else
+				return "disabled address from sending MultiSend transactions";
+		}
+		
+	}
+	//if no commands are used
+	if (fHelp || params.size() != 2)
+        throw runtime_error(
+			"multisend <command>\n"
+			"****************************************************************\n"
+			"WHAT IS MULTISEND?\n"
+			"MultiSend is a rebuild of what used to be called Stake For Charity (s4c)\n"
+			"MultiSend allows a user to automatically send a percent of their stake reward to as many addresses as you would like\n"
+			"The MultiSend transaction is sent when the staked coins mature\n"
+			"The only current restriction is that you cannot choose to send more than 100% of your stake using MultiSend\n"
+			"****************************************************************\n"
+			"MULTISEND COMMANDS (usage: multisend <command>)\n"
+			"   print - displays the current MultiSend vector \n"
+			"   clear - deletes the current MultiSend vector \n"
+			"   enable/activate - activates the current MultiSend vector \n"
+			"   disable/deactivate - disables the current MultiSend vector \n"
+			"   delete <Address #> - deletes an address from the MultiSend vector \n"
+			"   disable <address> - prevents a specific address from sending MultiSend transactions\n"
+			"   enableall - enables all addresses to be eligible to send MultiSend transactions\n"
+			
+			"****************************************************************\n"
+			"TO CREATE OR ADD TO THE MULTISEND VECTOR:\n"
+			"multisend <ColossusCoin2 Address> <percent>\n"
+            "This will add a new address to the MultiSend vector\n"
+            "Percent is a whole number 1 to 100.\n"
+			"****************************************************************\n"
+            );
+	
+	//if the user is entering a new MultiSend item
+	string strAddress = params[0].get_str();
+    CBitcoinAddress address(strAddress);
+    if (!address.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ColossusCoin2 address");
+    if (boost::lexical_cast<int>(params[1].get_str()) < 0)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid percentage");
+    if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
+
+	
+	unsigned int nPercent = boost::lexical_cast<unsigned int>(params[1].get_str());
+    
+	LOCK(pwalletMain->cs_wallet);
+	{
+		fFileBacked = pwalletMain->fFileBacked;
+		//Error if 0 is entered
+		if(nPercent == 0)
+		{
+            return "Sending 0% of stake is not valid";
+		}
+		
+		//MultiSend can only send 100% of your stake
+        if (nPercent + sumMultiSend() > 100)
+			return "Failed to add to MultiSend vector, the sum of your MultiSend is greater than 100%";
+		
+		for(unsigned int i = 0; i < pwalletMain->vMultiSend.size(); i++)
+		{
+			if(pwalletMain->vMultiSend[i].first == strAddress)
+				return "Failed to add to MultiSend vector, cannot use the same address twice";
+		}
+			
+		if(fFileBacked)
+			walletdb.EraseMultiSend(pwalletMain->vMultiSend);
+			  
+		std::pair<std::string, int> newMultiSend;
+		newMultiSend.first = strAddress;
+		newMultiSend.second = nPercent;
+		pwalletMain->vMultiSend.push_back(newMultiSend);
+		
+		if(fFileBacked)
+		{	
+			if(!walletdb.WriteMultiSend(pwalletMain->vMultiSend))
+				return "walletdb WriteMultiSend failed!";
+		}
+	}
+	return printMultiSend();
 }

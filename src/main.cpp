@@ -2030,8 +2030,6 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
 {
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
-    if(pindexBest != NULL && pindexBest->nHeight > 1)
-        nCoinbaseMaturity = 90; //coinbase maturity change to 180 blocks
 
     // Size limits
     if (vtx.empty() || vtx.size() > MAX_BLOCK_SIZE || ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
@@ -2370,7 +2368,7 @@ bool CBlock::SignBlock(CWallet& wallet, int64_t nFees)
         {
             if (txCoinStake.nTime >= max(pindexBest->GetPastTimeLimit()+1, pindexBest->GetBlockTime() - GetClockDrift(pindexBest->GetBlockTime())))
             {
-				// make sure coinstake would meet timestamp protocol
+			    // make sure coinstake would meet timestamp protocol
                 //    as it would be the same as the block timestamp
                 vtx[0].nTime = nTime = txCoinStake.nTime;
                 nTime = max(pindexBest->GetPastTimeLimit()+1, GetMaxTransactionTime());
