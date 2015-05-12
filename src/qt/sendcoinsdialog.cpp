@@ -42,6 +42,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
 	ui->splitBlockCheckBox->setToolTip(tr("Enable/Disable Block Splitting"));
 	ui->returnChangeCheckBox->setToolTip(tr("Use your sending address as the change address"));
 	ui->checkBoxCoinControlChange->setToolTip(tr("Send change to a custom address"));
+	ui->labelBlockSize->setText("0");
 #endif
 
     addEntry();

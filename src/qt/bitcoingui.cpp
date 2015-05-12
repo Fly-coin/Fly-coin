@@ -388,6 +388,10 @@ void BitcoinGUI::createMenuBar()
     file->addAction(signMessageAction);
     file->addAction(verifyMessageAction);
     file->addSeparator();
+    for (int i = 0; i < themesList.count(); i++) {
+        file->addAction(customActions[i]);
+    }
+    file->addSeparator();
     file->addAction(quitAction);
 
     QMenu *settings = appMenuBar->addMenu(tr("&Tools"));
@@ -401,14 +405,6 @@ void BitcoinGUI::createMenuBar()
     settings->addSeparator();
     settings->addAction(optionsAction);
 	
-	/* zeewolf: Hot swappable wallet themes */
-    if (themesList.count()>0)
-    {
-        QMenu *themes = appMenuBar->addMenu(tr("&Themes"));
-        for (int i = 0; i < themesList.count(); i++) {
-            themes->addAction(customActions[i]);
-        }
-    }
     /* zeewolf: Hot swappable wallet themes */
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));

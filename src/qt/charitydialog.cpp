@@ -40,7 +40,7 @@ void charityDialog::on_buttonBox_accepted()
 
                    if (!address.IsValid())
                    {
-                       msgBox.setText("Invalid HyperStake address");
+                       msgBox.setText("Invalid ColossusCoin2 address");
                        msgBox.exec();
                        return;
                    }

@@ -1,6 +1,6 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2014 The ColossusCoin2 developers
+// Copyright (c) 2009-2015 Satoshi Nakamoto
+// Copyright (c) 2009-2015 The Bitcoin developers
+// Copyright (c) 2015 The ColossusCoin2 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1662,6 +1662,19 @@ bool CWallet::SelectCoinsMinConf(int64_t nTargetValue, unsigned int nSpendTime, 
     }
 
     return true;
+}
+
+bool CWallet::MintableCoins()
+{
+	vector<COutput> vCoins;
+    AvailableCoins(vCoins, true);
+	
+	BOOST_FOREACH(const COutput& out, vCoins)
+	{
+		if(GetTime() - out.tx->GetTxTime() > nStakeMinAge)
+			return true;
+	}
+	return false;
 }
 
 bool CWallet::SelectCoins(int64_t nTargetValue, unsigned int nSpendTime, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64_t& nValueRet, const CCoinControl* coinControl) const

@@ -3,28 +3,51 @@ macx{
 }
 TEMPLATE = app
 TARGET = ColossusCoin2-qt
-VERSION = 1.0.0
+VERSION = 1.0.1
 INCLUDEPATH += src src/json src/qt /usr/local/include
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
 QT += core gui network widgets
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 lessThan(QT_MAJOR_VERSION, 5): CONFIG += static
 QMAKE_CXXFLAGS = -fpermissive
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += core gui network widgets
+    QT += widgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 }
 
 #Added win32 conditional - Yash
+#    QMAKE_TARGET_BUNDLE_PREFIX = co.opalcoin
+#    BOOST_LIB_SUFFIX=-mt
+#    BOOST_INCLUDE_PATH=/usr/local/Cellar/boost/1.57.0/include
+#    BOOST_LIB_PATH=/usr/local/Cellar/boost/1.57.0/lib
+#
+#    BDB_INCLUDE_PATH=/usr/local/opt/berkeley-db4/include
+#    BDB_LIB_PATH=/usr/local/Cellar/berkeley-db4/4.8.30/lib
+#
+#    OPENSSL_INCLUDE_PATH=/usr/local/opt/openssl/include
+#    OPENSSL_LIB_PATH=/usr/local/opt/openssl/lib
+#
+#    MINIUPNPC_INCLUDE_PATH=/usr/local/opt/miniupnpc/include
+#    MINIUPNPC_LIB_PATH=/usr/local/Cellar/miniupnpc/1.9.20141027/lib
+#
+#    QRENCODE_INCLUDE_PATH=/usr/local/opt/qrencode/include
+#    QRENCODE_LIB_PATH=/usr/local/opt/qrencode/lib
+#
+#    DEFINES += IS_ARCH_64
+#    QMAKE_CXXFLAGS += -arch x86_64 -stdlib=libc++
+#    QMAKE_CFLAGS += -arch x86_64
+#    QMAKE_LFLAGS += -arch x86_64 -stdlib=libc++
+
 
 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
 # for boost thread win32 with _win32 sufix
 # use: BOOST_THREAD_LIB_SUFFIX=_win32-...
-# or when linking against a specific BerkelyDB version: BDB_LIB_SUFFIX=-4.8
+# or when linking against a specific BerkelyDB versioD: BDB_LIB_SUFFIX=-4.8
 
 # Dependency library locations can be customized with:
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
@@ -33,6 +56,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
+
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
@@ -170,7 +194,7 @@ contains(USE_O3, 1) {
     QMAKE_CFLAGS += -msse2
 }
 
-QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wno-ignored-qualifiers -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
+QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall  -Wextra -Wno-ignored-qualifiers -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
 
 
 # Input
@@ -409,7 +433,7 @@ OTHER_FILES += \
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
     macx:BOOST_LIB_SUFFIX = -mt
-    windows:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_550  #Replaced windows with win - Yash
+    wiD:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_550  #Replaced windows with win - Yash
 }
 
 isEmpty(BOOST_THREAD_LIB_SUFFIX) {
@@ -459,7 +483,7 @@ macx:HEADERS += src/qt/macdockiconhandler.h
 macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
-macx:ICON = src/qt/res/icons/ColossusCoin2.icns
+macx:ICON = src/qt/res/icons/bitcoin.icns
 macx:TARGET = "ColossusCoin2-Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread

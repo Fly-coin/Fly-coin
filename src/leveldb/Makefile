@@ -44,7 +44,6 @@ TESTS = \
 	filename_test \
 	filter_block_test \
 	issue178_test \
-	issue200_test \
 	log_test \
 	memenv_test \
 	skiplist_test \
@@ -155,9 +154,6 @@ filter_block_test: table/filter_block_test.o $(LIBOBJECTS) $(TESTHARNESS)
 issue178_test: issues/issue178_test.o $(LIBOBJECTS) $(TESTHARNESS)
 	$(CXX) $(LDFLAGS) issues/issue178_test.o $(LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)
 
-issue200_test: issues/issue200_test.o $(LIBOBJECTS) $(TESTHARNESS)
-	$(CXX) $(LDFLAGS) issues/issue200_test.o $(LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)
-
 log_test: db/log_test.o $(LIBOBJECTS) $(TESTHARNESS)
 	$(CXX) $(LDFLAGS) db/log_test.o $(LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)
 
@@ -195,14 +191,14 @@ IOSVERSION=$(shell defaults read $(PLATFORMSROOT)/iPhoneOS.platform/version CFBu
 	mkdir -p ios-x86/$(dir $@)
 	$(CXX) $(CXXFLAGS) -isysroot $(SIMULATORROOT)/SDKs/iPhoneSimulator$(IOSVERSION).sdk -arch i686 -c $< -o ios-x86/$@
 	mkdir -p ios-arm/$(dir $@)
-	xcrun -sdk iphoneos $(CXX) $(CXXFLAGS) -isysroot $(DEVICEROOT)/SDKs/iPhoneOS$(IOSVERSION).sdk -arch armv6 -arch armv7 -c $< -o ios-arm/$@
+	$(DEVICEROOT)/usr/bin/$(CXX) $(CXXFLAGS) -isysroot $(DEVICEROOT)/SDKs/iPhoneOS$(IOSVERSION).sdk -arch armv6 -arch armv7 -c $< -o ios-arm/$@
 	lipo ios-x86/$@ ios-arm/$@ -create -output $@
 
 .c.o:
 	mkdir -p ios-x86/$(dir $@)
 	$(CC) $(CFLAGS) -isysroot $(SIMULATORROOT)/SDKs/iPhoneSimulator$(IOSVERSION).sdk -arch i686 -c $< -o ios-x86/$@
 	mkdir -p ios-arm/$(dir $@)
-	xcrun -sdk iphoneos $(CC) $(CFLAGS) -isysroot $(DEVICEROOT)/SDKs/iPhoneOS$(IOSVERSION).sdk -arch armv6 -arch armv7 -c $< -o ios-arm/$@
+	$(DEVICEROOT)/usr/bin/$(CC) $(CFLAGS) -isysroot $(DEVICEROOT)/SDKs/iPhoneOS$(IOSVERSION).sdk -arch armv6 -arch armv7 -c $< -o ios-arm/$@
 	lipo ios-x86/$@ ios-arm/$@ -create -output $@
 
 else
