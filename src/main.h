@@ -41,7 +41,7 @@ static const int64_t MAX_MINT_PROOF_OF_STAKE = 50 * CENT; // 50% per year
 static const int MAX_TIME_SINCE_BEST_BLOCK = 10; // how many seconds to wait before sending next PushGetBlocks()
 static const int MODIFIER_INTERVAL_SWITCH = 100;
 
-static const unsigned int BLOCK_SWITCH_TIME = 1430438400; // 05/01/2015 @ 12:00am (UTC)
+static const unsigned int BLOCK_SWITCH_TIME = 1435708800; // 07/01/2015 @ 12:00am (UTC)
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
