@@ -2875,7 +2875,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return false;
         }
 
-        if (nTime > 1430124800 && pfrom->nVersion < 70122)
+        if (nTime > 1430124800 && pfrom->nVersion < 60013)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
