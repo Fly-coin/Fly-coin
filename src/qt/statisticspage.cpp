@@ -33,6 +33,7 @@ int stakeminPrevious = -1;
 int stakemaxPrevious = -1;
 QString stakecPrevious = "";
 QString rewardPrevious = "";
+QString rewardPrevious2 = "";
 
 
 void StatisticsPage::updateStatistics()
@@ -45,14 +46,14 @@ void StatisticsPage::updateStatistics()
     uint64_t nMinWeight = 0, nMaxWeight = 0, nWeight = 0;
     pwalletMain->GetStakeWeight(*pwalletMain, nMinWeight, nMaxWeight, nWeight);
     uint64_t nNetworkWeight = GetPoSKernelPS();
-    int64_t volume = ((pindexBest->nMoneySupply)/10000000);
+    int64_t volume = ((pindexBest->nMoneySupply)/100000000);
     int peers = this->model->getNumConnections();
     pPawrate2 = (double)pPawrate;
     QString height = QString::number(nHeight);
     QString stakemin = QString::number(nMinWeight);
     QString stakemax = QString::number(nNetworkWeight);
     QString phase = "";
-    if (pindexBest->nHeight < 7200)
+    if (pindexBest->nHeight < 5000)
     {
         phase = "X13 POW";
     }
@@ -66,7 +67,7 @@ void StatisticsPage::updateStatistics()
     }
 
     QString subsidy = "";
-    if(pindexBest->nHeight == 2)
+    if(pindexBest->nHeight < 100)
     {
         subsidy = "190000000 CV2";
     }
@@ -74,18 +75,27 @@ void StatisticsPage::updateStatistics()
     {
         subsidy = "1000 CV2";
     }
-        else if(pindexBest->nHeight < 1000000000)
+        else if(pindexBest->nHeight < 100000000)
     {
-        subsidy = "5000 CV2 (POS only)";
+        subsidy = "0 CV2";
     }
-    
+
+    QString subsidy2 = "";
+    if(pindexBest->nHeight < 5000)
+    {
+        subsidy2 = "0 CV2";
+    }
+        else if(pindexBest->nHeight < 10000000)
+    {
+        subsidy2 = "5000 CV2";
+    }
 
     QString hardness = QString::number(pHardness, 'f', 6);
     QString hardness2 = QString::number(pHardness2, 'f', 6);
     QString pawrate = QString::number(pPawrate2, 'f', 3);
     QString Qlpawrate = model->getLastBlockDate().toString();
     QString QPeers = QString::number(peers);
-    QString qVolume = QLocale(QLocale::English).toString(int(volume));
+    QString qVolume = QLocale(QLocale::English).toString(int64_t(volume));
 
     if(nHeight > heightPrevious)
     {
@@ -121,6 +131,13 @@ void StatisticsPage::updateStatistics()
     ui->rewardBox->setText(subsidy);
     }
     
+    if(subsidy2 != rewardPrevious)
+    {
+        ui->posrewardBox->setText("<b><font color=\"green\">" + subsidy2 + "</font></b>");
+    } else {
+    ui->rewardBox->setText(subsidy2);
+    }
+
     if(pHardness > hardnessPrevious)
     {
         ui->diffBox->setText("<b><font color=\"green\">" + hardness + "</font></b>");        
@@ -172,16 +189,17 @@ void StatisticsPage::updateStatistics()
     } else {
         ui->volumeBox->setText(qVolume + " CV2");
     }
-    updatePrevious(nHeight, nMinWeight, nNetworkWeight, phase, subsidy, pHardness, pHardness2, pPawrate2, Qlpawrate, peers, volume);
+    updatePrevious(nHeight, nMinWeight, nNetworkWeight, phase, subsidy, subsidy2, pHardness, pHardness2, pPawrate2, Qlpawrate, peers, volume);
 }
 
-void StatisticsPage::updatePrevious(int nHeight, int nMinWeight, int nNetworkWeight, QString phase, QString subsidy, double pHardness, double pHardness2, double pPawrate2, QString Qlpawrate, int peers, int volume)
+void StatisticsPage::updatePrevious(int nHeight, int nMinWeight, int nNetworkWeight, QString phase, QString subsidy, QString subsidy2, double pHardness, double pHardness2, double pPawrate2, QString Qlpawrate, int peers, int volume)
 {
     heightPrevious = nHeight;
     stakeminPrevious = nMinWeight;
     stakemaxPrevious = nNetworkWeight;
     stakecPrevious = phase;
     rewardPrevious = subsidy;
+    rewardPrevious2 = subsidy2;
     hardnessPrevious = pHardness;
     hardnessPrevious2 = pHardness2;
     netPawratePrevious = pPawrate2;

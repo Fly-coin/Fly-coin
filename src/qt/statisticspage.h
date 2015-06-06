@@ -41,6 +41,7 @@ public:
     int stakemaxPrevious;
     QString stakecPrevious;
     QString rewardPrevious;
+    QString rewardPrevious2;
     double netPawratePrevious;
     QString pawratePrevious;
     double hardnessPrevious;
@@ -49,7 +50,7 @@ public:
 public slots:
 
     void updateStatistics();
-    void updatePrevious(int, int, int, QString, QString, double, double, double, QString, int, int);
+    void updatePrevious(int, int, int, QString, QString, QString, double, double, double, QString, int, int);
 
 private slots:
 
