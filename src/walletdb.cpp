@@ -14,7 +14,6 @@ using namespace boost;
 
 
 static uint64_t nAccountingEntryNumber = 0;
-extern bool fWalletUnlockStakingOnly;
 
 //
 // CWalletDB

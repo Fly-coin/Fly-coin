@@ -12,6 +12,7 @@
 #include <QTimer>
 
 static const int64_t nClientStartupTime = GetTime();
+double GetPoSKernelPS(const CBlockIndex* blockindex = NULL);
 
 ClientModel::ClientModel(OptionsModel *optionsModel, QObject *parent) :
     QObject(parent), optionsModel(optionsModel),
@@ -53,7 +54,7 @@ QDateTime ClientModel::getLastBlockDate() const
     if (pindexBest)
         return QDateTime::fromTime_t(pindexBest->GetBlockTime());
     else
-        return QDateTime::fromTime_t(1393221600); // Genesis block's time
+        return QDateTime::fromTime_t(1422775300); // Genesis block's time
 }
 
 void ClientModel::updateTimer()
@@ -94,6 +95,32 @@ void ClientModel::updateAlert(const QString &hash, int status)
     // Emit a numBlocksChanged when the status message changes,
     // so that the view recomputes and updates the status bar.
     emit numBlocksChanged(getNumBlocks(), getNumBlocksOfPeers());
+}
+
+double ClientModel::GetDifficulty() const
+{
+    // Floating point number that is a multiple of the minimum difficulty,
+    // minimum difficulty = 1.0.
+
+    if (pindexBest == NULL)
+        return 1.0;
+    int nShift = (pindexBest->nBits >> 24) & 0xff;
+
+    double dDiff =
+        (double)0x0000ffff / (double)(pindexBest->nBits & 0x00ffffff);
+
+    while (nShift < 29)
+    {
+        dDiff *= 256.0;
+        nShift++;
+    }
+    while (nShift > 29)
+    {
+        dDiff /= 256.0;
+        nShift--;
+    }
+
+    return dDiff;
 }
 
 bool ClientModel::isTestNet() const

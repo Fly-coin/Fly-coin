@@ -43,7 +43,7 @@ void ThreadRPCServer3(void* parg);
 
 static inline unsigned short GetDefaultRPCPort()
 {
-    return GetBoolArg("-testnet", false) ? 25073 : 9456;
+    return GetBoolArg("-testnet", false) ? 23521 : 43521;
 }
 
 Object JSONRPCError(int code, const string& message)
@@ -257,6 +257,9 @@ static const CRPCCommand vRPCCommands[] =
     { "getaccount",             &getaccount,             false,  false },
     { "getaddressesbyaccount",  &getaddressesbyaccount,  true,   false },
     { "sendtoaddress",          &sendtoaddress,          false,  false },
+	{ "setstakesplitthreshold", &setstakesplitthreshold, false,  false },
+	{ "getstakesplitthreshold", &getstakesplitthreshold, false,  false },
+	{ "rescanfromblock", 		&rescanfromblock, 		 false,  false },
     { "getreceivedbyaddress",   &getreceivedbyaddress,   false,  false },
     { "getreceivedbyaccount",   &getreceivedbyaccount,   false,  false },
     { "listreceivedbyaddress",  &listreceivedbyaddress,  false,  false },
@@ -280,7 +283,8 @@ static const CRPCCommand vRPCCommands[] =
     { "getblockbynumber",       &getblockbynumber,       false,  false },
     { "getblockhash",           &getblockhash,           false,  false },
     { "gettransaction",         &gettransaction,         false,  false },
-	{ "rescanfromblock", 		&rescanfromblock, 		 false,  false },
+	{ "getstaketx",             &getstaketx,             false,  false },
+	{ "deleteaddress",          &deleteaddress,          false,  false },
     { "listtransactions",       &listtransactions,       false,  false },
     { "listaddressgroupings",   &listaddressgroupings,   false,  false },
     { "signmessage",            &signmessage,            false,  false },
@@ -313,8 +317,7 @@ static const CRPCCommand vRPCCommands[] =
     { "resendtx",               &resendtx,               false,  true},
     { "makekeypair",            &makekeypair,            false,  true},
     { "sendalert",              &sendalert,              false,  false},
-	{ "setstakesplitthreshold",  &setstakesplitthreshold,  false,  false},
-	{ "getstakesplitthreshold",  &getstakesplitthreshold,  false,  false},
+	{ "multisend",        &multisend,        false,  false },
 	{ "cclistcoins", 			&cclistcoins, 			 false,  false },
 	{ "ccselect",        		&ccselect,               false,  false },
 	{ "cclistselected",        	&cclistselected,         false,  false },
@@ -322,7 +325,8 @@ static const CRPCCommand vRPCCommands[] =
     { "cccustomchange",		&cccustomchange,	false,	false },
     { "ccreset",		&ccreset,	false,	false },
 	{ "ccsend",		&ccsend,	false,	false },
-	{ "multisend",        &multisend,        false,  false },
+	{ "getweight",	&getweight,	false,	false },
+	{ "getconfs",	&getconfs,	false,	false },
 };
 
 CRPCTable::CRPCTable()

@@ -23,7 +23,8 @@ public:
         Date = 1,
         Type = 2,
         ToAddress = 3,
-        Amount = 4
+        Amount = 4,
+		Depth = 5
     };
 
     /** Roles to get specific information from a transaction row.
@@ -47,9 +48,7 @@ public:
         /** Is transaction confirmed? */
         ConfirmedRole,
         /** Formatted amount, without brackets when unconfirmed */
-        FormattedAmountRole,
-        /** Transaction status (TransactionRecord::Status) */
-        StatusRole
+        FormattedAmountRole
     };
 
     int rowCount(const QModelIndex &parent) const;

@@ -270,6 +270,9 @@
      </item>
      <item>
       <layout class="QFormLayout" name="formLayoutCoinControl4">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
        <property name="horizontalSpacing">
         <number>10</number>
        </property>
@@ -405,7 +408,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>List mode</string>
+          <string>List Mode</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -421,7 +424,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Tree mode</string>
+          <string>Tree Mode</string>
          </property>
         </widget>
        </item>
@@ -516,7 +519,12 @@
 	 
 	 <column>
       <property name="text">
-       <string>Weight</string>  /** weight **/
+       <string>Days to Stake (est.)</string> /** stake time estimate **/
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Weight</string> /** weight **/
       </property>
      </column>
      <column>

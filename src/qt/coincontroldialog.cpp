@@ -8,6 +8,7 @@
 #include "optionsmodel.h"
 #include "coincontrol.h"
 #include "qcomboboxfiltercoins.h"
+#include "bitcoinrpc.h"
 
 #include <QApplication>
 #include <QCheckBox>
@@ -110,8 +111,9 @@ CoinControlDialog::CoinControlDialog(QWidget *parent) :
 
     ui->treeWidget->setColumnWidth(COLUMN_CHECKBOX, 45);
     ui->treeWidget->setColumnWidth(COLUMN_AMOUNT, 100);
-	ui->treeWidget->setColumnWidth(COLUMN_CONFIRMATIONS, 80);
+	ui->treeWidget->setColumnWidth(COLUMN_CONFIRMATIONS, 85);
 	ui->treeWidget->setColumnWidth(COLUMN_AGE, 55);
+	ui->treeWidget->setColumnWidth(COLUMN_TIMEESTIMATE, 110);
 	ui->treeWidget->setColumnWidth(COLUMN_WEIGHT, 75);
     ui->treeWidget->setColumnWidth(COLUMN_LABEL, 125);
     ui->treeWidget->setColumnWidth(COLUMN_ADDRESS, 275);
@@ -177,8 +179,8 @@ void CoinControlDialog::buttonSelectAllClicked()
         if (ui->treeWidget->topLevelItem(i)->checkState(COLUMN_CHECKBOX) != Qt::Unchecked)
         {
             state = Qt::Unchecked;
-            break;
         }
+		coinControl->UnSelectAll();
     }
     ui->treeWidget->setEnabled(false);
     for (int i = 0; i < ui->treeWidget->topLevelItemCount(); i++)
@@ -610,7 +612,13 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         int64_t nMinFee = txDummy.GetMinFee(1, GMF_SEND, nBytes);
         
         nPayFee = max(nFee, nMinFee);
-        
+
+        //nPayFee = nFee;
+		if(pwalletMain->fSplitBlock)
+		{
+			nPayFee = COIN * 200; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
+		}
+	        
         if (nPayAmount > 0)
         {
             nChange = nAmount - nPayFee - nPayAmount;
@@ -678,6 +686,11 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     l6->setStyleSheet((dPriority <= 576000) ? "color:red;" : "");         // Priority < "medium"
     l7->setStyleSheet((fLowOutput) ? "color:red;" : "");                    // Low Output = "yes"
     l8->setStyleSheet((nChange > 0 && nChange < CENT) ? "color:red;" : ""); // Change < 0.01BTC
+	
+    //l5->setProperty("error", (nBytes >= 10000) ? true : false);              // Bytes >= 10000
+    //l6->setProperty("error", (dPriority <= 576000) ? true : false);          // Priority < "medium"
+    //l7->setProperty("error", fLowOutput ? true : false);                     // Low Output = "yes"
+    //l8->setProperty("error", (nChange > 0 && nChange < CENT) ? true : false);// Change < 0.01BTC
         
     // tool tips
     l5->setToolTip(tr("This label turns red, if the transaction size is bigger than 10000 bytes.\n\n This means a fee of at least %1 per kb is required.\n\n Can vary +/- 1 Byte per input.").arg(BitcoinUnits::formatWithUnit(nDisplayUnit, CENT)));
@@ -744,18 +757,30 @@ void CoinControlDialog::updateView()
         double dPrioritySum = 0;
         int nChildren = 0;
         int nInputSum = 0;
-		uint64_t nTxWeight = 0, nTxWeightSum = 0;
+		uint64_t nTxWeight = 0;
+		uint64_t nDisplayWeight = 0;
+		uint64_t nTxWeightSum = 0;
 		GetLastBlockIndex(pindexBest, false);
 		int64_t nBestHeight = pindexBest->nHeight;
+		uint64_t nNetworkWeight = GetPoSKernelPS();
 	
         BOOST_FOREACH(const COutput& out, coins.second)
         {
-            int nInputSize = 148; // 180 if uncompressed public key
+           
+			int64_t nHeight = nBestHeight - out.nDepth;
+			CBlockIndex* pindex = FindBlockByHeight(nHeight);
+			
+			int nInputSize = 148; // 180 if uncompressed public key
             nSum += out.tx->vout[out.i].nValue;
             nChildren++;
 			
 			model->getStakeWeightFromValue(out.tx->GetTxTime(), out.tx->vout[out.i].nValue, nTxWeight);
-			nTxWeightSum += nTxWeight;
+			if ((GetTime() - pindex->nTime) < (60*60*24*7.7))
+				nDisplayWeight = 0;
+			else
+				nDisplayWeight = nTxWeight;
+			
+			nTxWeightSum += nDisplayWeight;
 			
             QTreeWidgetItem *itemOutput;
             if (treeMode)    itemOutput = new QTreeWidgetItem(itemWalletAddress);
@@ -798,12 +823,11 @@ void CoinControlDialog::updateView()
             }
 
             // amount
+			uint64_t nBlockSize = out.tx->vout[out.i].nValue / 100000000; //used in formulas below
             itemOutput->setText(COLUMN_AMOUNT, BitcoinUnits::format(nDisplayUnit, out.tx->vout[out.i].nValue));
             itemOutput->setText(COLUMN_AMOUNT_INT64, strPad(QString::number(out.tx->vout[out.i].nValue), 15, " ")); // padding so that sorting works correctly
 
             // date
-			int64_t nHeight = nBestHeight - out.nDepth;
-			CBlockIndex* pindex = FindBlockByHeight(nHeight);
 			int64_t nTime = pindex->nTime;
             itemOutput->setText(COLUMN_DATE, QDateTime::fromTime_t(nTime).toString("yy-MM-dd hh:mm"));
             
@@ -827,10 +851,27 @@ void CoinControlDialog::updateView()
 			itemOutput->setText(COLUMN_WEIGHT, strPad(QString::number(nTxWeight), 8, " "));
 
 			// Age
-			int64_t age = COIN * (GetTime() - nTime) / (1440 * 60);
+			uint64_t nAge = (GetTime() - nTime);
+			int64_t age = COIN * nAge / (1440 * 60);
 			itemOutput->setText(COLUMN_AGE, strPad(BitcoinUnits::formatAge(nDisplayUnit, age), 2, " "));
 			itemOutput->setText(COLUMN_AGE_INT64, strPad(QString::number(age), 15, " "));
-				
+
+			// Estimated Stake Time
+			uint64_t nMin = 1;
+			nBlockSize = qMax(nBlockSize, nMin);
+			uint64_t nTimeToMaturity = 0;
+			uint64_t nBlockWeight = qMax(nDisplayWeight, uint64_t(nBlockSize * 7)); // default to using weight at 7 days for calc
+			double dAge = nAge;
+			if (604800 - dAge >= 0 ) // 604800 seconds is 7 days
+				nTimeToMaturity = (604800 - nAge);
+			else
+				nTimeToMaturity = 0;
+			uint64_t nAccuracyAdjustment = 1; // this is a manual adjustment in an attempt to make staking estimate more accurate
+			uint64_t nEstimateTime = 120 * nNetworkWeight / nBlockWeight / nAccuracyAdjustment; // 120 seconds is block target
+			uint64_t nMax = 999 * COIN; // qmin cannot compar int64, so convert to uint64 prior
+			nEstimateTime = qMin((nEstimateTime + nTimeToMaturity) * COIN / (60*60*24), nMax); // multiply by coin to use built in formatting
+			itemOutput->setText(COLUMN_TIMEESTIMATE, strPad(BitcoinUnits::formatAge(nDisplayUnit, nEstimateTime), 15, " "));
+			
             // transaction hash
             uint256 txhash = out.tx->GetHash();
             itemOutput->setText(COLUMN_TXHASH, txhash.GetHex().c_str());
