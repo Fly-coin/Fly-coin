@@ -75,6 +75,7 @@ const string strMessageMagic = "ColossusCoin2 Signed Message:\n";
 int64_t nTransactionFee = MIN_TX_FEE;
 int64_t nReserveBalance = 0;
 int64_t nMinimumInputValue = 0;
+int64_t nCombineThreshold = DEF_COMBINE_AMOUNT;
 
 extern enum Checkpoints::CPMode CheckpointsMode;
 
@@ -515,7 +516,7 @@ int64_t CTransaction::GetMinFee(unsigned int nBlockSize, enum GetMinFee_mode mod
 {
     // Base fee is either MIN_TX_FEE or MIN_RELAY_TX_FEE
     int64_t nBaseFee = (mode == GMF_RELAY) ? MIN_RELAY_TX_FEE : MIN_TX_FEE;
-	
+
     unsigned int nNewBlockSize = nBlockSize + nBytes;
     int64_t nMinFee = (1 + (int64_t)nBytes / 1000) * nBaseFee;
 
@@ -973,8 +974,8 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     {
       nSubsidy = 1910000000 * COIN;
       return nSubsidy + nFees;
-    }
-    
+    }   
+
     else if (pindexBest->nHeight+1 <= LAST_POW_BLOCK)
     {
       nSubsidy = 1000 * COIN;

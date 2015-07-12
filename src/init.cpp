@@ -300,6 +300,7 @@ std::string HelpMessage()
         "  -upgradewallet         " + _("Upgrade wallet to latest format") + "\n" +
         "  -keypool=<n>           " + _("Set key pool size to <n> (default: 100)") + "\n" +
         "  -rescan                " + _("Rescan the block chain for missing wallet transactions") + "\n" +
+    	"  -combinethreshold=<n>  " + _("Set stake combine threshold after 28 days within range (default: 10000, max: 200000)") + "\n" + 
         "  -salvagewallet         " + _("Attempt to recover private keys from a corrupt wallet.dat") + "\n" +
         "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 2500, 0 = all)") + "\n" +
         "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n" +
@@ -571,6 +572,18 @@ bool AppInit2()
     }
 
     // ********************************************************* Step 6: network initialization
+	  
+        // Combine threshold  
+	    if (mapArgs.count("-combinethreshold"))   
+    {   
+       if (!ParseMoney(mapArgs["-combinethreshold"], nCombineThreshold))   
+           return InitError(strprintf(_("Invalid amount for -combinethreshold=<amount>: '%s'"), mapArgs["-combinethreshold"].c_str()));   
+       else {   
+           if (nCombineThreshold > MAX_COMBINE_AMOUNT)   
+               nCombineThreshold = MAX_COMBINE_AMOUNT;   
+       }   
+       printf("combinethreshold set to %"PRId64"\n",nCombineThreshold);   
+    }   
 
     int nSocksVersion = GetArg("-socks", 5);
 

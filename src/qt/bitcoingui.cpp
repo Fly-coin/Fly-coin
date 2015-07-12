@@ -85,24 +85,24 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     notificator(0),
     rpcConsole(0)
 {
-    setMinimumSize(850,600);
-            resize(850,600);
+    setMinimumSize(870,620);
+            resize(870,620);
     setWindowTitle(tr("ColossusCoin2") + " - " + tr("Wallet"));
 #ifndef Q_OS_MAC
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
     setWindowIcon(QIcon(":icons/bitcoin"));
 #else
-    setUnifiedTitleAndToolBarOnMac(true);
+    //setUnifiedTitleAndToolBarOnMac(true);
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
     // Accept D&D of URIs
     setAcceptDrops(true);
 
-	/* zeewolf: Hot swappable wallet themes */
+        /* zeewolf: Hot swappable wallet themes */
     // Discover themes
     listThemes(themesList);
     /* /zeewolf: Hot swappable wallet themes */
-	
+
     // Create actions for the toolbar, menu bar and tray/dock icon
     createActions();
 
@@ -117,9 +117,9 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 	
     // Create tabs
     overviewPage = new OverviewPage();
-	statisticsPage = new StatisticsPage(this);
+        statisticsPage = new StatisticsPage(this);
     chatWindow = new ChatWindow(this);
-	blockBrowser = new BlockBrowser(this);
+        blockBrowser = new BlockBrowser(this);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -137,9 +137,9 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     centralWidget = new QStackedWidget(this);
     centralWidget->addWidget(overviewPage);
-	centralWidget->addWidget(statisticsPage);
-	centralWidget->addWidget(chatWindow);
-	centralWidget->addWidget(blockBrowser);
+        centralWidget->addWidget(statisticsPage);
+        centralWidget->addWidget(chatWindow);
+        centralWidget->addWidget(blockBrowser);
     centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
@@ -251,8 +251,8 @@ void BitcoinGUI::createActions()
     overviewAction->setCheckable(true);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
-	
-	statisticsAction = new QAction(QIcon(":/icons/statistics"), tr("&Statistics"), this);
+
+        statisticsAction = new QAction(QIcon(":/icons/statistics"), tr("&Statistics"), this);
     statisticsAction->setToolTip(tr("View statistics"));
     statisticsAction->setCheckable(true);
     tabGroup->addAction(statisticsAction);
@@ -285,18 +285,18 @@ void BitcoinGUI::createActions()
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
-	
-	blockAction = new QAction(QIcon(":/icons/block"), tr("&Block Explorer"), this);
+
+        blockAction = new QAction(QIcon(":/icons/block"), tr("&Block Explorer"), this);
     blockAction->setToolTip(tr("Explore the BlockChain"));
     blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     blockAction->setCheckable(true);
     tabGroup->addAction(blockAction);
 
-	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
+        connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
-	connect(statisticsAction, SIGNAL(triggered()), this, SLOT(gotoStatisticsPage()));
-	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
+        connect(statisticsAction, SIGNAL(triggered()), this, SLOT(gotoStatisticsPage()));
+        connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -313,11 +313,11 @@ void BitcoinGUI::createActions()
     aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About ColossusCoin2"), this);
     aboutAction->setToolTip(tr("Show information about ColossusCoin2"));
     aboutAction->setMenuRole(QAction::AboutRole);
-	
-	charityAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Stake For Charity"), this);
+
+        charityAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Stake For Charity"), this);
     charityAction->setToolTip(tr("Enable Stake For Charity"));
     charityAction->setMenuRole(QAction::AboutRole);
-	
+
     aboutQtAction = new QAction(QIcon(":/trolltech/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
@@ -338,10 +338,10 @@ void BitcoinGUI::createActions()
     lockWalletToggleAction = new QAction(this);
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-	checkWalletAction = new QAction(QIcon(":/icons/transaction_confirmed"), tr("&Check Wallet..."), this);
-	checkWalletAction->setStatusTip(tr("Check wallet integrity and report findings"));
-	repairWalletAction = new QAction(QIcon(":/icons/options"), tr("&Repair Wallet..."), this);
-	repairWalletAction->setStatusTip(tr("Fix wallet integrity and remove orphans"));
+        checkWalletAction = new QAction(QIcon(":/icons/transaction_confirmed"), tr("&Check Wallet..."), this);
+        checkWalletAction->setStatusTip(tr("Check wallet integrity and report findings"));
+        repairWalletAction = new QAction(QIcon(":/icons/options"), tr("&Repair Wallet..."), this);
+        repairWalletAction->setStatusTip(tr("Fix wallet integrity and remove orphans"));
     exportAction = new QAction(QIcon(":/icons/export"), tr("&Export..."), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
@@ -349,21 +349,21 @@ void BitcoinGUI::createActions()
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
-	connect(charityAction, SIGNAL(triggered()), this, SLOT(charityClicked()));
+        connect(charityAction, SIGNAL(triggered()), this, SLOT(charityClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(encryptWalletAction, SIGNAL(triggered(bool)), this, SLOT(encryptWallet(bool)));
-	connect(checkWalletAction, SIGNAL(triggered()), this, SLOT(checkWallet()));
-	connect(repairWalletAction, SIGNAL(triggered()), this, SLOT(repairWallet()));
+        connect(checkWalletAction, SIGNAL(triggered()), this, SLOT(checkWallet()));
+        connect(repairWalletAction, SIGNAL(triggered()), this, SLOT(repairWallet()));
     connect(backupWalletAction, SIGNAL(triggered()), this, SLOT(backupWallet()));
     connect(changePassphraseAction, SIGNAL(triggered()), this, SLOT(changePassphrase()));
     connect(lockWalletToggleAction, SIGNAL(triggered()), this, SLOT(lockWalletToggle()));
     connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
     connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
 	connect(unlockWalletAction, SIGNAL(triggered()), this, SLOT(unlockWalletForMint()));
-	
-	/* zeewolf: Hot swappable wallet themes */
+
+        /* zeewolf: Hot swappable wallet themes */
     if (themesList.count()>0)
     {
         QSignalMapper* signalMapper = new QSignalMapper (this) ;
@@ -414,12 +414,12 @@ void BitcoinGUI::createMenuBar()
 	settings->addAction(lockWalletToggleAction);
 	settings->addAction(unlockWalletAction);
     settings->addAction(changePassphraseAction);
-	settings->addAction(checkWalletAction);
-	settings->addAction(repairWalletAction);
-	settings->addAction(charityAction);
+        settings->addAction(checkWalletAction);
+        settings->addAction(repairWalletAction);
+        settings->addAction(charityAction);
     settings->addSeparator();
     settings->addAction(optionsAction);
-	
+
     /* zeewolf: Hot swappable wallet themes */
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
@@ -432,20 +432,31 @@ void BitcoinGUI::createMenuBar()
 void BitcoinGUI::createToolBars()
 {
     QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+    toolbar->setObjectName("toolbar");
+    addToolBar(Qt::LeftToolBarArea,toolbar);
+    toolbar->setOrientation(Qt::Vertical);
+    toolbar->setMovable( false );
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->addAction(overviewAction);
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
-	toolbar->addAction(statisticsAction);
-	toolbar->addAction(blockAction);
-	toolbar->addAction(chatAction);
+        toolbar->addAction(statisticsAction);
+        toolbar->addAction(blockAction);
+    toolbar->addAction(chatAction);
+	toolbar->addAction(exportAction);
+#ifdef Q_OS_MAC
+    toolbar->setMovable(false);
+#endif
 
-    QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
-    toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolbar2->addAction(lockWalletToggleAction);
-    toolbar2->addAction(exportAction);
+  //  QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
+  //  toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+   // toolbar2->addAction(lockWalletToggleAction);
+ //   toolbar2->addAction(exportAction);
+#ifdef Q_OS_MAC
+ //   toolbar2->setMovable(false);
+#endif
 }
 
 void BitcoinGUI::setClientModel(ClientModel *clientModel)
@@ -505,9 +516,9 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
         receiveCoinsPage->setModel(walletModel->getAddressTableModel());
         sendCoinsPage->setModel(walletModel);
         signVerifyMessageDialog->setModel(walletModel);
-		statisticsPage->setModel(clientModel);
-		chatWindow->setModel(clientModel);
-		blockBrowser->setModel(clientModel);
+                statisticsPage->setModel(clientModel);
+                chatWindow->setModel(clientModel);
+                blockBrowser->setModel(clientModel);
 
         setEncryptionStatus(walletModel->getEncryptionStatus());
         connect(walletModel, SIGNAL(encryptionStatusChanged(int)), this, SLOT(setEncryptionStatus(int)));
@@ -1027,17 +1038,17 @@ void BitcoinGUI::checkWallet()
 
     if (nMismatchSpent == 0 && nOrphansFound == 0)
         notificator->notify(Notificator::Warning,
-		tr("Check Wallet Information"),
+                tr("Check Wallet Information"),
                 tr("Wallet passed integrity test!\n"
                    "Nothing found to fix."));
   else
-		notificator->notify(Notificator::Warning, //tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters."));
-			tr("Check Wallet Information"), tr("Wallet failed integrity test!\n\n"
+                notificator->notify(Notificator::Warning, //tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters."));
+                        tr("Check Wallet Information"), tr("Wallet failed integrity test!\n\n"
                   "Mismatched coin(s) found: %1.\n"
                   "Amount in question: %2.\n"
                   "Orphans found: %3.\n\n"
                   "Please backup wallet and run repair wallet.\n")
-						.arg(nMismatchSpent)
+                                                .arg(nMismatchSpent)
                         .arg(BitcoinUnits::formatWithUnit(walletModel->getOptionsModel()->getDisplayUnit(), nBalanceInQuestion,true))
                         .arg(nOrphansFound));
 }
@@ -1056,12 +1067,12 @@ void BitcoinGUI::repairWallet()
 
     if (nMismatchSpent == 0 && nOrphansFound == 0)
        notificator->notify(Notificator::Warning,
-	   tr("Repair Wallet Information"),
+           tr("Repair Wallet Information"),
                tr("Wallet passed integrity test!\n"
                   "Nothing found to fix."));
     else
-		notificator->notify(Notificator::Warning,
-		tr("Repair Wallet Information"),
+                notificator->notify(Notificator::Warning,
+                tr("Repair Wallet Information"),
                tr("Wallet failed integrity test and has been repaired!\n"
                   "Mismatched coin(s) found: %1\n"
                   "Amount affected by repair: %2\n"
@@ -1369,6 +1380,8 @@ void BitcoinGUI::listThemes(QStringList& themes)
     } else if (currentDir.cd("src/qt/res/themes")) {
         // got it
     } else if (currentDir.cd("../src/qt/res/themes")) {
+        // got it
+    } else if (currentDir.cd("../../../themes")) {
         // got it
     } else {
         // themes not found :(

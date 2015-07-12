@@ -83,6 +83,7 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("balance",       ValueFromAmount(pwalletMain->GetBalance())));
     obj.push_back(Pair("newmint",       ValueFromAmount(pwalletMain->GetNewMint())));
     obj.push_back(Pair("stake",         ValueFromAmount(pwalletMain->GetStake())));
+	obj.push_back(Pair("combine threshold",   ValueFromAmount(nCombineThreshold)));
     obj.push_back(Pair("blocks",        (int)nBestHeight));
     obj.push_back(Pair("timeoffset",    (boost::int64_t)GetTimeOffset()));
     obj.push_back(Pair("moneysupply",   ValueFromAmount(pindexBest->nMoneySupply)));
@@ -2053,7 +2054,7 @@ Value getstaketx(const Array& params, bool fHelp)
 				uint64_t nGeneratedAmount = max (nGeneratedMature, nGeneratedImmature);
 				double nGeneratedAmount2 = max (nGeneratedMature, nGeneratedImmature); //uint64_t math not working
 				double percentReward = nFee / (nGeneratedAmount2 - nFee);
-				double dWeight = ((nGeneratedAmount - nFee)/ COIN) * (dDaysToStake - 7.7);
+				double dWeight = ((nGeneratedAmount - nFee)/ COIN) * (dDaysToStake - 7);
 				
 				entry.push_back(Pair("Stake TX Time", nTime));
 				entry.push_back(Pair("Previous Time", nPrevTime));
@@ -2083,7 +2084,7 @@ double getWeight()
 		uint64_t nWeight = 0;
 		pwalletMain->GetStakeWeightFromValue(out.tx->GetTxTime(), out.tx->vout[out.i].nValue, nWeight);
 		double dAge = double(GetTime() - pindex->nTime) / (60*60*24);
-		if(dAge < 7.7)
+		if(dAge < 7)
 			nWeight = 0;
 		nWeightSum += nWeight;
 	}

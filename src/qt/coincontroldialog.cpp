@@ -775,7 +775,7 @@ void CoinControlDialog::updateView()
             nChildren++;
 			
 			model->getStakeWeightFromValue(out.tx->GetTxTime(), out.tx->vout[out.i].nValue, nTxWeight);
-			if ((GetTime() - pindex->nTime) < (60*60*24*7.7))
+			if ((GetTime() - pindex->nTime) < (60*60*24*7))
 				nDisplayWeight = 0;
 			else
 				nDisplayWeight = nTxWeight;
@@ -852,7 +852,7 @@ void CoinControlDialog::updateView()
 
 			// Age
 			uint64_t nAge = (GetTime() - nTime);
-			int64_t age = COIN * nAge / (1440 * 60);
+			int64_t age = COIN * nAge / (720 * 60);
 			itemOutput->setText(COLUMN_AGE, strPad(BitcoinUnits::formatAge(nDisplayUnit, age), 2, " "));
 			itemOutput->setText(COLUMN_AGE_INT64, strPad(QString::number(age), 15, " "));
 

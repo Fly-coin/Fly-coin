@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/icons">
         <file alias="bitcoin">res/icons/ColossusCoin2.png</file>
-        <file alias="coinbg">res/icons/ColossusCoin2-256.png</file>
+        <file alias="coinbg">res/icons/ColossusCoin2256.png</file>
+        <file alias="yuno">res/icons/ColossusCoin2-Yuno.png</file>
         <file alias="address-book">res/icons/address-book.png</file>
         <file alias="quit">res/icons/quit.png</file>
         <file alias="send">res/icons/send.png</file>
@@ -49,6 +50,9 @@
         <file alias="face">res/icons/face.png</file>
         <file alias="forums">res/icons/forums.png</file>
         <file alias="youtube">res/icons/youtube.png</file>
+        <file alias="ccex">res/icons/ccex.png</file>
+        <file alias="cryptopia">res/icons/cryptopia.png</file>
+        <file alias="yobit">res/icons/yobit.png</file>
         <file alias="social">res/icons/social.png</file>
 		<file alias="block">res/icons/block.png</file>
 		<file alias="statistics">res/icons/stats.png</file>
@@ -59,6 +63,7 @@
     </qresource>
     <qresource prefix="/movies">
         <file alias="update_spinner">res/movies/update_spinner.mng</file>
+        <file alias="mining">res/movies/mining.mng</file>
     </qresource>
     <qresource prefix="/translations">
         <file alias="ar">locale/bitcoin_ar.qm</file>

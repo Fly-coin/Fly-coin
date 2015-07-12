@@ -46,6 +46,10 @@ static const unsigned int BLOCK_SWITCH_TIME = 1435708800; // 07/01/2015 @ 12:00a
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
+/** Combine Threshold Default */   
+static const int64_t DEF_COMBINE_AMOUNT = 10000 * COIN; 
+/** Combine Threshold Max */  
+static const int64_t MAX_COMBINE_AMOUNT = 200000 * COIN;
 
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
@@ -93,6 +97,7 @@ extern std::map<unsigned int, unsigned int> mapHashedBlocks; // for liteStake
 
 // Settings
 extern int64_t nTransactionFee;
+extern int64_t nCombineThreshold; 
 extern int64_t nReserveBalance;
 extern int64_t nMinimumInputValue;
 extern bool fUseFastIndex;
