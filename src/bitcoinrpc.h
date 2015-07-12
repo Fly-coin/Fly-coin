@@ -218,6 +218,7 @@ extern json_spirit::Value ccsend(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getweight(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getconfs(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value multisend(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value hashsettings(const json_spirit::Array& params, bool fHelp);
 
 extern json_spirit::Value getrawtransaction(const json_spirit::Array& params, bool fHelp); // in rcprawtransaction.cpp
 extern json_spirit::Value listunspent(const json_spirit::Array& params, bool fHelp);

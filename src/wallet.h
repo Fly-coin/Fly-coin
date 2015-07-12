@@ -97,6 +97,7 @@ public:
 	bool fCombine;
 	bool fSplitBlock;
 	unsigned int nHashDrift;
+	unsigned int nHashInterval;
 	
     std::set<int64_t> setKeyPool;
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
@@ -131,7 +132,8 @@ public:
 		strBestAddress = "";
 		fCombine = false;
 		fSplitBlock =  false;
-		nHashDrift = 60;
+		nHashDrift = 45;
+		nHashInterval = 22;
 		
 		//MultiSend
 		vMultiSend.clear();
@@ -159,7 +161,8 @@ public:
 		strBestAddress = "";
 		fCombine = false;
 		fSplitBlock =  false;
-		nHashDrift = 60;
+		nHashDrift = 45;
+		nHashInterval = 22;
 		
 		//MultiSend
 		vMultiSend.clear();

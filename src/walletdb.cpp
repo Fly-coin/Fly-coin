@@ -445,6 +445,18 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
 		   ssValue >> strDisabledAddress;
 		   pwallet->vDisabledAddresses.push_back(strDisabledAddress);
 		}
+		else if(strType == "hashdrift")//presstab HyperStake  
+		{  
+		   unsigned int nHashDrift;  
+		   ssValue >> nHashDrift;  
+		   pwallet->nHashDrift = nHashDrift;  
+		}
+		else if(strType == "hashinterval")//presstab HyperStake  
+		{  
+		   unsigned int nHashInterval;  
+		   ssValue >> nHashInterval;  
+		   pwallet->nHashInterval = nHashInterval;  
+		} 
     } catch (...)
     {
         return false;
