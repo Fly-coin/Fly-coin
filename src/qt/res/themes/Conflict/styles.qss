@@ -1,7 +1,7 @@
 /**
- * Black wood Qt Theme - v1.0
+ * Conflict Qt Theme - v1.0
  * Created: 22/2/2015
- * Author: tepelstreeltje (Based on HyperBlue by Zeewolf) 
+ * Author: dcgirl (using examples by tepelstreeltje and Zeewolf) 
  */
 
 /**
@@ -11,7 +11,7 @@
  */ 
  
 /** [VARS]
-	$text-color = #969675
+	$text-color = #e7e7e7
 	$main-color-l = #142930
 	$main-color-xl = #969675
 	$main-color-d = #342D7E
@@ -21,11 +21,12 @@
 	$main-color-transparent-2 = rgba(72,99,160,200)
 	$shade-transparent-1 = rgba(0,0,0,100)
 	$shade-transparent-2 = rgba(0,0,0,50)
-	$main-color = #25383C
+	$main-color = rgba(255,255,255,50)
+	$input-color = rgba(0,0,0,150)
 	$text-grey-d = #0c191d
-	$accent-color = #969675
+	$accent-color = #cc0000
 	$brightest-color = #fff
-	$input-border-color = #0c191d
+	$input-border-color = #cc0000
 	$header-font = "Verdana, Geneva, sans-serif"
 	$error-color = #FF0000
 	$success-color = #00FF00
@@ -35,13 +36,21 @@
 
 /* Overview */
  QMainWindow {
-	border-image: url($themes-dir/Blackwood/wood.jpg);
+	border-image: url($themes-dir/Conflict/conflictmain.png);
 }
 
 /* Dialogs */
 QDialog, QTableView{
-	border-image: url($themes-dir/Blackwood/black.jpg);
+	border-image: url($themes-dir/Conflict/graytrans.png);
      font-size: 14px;
+}
+#CoinControlDialog, #AskPassphraseDialog, #AboutDialog, #RPCConsole{
+	border-image: url($themes-dir/Conflict/blacktrans.png);
+     font-size: 14px;
+}
+/* Coin Image */
+#label_2 {
+	qproperty-pixmap: url($themes-dir/Conflict/ColossusCoin128.png);
 }
 /* Group Box */
 QGroupBox {
@@ -59,11 +68,6 @@ QWidget{
 QFrame {	
 	/* too general - do not style */
 }
-/* Coin Image */
-#label_2 {
-	qproperty-pixmap: url($themes-dir/Blackwood/ColossusCoin256.png);
-}
-
 
 /* Bottom status bar */
 QStatusBar {
@@ -98,17 +102,12 @@ QValidatedLineEdit[error="true"], QDoubleSpinBox[error="true"] {
 
 /* Balance frame */
 QFrame#frame {
-	background-color: $shade-transparent-1;
-	border-bottom: 3px solid $shade-transparent-2;
-	border-right: 3px solid $shade-transparent-2;
+	border-image: url($themes-dir/Conflict/blacktrans.png);
 }
 
 /* Recent transactions frame */
 QFrame#frame_2 {
-	background-color: $shade-transparent-1;
-	border: none;
-	border-bottom: 3px solid $shade-transparent-2;
-	border-right: 3px solid $shade-transparent-2;
+	border-image: url($themes-dir/Conflict/blacktrans.png);
 }
 #listTransactions{
 color: $accent-color;
@@ -140,7 +139,7 @@ QFrame#frameCoinControl {
 
 /* Balance value */
 #frame #labelBalance {
-	color: $text-color;
+	color: $accent-color;
 	font-size: 14px;
      }
     
@@ -149,14 +148,18 @@ QFrame#frameCoinControl {
 QFrame#frame #label_5 {
 	font-size: 15px;
 	font-family: $header-font;
-	color: $accent-color;
+	color: #ffffff;
+	padding: 4px 50px 10px 5px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #C30000, stop:1 #600000);
 }
 
 /* Recent transactions label */
 QFrame#frame_2 #label_4 {
 	font-size: 15px;
 	font-family: $header-font;
-	color: $accent-color;
+	color: #ffffff;
+	padding: 4px 50px 10px 5px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #C30000, stop:1 #600000);
 }
 
 /* ScrollArea */
@@ -187,7 +190,7 @@ QScrollArea {
 /* Text edit fields */
 QPlainTextEdit, QLineEdit {
 	padding: 4px;
-	background-color: $main-color;
+	background-color: $input-color;
 	color: $brightest-color;
 	border: 1px solid $input-border-color;
 }
@@ -204,7 +207,7 @@ QPlainTextEdit:disabled, QLineEdit:disabled {
 /* Text edit - debug window */
 QTextEdit {
 	padding: 4px;
-	background-color: transparent;
+	background-color: $input-color;
 	color: $brightest-color;
 	border: none;
 }
@@ -216,7 +219,7 @@ QTextEdit:disabled {
 
 /* Combo box */
 QComboBox {
-	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 $main-color-xl, stop:1 $main-color);
+	background: $input-color;
 	color: $text-color;
 	border: 1px solid $input-border-color;
 	border-radius: 3px; /* same radius as the QComboBox */
@@ -225,7 +228,7 @@ QComboBox {
 }
 
 QComboBox:on {
-	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 $main-color, stop:1 $main-color-xl);
+	background: $input-color;
 	border-color: $accent-color;
 }
 
@@ -240,16 +243,16 @@ QComboBox::drop-down:disabled {
 
 QComboBox::down-arrow {
 	/* Custom dropdown symbol */
-	image: url($themes-dir/Blackwood/down-arrow.png);
+	image: url($themes-dir/Conflict/down-arrow.png);
 }
 
 QComboBox::down-arrow:disabled {
-	image: url($themes-dir/Blackwood/down-arrow-disabled.png);
+	image: url($themes-dir/Conflict/down-arrow-disabled.png);
 }
 
 QComboBox::down-arrow:on {
 	/* Custom dropdown symbol */
-	image: url($themes-dir/Blackwood/up-arrow.png);
+	image: url($themes-dir/Conflict/up-arrow.png);
 }
 
 QComboBox::drop-down {
@@ -265,8 +268,8 @@ QComboBox QAbstractItemView {
 
 QComboBox QListView {
 	border: none;
-	selection-color: $main-color;
-	selection-background-color: $text-color;
+	selection-color: #ffffff;
+	selection-background-color: #000000;
 }
 
 /* Up&down spin box */
@@ -287,11 +290,11 @@ QDateTimeEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled {
 }
 
 QDateTimeEdit::down-arrow {
-	image: url($themes-dir/Blackwood/calendar.png);
+	image: url($themes-dir/Conflict/calendar.png);
 }
 
 QDateTimeEdit::down-arrow:disabled {
-	image: url($themes-dir/Blackwood/calendar-disabled.png);
+	image: url($themes-dir/Conflict/calendar-disabled.png);
 }
 
 QDateTimeEdit::drop-down {
@@ -299,11 +302,11 @@ QDateTimeEdit::drop-down {
 }
 
 QDoubleSpinBox::down-button {
-	image: url($themes-dir/Blackwood/down-arrow.png);
+	image: url($themes-dir/Conflict/down-arrow.png);
 }
 
 QDoubleSpinBox::up-button {
-	image: url($themes-dir/Blackwood/up-arrow.png);
+	image: url($themes-dir/Conflict/up-arrow.png);
 }
 
 /* Button */
@@ -324,14 +327,15 @@ QPushButton[text="OK"] {
 }
 
 QToolButton {
-	background-color: qlineargradient(x1: 0, y1: 0, x2: 0.5, y2: 1, stop: 0 $text-color, stop: 0.5 $main-color-xd);
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0.5, y2: 1, stop: 0 $shade-transparent-1, stop: 0.5 $shade-transparent-2);
 	color: $text-color;
 	padding: 4px;
 	border: 2px solid $text-color;
 	outline: none;
 	font-family: $header-font;
-	font-size: 12px;
+	font-size: 11px;
 	border-radius: 3px;
+	qproperty-toolButtonStyle: ToolButtonTextOnly;
 }
 
 QPushButton:hover, QToolButton:hover {
@@ -342,7 +346,7 @@ QPushButton:hover, QToolButton:hover {
 
 QPushButton:disabled, QToolButton:disabled {
 	background-color: $main-color-xd;
-	border: 2px solid $input-border-color;
+	border: 2px solid #555555;
 	color: $main-color-xl;
 }
 
@@ -354,48 +358,42 @@ QPushButton:pressed, QToolButton:pressed {
 
 /* Toolbar */
 QToolBar {
-	background: $main-color-l;
+	background: transparent;
 	spacing: 0px; /* spacing between items in the tool bar */
-	border-bottom: 3px solid $main-color-xd;
-	border-top: 1px solid $main-color-xd;
+	border-bottom: 0px solid $main-color-xd;
+	border-top: 0px solid $main-color-xd;
 	min-height: 40px;
-	padding: 0px;
-	background-color: transparent;
+	padding: 1px;
 }
 
 QToolBar::handle {
 	padding: 0px;
-	background-image: url($themes-dir/Blackwood/toolbar-handle.png);
-	background-repeat: repeat-y;
-	background-position: top center;
+	background: transparent;
 }
 
 /* Toolbar buttons */
 QToolBar QToolButton { /* all types of tool button */
-	border-radius: 0px;
-	background-color: transparent;
-	color: $text-color;
-	padding: 3px 1px 5px 2px;
+	background-color: qlineargradient(x1: 0, y1: 0, x2: 0.5, y2: 1, stop: 0 $shade-transparent-1, stop: 0.5 $shade-transparent-2);
+	color: #777777;
+	padding: 4px;
+	border: 1px solid #555;
+	box-shadow: 10px 10px 5px $accent-color;
+	padding: 3px 0px 5px 2px;
 	font-family: $header-font;
 	font-size: 14px;
-	margin-top: 4px;
-	border: none;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	margin: 4px;
+	border-radius: 6px;
 }
 
 QToolBar QToolButton:hover {
 	color: $brightest-color;
-	background-color: transparent;
+	background-color: rgba(102,0,0);
 	border: none;
 	
 }
 
 QToolBar QToolButton:checked {
-	background-color: $main-color-xd;
 	color: $accent-color;
-	border-bottom: 3px solid $accent-color;
-	padding: 5px 1px 5px 2px;
 }
 
 QToolBar QToolButton:disabled {
@@ -406,7 +404,7 @@ QToolBar QToolButton:disabled {
 
 /* Tool buttons - buttons with icons */
 #qt_toolbar_ext_button {
-	qproperty-icon: url($themes-dir/Blackwood/arrow-down.png);
+	qproperty-icon: url($themes-dir/Conflict/arrow-down.png);
 	border-radius: 0px;
 	margin-top: 0px;
 	color: #fff;
@@ -419,8 +417,13 @@ QToolButton#addressBookButton_VM, QToolButton#copySignatureButton_SM, QToolButto
 	max-width: 24px;
 	padding: 2px;
 	margin-left: 4px;
+	background: transparent;
+	qproperty-toolButtonStyle: ToolButtonIconOnly;
 }
 
+QToolButton#addressBookButton_VM {
+	qproperty-icon: url($themes-dir/Conflict/arrow-down.png);
+}	
 /* Progress bar */
 QProgressBar {
 	border: 1px solid rgba(136,193,208,80);
@@ -552,35 +555,35 @@ QCheckBox::indicator {
 }
 
 QCheckBox::indicator:unchecked {
-	image: url($themes-dir/Blackwood/cb.png);
+	image: url($themes-dir/Conflict/cb.png);
 }
 
 QCheckBox::indicator:unchecked:hover {
-	image: url($themes-dir/Blackwood/cb-hover.png);
+	image: url($themes-dir/Conflict/cb-hover.png);
 }
 
 QCheckBox::indicator:unchecked:pressed {
-	/*image: url($themes-dir/Blackwood/checkbox_unchecked_pressed.png);*/
+	/*image: url($themes-dir/Conflict/checkbox_unchecked_pressed.png);*/
 }
 
 QCheckBox::indicator:checked {
-	image: url($themes-dir/Blackwood/cb-checked.png);
+	image: url($themes-dir/Conflict/cb-checked.png);
 }
 
 QCheckBox::indicator:checked:hover {
-	image: url($themes-dir/Blackwood/cb-checked-hover.png);
+	image: url($themes-dir/Conflict/cb-checked-hover.png);
 }
 
 QCheckBox::indicator:checked:pressed {
-	/*image: url($themes-dir/Blackwood/checkbox_checked_pressed.png);*/
+	/*image: url($themes-dir/Conflict/checkbox_checked_pressed.png);*/
 }
 
 QCheckBox::indicator:indeterminate:hover {
-	/*image: url($themes-dir/Blackwood/checkbox_indeterminate_hover.png);*/
+	/*image: url($themes-dir/Conflict/checkbox_indeterminate_hover.png);*/
 }
 
 QCheckBox::indicator:indeterminate:pressed {
-	/*image: url($themes-dir/Blackwood/checkbox_indeterminate_pressed.png);*/
+	/*image: url($themes-dir/Conflict/checkbox_indeterminate_pressed.png);*/
 }
 
 /* Radio button */
@@ -594,27 +597,27 @@ QRadioButton::indicator {
 }
 
 QRadioButton::indicator::unchecked {
-	image: url($themes-dir/Blackwood/r.png);
+	image: url($themes-dir/Conflict/r.png);
 }
 
 QRadioButton::indicator:unchecked:hover {
-	image: url($themes-dir/Blackwood/r-hover.png);
+	image: url($themes-dir/Conflict/r-hover.png);
 }
 
 QRadioButton::indicator:unchecked:pressed {
-	/*image: url($themes-dir/Blackwood/rpressed.png);*/
+	/*image: url($themes-dir/Conflict/rpressed.png);*/
 }
 
 QRadioButton::indicator::checked {
-	image: url($themes-dir/Blackwood/r-checked.png);
+	image: url($themes-dir/Conflict/r-checked.png);
 }
 
 QRadioButton::indicator:checked:hover {
-	image: url($themes-dir/Blackwood/r-checked-hover.png);
+	image: url($themes-dir/Conflict/r-checked-hover.png);
 }
 
 QRadioButton::indicator:checked:pressed {
-	/*image: url($themes-dir/Blackwood/radiobutton_checked_pressed.png);*/
+	/*image: url($themes-dir/Conflict/radiobutton_checked_pressed.png);*/
 }
 
 /* Tabs */
@@ -706,7 +709,7 @@ QCalendarWidget QAbstractItemView:disabled { color: $main-color-xd }
 
 /* Window resize grip */
 QSizeGrip {
-	image: url($themes-dir/Blackwood/sizegrip.png);
+	image: url($themes-dir/Conflict/sizegrip.png);
 	width: 16px;
 	height: 16px;
 }
@@ -728,4 +731,10 @@ QBalloonTip QPushButton {
 QBalloonTip QPushButton:hover {
 	border: none;  
 	background-color: $accent-color;
+}
+
+
+/* Headings in Statistics, BlockBrowser, Chatwindow */
+QStatisticsPage {
+	background:black;
 }

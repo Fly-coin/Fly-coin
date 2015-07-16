@@ -21,6 +21,10 @@ QMainWindow, QDialog{
 	background:rgba(255,255,255,1);
 	border:none;
 }
+/* Coin Image */
+#label_2 {
+	qproperty-pixmap: url($themes-dir/Bluish-White/ColossusCoin256.png);
+}
 /* QFrames, QLabel*/
 QFrame {
 	border:none;
