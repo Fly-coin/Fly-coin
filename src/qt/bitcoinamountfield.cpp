@@ -75,9 +75,14 @@ bool BitcoinAmountField::validate()
 void BitcoinAmountField::setValid(bool valid)
 {
     if (valid)
-        amount->setStyleSheet("");
-    else
-        amount->setStyleSheet(STYLE_INVALID);
+    {
+        setProperty("error", false);
+        style()->polish(this);
+    }
+    else {
+        setProperty("error", true);
+        style()->polish(this);
+    }
 }
 
 QString BitcoinAmountField::text() const

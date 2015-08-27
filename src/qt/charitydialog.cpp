@@ -1,101 +1,208 @@
 #include "charitydialog.h"
 #include "ui_charitydialog.h"
 
-#include "clientmodel.h"
-#include "notificator.h"
-#include "version.h"
-
-#include "wallet.h"
-#include "walletdb.h"
-#include "main.h"
+#include "walletmodel.h"
+#include "base58.h"
+#include "addressbookpage.h"
 #include "init.h"
 
 #include <QMessageBox>
+#include <QLineEdit>
 
-charityDialog::charityDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::charityDialog)
+#include <boost/lexical_cast.hpp>
+
+using namespace std;
+using namespace boost;
+
+StakeForCharityDialog::StakeForCharityDialog(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::StakeForCharityDialog),
+	 model(0)
 {
     ui->setupUi(this);
 }
 
-charityDialog::~charityDialog()
+StakeForCharityDialog::~StakeForCharityDialog()
 {
     delete ui;
 }
 
-void charityDialog::setModel(ClientModel *model)
+void StakeForCharityDialog::setModel(WalletModel *model)
 {
-
+	this->model = model;
 }
 
-void charityDialog::on_buttonBox_accepted()
+void StakeForCharityDialog::setAddress(const QString &address)
 {
-    QMessageBox msgBox;
-    CBitcoinAddress address = ui->charityAddressEdit->text().toStdString();
-    QString str = ui->charityPercentEdit->text();
-    bool fIntConversion;
-    unsigned int nCharityPercent = str.toInt(&fIntConversion, 10);
-
-
-                   if (!address.IsValid())
-                   {
-                       msgBox.setText("Invalid ColossusCoin2 address");
-                       msgBox.exec();
-                       return;
-                   }
-                   if (nCharityPercent < 1)
-                   {
-                        msgBox.setText("Invalid parameter, expected valid percentage");
-                        msgBox.exec();
-                        return;
-                   }
-                   if (pwalletMain->IsLocked())
-                   {
-                       msgBox.setText("Error: Please enter the wallet passphrase with walletpassphrase first.");
-                       msgBox.exec();
-                       return;
-                   }
-
-                   //Turn off if we set to zero.
-                   //Future: After we allow multiple addresses, only turn of this address
-                   if(nCharityPercent == 0)
-                   {
-                       pwalletMain->fStakeForCharity = false;
-                       pwalletMain->StakeForCharityAddress = "";
-                       pwalletMain->nStakeForCharityPercent = 0;
-
-                       msgBox.setText("0 Percent Selected, void");
-                       msgBox.exec();
-                       return;
-                   }
-
-
-                   //For now max percentage is 50.
-                   if (nCharityPercent > 50 )
-                      nCharityPercent = 50;
-
-                   pwalletMain->StakeForCharityAddress = address;
-                   pwalletMain->nStakeForCharityPercent = nCharityPercent;
-                   pwalletMain->fStakeForCharity = true;
-
-                   msgBox.setText("Stake For Charity Set");
-                   msgBox.exec();
+	setAddress(address, ui->charityAddressEdit);
 }
 
-void charityDialog::on_buttonBox_rejected()
+void StakeForCharityDialog::setAddress(const QString &address, QLineEdit *addrEdit)
 {
-    close();
+	addrEdit->setText(address);
+	addrEdit->setFocus();
 }
 
-void charityDialog::on_pushButton_clicked()
+void StakeForCharityDialog::on_addressBookButton_clicked()
 {
-    QMessageBox msgBox;
-    pwalletMain->fStakeForCharity = false;
-    pwalletMain->StakeForCharityAddress = "";
-    pwalletMain->nStakeForCharityPercent = 0;
-
-    msgBox.setText("Stake For Charity Disabled");
-    msgBox.exec();
-
+    if (model && model->getAddressTableModel())
+    {
+        AddressBookPage dlg(AddressBookPage::ForSending, AddressBookPage::SendingTab, this);
+        dlg.setModel(model->getAddressTableModel());
+        if (dlg.exec())
+			setAddress(dlg.getReturnValue(), ui->charityAddressEdit);
+    }
 }
+
+void StakeForCharityDialog::on_viewButton_clicked()
+{
+	std::pair<std::string, int> pMultiSend;
+	std::string strMultiSendPrint = "";
+	if(pwalletMain->fMultiSend)
+		strMultiSendPrint += "MultiSend Active\n";
+	else
+		strMultiSendPrint += "MultiSend Not Active\n";
+	
+	for(int i = 0; i < (int)pwalletMain->vMultiSend.size(); i++)
+	{
+		pMultiSend = pwalletMain->vMultiSend[i];
+		strMultiSendPrint += pMultiSend.first.c_str();
+		strMultiSendPrint += " - ";
+		strMultiSendPrint += boost::lexical_cast<string>(pMultiSend.second); 
+		strMultiSendPrint += "% \n";
+	}
+
+	ui->message->setProperty("status", "ok");
+    ui->message->style()->polish(ui->message);
+    ui->message->setText(QString(strMultiSendPrint.c_str()));
+    return;
+}
+
+
+void StakeForCharityDialog::on_addButton_clicked()
+{
+    bool fValidConversion = false;
+
+    std::string strAddress = ui->charityAddressEdit->text().toStdString();
+    if (!CBitcoinAddress(strAddress).IsValid())
+    {
+        ui->message->setProperty("status", "error");
+        ui->message->style()->polish(ui->message);
+        ui->message->setText(tr("The entered address:\n") + ui->charityAddressEdit->text() + tr(" is invalid.\nPlease check the address and try again."));
+        ui->charityAddressEdit->setFocus();
+        return;
+    }
+
+	
+    int nCharityPercent = ui->charityPercentEdit->text().toInt(&fValidConversion, 10);
+	int nSumMultiSend = 0;
+	for(int i = 0; i < (int)pwalletMain->vMultiSend.size(); i++)
+		nSumMultiSend += pwalletMain->vMultiSend[i].second;
+
+	if(nSumMultiSend + nCharityPercent > 100)
+	{
+		ui->message->setProperty("status", "error");
+        ui->message->style()->polish(ui->message);
+        ui->message->setText(tr("The total amount of your MultiSend vector is over 100% of your stake reward\n"));
+        ui->charityAddressEdit->setFocus();
+        return;
+	}
+	if (!fValidConversion || nCharityPercent > 100 || nCharityPercent <= 0)
+    {
+        ui->message->setProperty("status", "error");
+        ui->message->style()->polish(ui->message);
+        ui->message->setText(tr("Please Enter 1 - 100 for percent."));
+        ui->charityPercentEdit->setFocus();
+        return;
+    }
+
+	std::pair<std::string, int> pMultiSend;
+	pMultiSend.first = strAddress;
+	pMultiSend.second = nCharityPercent;
+	pwalletMain->vMultiSend.push_back(pMultiSend);
+	
+    ui->message->setProperty("status", "ok");
+    ui->message->style()->polish(ui->message);
+	
+	std::string strMultiSendPrint = "";
+	for(int i = 0; i < (int)pwalletMain->vMultiSend.size(); i++)
+	{
+		pMultiSend = pwalletMain->vMultiSend[i];
+		strMultiSendPrint += pMultiSend.first.c_str();
+		strMultiSendPrint += " - ";
+		strMultiSendPrint += boost::lexical_cast<string>(pMultiSend.second); 
+		strMultiSendPrint += "% \n";
+	}
+	CWalletDB walletdb(pwalletMain->strWalletFile);
+	walletdb.WriteMultiSend(pwalletMain->vMultiSend);
+    ui->message->setText(tr("MultiSend Vector\n") + QString(strMultiSendPrint.c_str()));
+    return;
+}
+
+void StakeForCharityDialog::on_deleteButton_clicked()
+{
+    std::vector<std::pair<std::string, int> > vMultiSendTemp = pwalletMain->vMultiSend;
+	std::string strAddress = ui->charityAddressEdit->text().toStdString();
+	bool fRemoved = false;
+	for(int i = 0; i < (int)pwalletMain->vMultiSend.size(); i++)
+	{
+		if(pwalletMain->vMultiSend[i].first == strAddress)
+		{
+			pwalletMain->vMultiSend.erase(pwalletMain->vMultiSend.begin() + i);
+			fRemoved = true;
+		}
+	}
+	
+	CWalletDB walletdb(pwalletMain->strWalletFile);
+	
+	if(!walletdb.EraseMultiSend(vMultiSendTemp))
+		fRemoved = false;
+	if(!walletdb.WriteMultiSend(pwalletMain->vMultiSend))
+		fRemoved = false;
+	
+	if(fRemoved)
+		ui->message->setText(tr("Removed ") + QString(strAddress.c_str()));
+	else
+		ui->message->setText(tr("Could not locate address\n"));
+    return;
+}
+
+void StakeForCharityDialog::on_activateButton_clicked()
+{
+	std::string strRet = "";
+	if(pwalletMain->vMultiSend.size() < 1)
+		strRet = "Unable to activate MultiSend, check MultiSend vector\n";
+	else if(CBitcoinAddress(pwalletMain->vMultiSend[0].first).IsValid())
+	{
+		pwalletMain->fMultiSend = true;
+		CWalletDB walletdb(pwalletMain->strWalletFile);
+		if(!walletdb.WriteMSettings(true, pwalletMain->nLastMultiSendHeight))
+			strRet = "MultiSend activated but writing settings to DB failed";
+		else
+			strRet = "MultiSend activated";
+	}
+	else
+		strRet = "First Address Not Valid";
+	
+    ui->message->setProperty("status", "ok");
+    ui->message->style()->polish(ui->message);
+    ui->message->setText(tr(strRet.c_str()));
+    return;
+}
+
+void StakeForCharityDialog::on_disableButton_clicked()
+{
+	std::string strRet = "";
+	pwalletMain->fMultiSend = false;
+	CWalletDB walletdb(pwalletMain->strWalletFile);
+	if(!walletdb.WriteMSettings(false, pwalletMain->nLastMultiSendHeight))
+		strRet = "MultiSend deactivated but writing settings to DB failed";
+	else
+		strRet = "MultiSend deactivated";
+	
+    ui->message->setProperty("status", "");
+    ui->message->style()->polish(ui->message);
+    ui->message->setText(tr(strRet.c_str()));
+    return;
+}
+

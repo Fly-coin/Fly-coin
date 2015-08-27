@@ -1,5 +1,5 @@
 #include "qvalidatedlineedit.h"
-
+#include <QStyle>
 #include "guiconstants.h"
 
 QValidatedLineEdit::QValidatedLineEdit(QWidget *parent) :
@@ -17,11 +17,13 @@ void QValidatedLineEdit::setValid(bool valid)
 
     if(valid)
     {
-        setStyleSheet("");
+        setProperty("error", false);
+        style()->polish(this);
     }
     else
     {
-        setStyleSheet(STYLE_INVALID);
+        setProperty("error", true);
+        style()->polish(this);
     }
     this->valid = valid;
 }
