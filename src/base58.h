@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -277,8 +277,8 @@ class CBitcoinAddress : public CBase58Data
 public:
     enum
     {
-        PUBKEY_ADDRESS = 28,
-        SCRIPT_ADDRESS = 38,
+        PUBKEY_ADDRESS = 35,
+        SCRIPT_ADDRESS = 95,
         PUBKEY_ADDRESS_TEST = 111,
         SCRIPT_ADDRESS_TEST = 196,
     };

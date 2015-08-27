@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -384,7 +384,7 @@ void CWallet::WalletUpdateSpent(const CTransaction &tx, bool fBlock)
                     printf("WalletUpdateSpent: bad wtx %s\n", wtx.GetHash().ToString().c_str());
                 else if (!wtx.IsSpent(txin.prevout.n) && IsMine(wtx.vout[txin.prevout.n]))
                 {
-                    printf("WalletUpdateSpent found spent coin %s CV2 %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    printf("WalletUpdateSpent found spent coin %s FLY %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkSpent(txin.prevout.n);
                     wtx.WriteToDisk();
                     NotifyTransactionChanged(this, txin.prevout.hash, CT_UPDATED);
@@ -921,7 +921,7 @@ void CWallet::ReacceptWalletTransactions()
                 }
                 if (fUpdated)
                 {
-                    printf("ReacceptWalletTransactions found spent coin %s CV2 %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
+                    printf("ReacceptWalletTransactions found spent coin %s FLY %s\n", FormatMoney(wtx.GetCredit()).c_str(), wtx.GetHash().ToString().c_str());
                     wtx.MarkDirty();
                     wtx.WriteToDisk();
                 }
@@ -1186,7 +1186,7 @@ static void ApproximateBestSubset(vector<pair<int64_t, pair<const CWalletTx*,uns
     }
 }
 
-// ColossusCoin2: total coins staked (non-spendable until maturity)
+// FlyCoin: total coins staked (non-spendable until maturity)
 int64_t CWallet::GetStake() const
 {
     int64_t nTotal = 0;
@@ -1790,7 +1790,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
         {
             nFeeRet = nTransactionFee;
 			if(fSplitBlock)
-				nFeeRet = COIN * 200;
+				nFeeRet = COIN * 0.05;
             while (true)
             {
                 wtxNew.vin.clear();
@@ -2115,7 +2115,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
             continue; // only count coins meeting min age requirement
 
         bool fKernelFound = false;
-		//ColossusCoin2 now iterates each utxo inside of CheckStakeKernelHash()
+		//FlyCoin now iterates each utxo inside of CheckStakeKernelHash()
 		uint256 hashProofOfStake = 0;
 		COutPoint prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
 		unsigned int txNewTime = txNew.nTime;
@@ -2754,8 +2754,8 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
     return ret;
 }
 
-// ColossusCoin2: check 'spent' consistency between wallet and txindex
-// ColossusCoin2: fix wallet spent state according to txindex
+// FlyCoin: check 'spent' consistency between wallet and txindex
+// FlyCoin: fix wallet spent state according to txindex
 void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, int& nOrphansFound, bool fCheckOnly)
 {
     nMismatchFound = 0;
@@ -2782,7 +2782,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, in
             bool fUpdated = false;
             if (IsMine(pcoin->vout[n]) && pcoin->IsSpent(n) && (txindex.vSpent.size() <= n || txindex.vSpent[n].IsNull()))
             {
-                printf("FixSpentCoins found lost coin %s CV2 %s[%d], %s\n",
+                printf("FixSpentCoins found lost coin %s FLY %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), hash.ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;
@@ -2795,7 +2795,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, in
             }
             else if (IsMine(pcoin->vout[n]) && !pcoin->IsSpent(n) && (txindex.vSpent.size() > n && !txindex.vSpent[n].IsNull()))
             {
-                printf("FixSpentCoins found spent coin %s CV2 %s[%d], %s\n",
+                printf("FixSpentCoins found spent coin %s FLY %s[%d], %s\n",
                     FormatMoney(pcoin->vout[n].nValue).c_str(), hash.ToString().c_str(), n, fCheckOnly? "repair not attempted" : "repairing");
                 nMismatchFound++;
                 nBalanceInQuestion += pcoin->vout[n].nValue;
@@ -2823,7 +2823,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, in
      }
 }
 
-// ColossusCoin2: disable transaction (only for coinstake)
+// FlyCoin: disable transaction (only for coinstake)
 void CWallet::DisableTransaction(const CTransaction &tx)
 {
     if (!tx.IsCoinStake() || !IsFromMe(tx))

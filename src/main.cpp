@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -69,7 +69,7 @@ map<unsigned int, unsigned int> mapHashedBlocks; // for liteStake
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "ColossusCoin2 Signed Message:\n";
+const string strMessageMagic = "FlyCoin Signed Message:\n";
 
 // Settings
 int64_t nTransactionFee = MIN_TX_FEE;
@@ -133,7 +133,7 @@ void SyncWithWallets(const CTransaction& tx, const CBlock* pblock, bool fUpdate,
 {
     if (!fConnect)
     {
-        // ColossusCoin2: wallets need to refund inputs when disconnecting coinstake
+        // FlyCoin: wallets need to refund inputs when disconnecting coinstake
         if (tx.IsCoinStake())
         {
             BOOST_FOREACH(CWallet* pwallet, setpwalletRegistered)
@@ -555,7 +555,7 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
     if (tx.IsCoinBase())
         return tx.DoS(100, error("CTxMemPool::accept() : coinbase as individual tx"));
 
-    // ColossusCoin2: coinstake is also only valid in a block, not as a loose transaction
+    // FlyCoin: coinstake is also only valid in a block, not as a loose transaction
     if (tx.IsCoinStake())
         return tx.DoS(100, error("CTxMemPool::accept() : coinstake as individual tx"));
 
@@ -972,13 +972,13 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     
     if (pindexBest->nHeight+1 <= 10)
     {
-      nSubsidy = 1910000000 * COIN;
+      nSubsidy = 15000 * COIN;
       return nSubsidy + nFees;
     }   
 
     else if (pindexBest->nHeight+1 <= LAST_POW_BLOCK)
     {
-      nSubsidy = 1000 * COIN;
+      nSubsidy = 1 * COIN;
       return nSubsidy + nFees;
     }
 
@@ -993,7 +993,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 {
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
 
-	int64_t nSubsidyLimit = 5000 * COIN;
+	int64_t nSubsidyLimit = 0.5 * COIN;
 
     int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
 
@@ -1045,7 +1045,7 @@ unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBl
 }
 
 
-// ColossusCoin2: find last block index up to pindex
+// FlyCoin: find last block index up to pindex
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake)
 {
     while (pindex && pindex->pprev && (pindex->IsProofOfStake() != fProofOfStake))
@@ -1356,7 +1356,7 @@ bool CTransaction::ConnectInputs(CTxDB& txdb, MapPrevTx inputs, map<uint256, CTx
                     if (pindex->nBlockPos == txindex.pos.nBlockPos && pindex->nFile == txindex.pos.nFile)
                         return error("ConnectInputs() : tried to spend %s at depth %d", txPrev.IsCoinBase() ? "coinbase" : "coinstake", pindexBlock->nHeight - pindex->nHeight);
 
-            // ColossusCoin2: check transaction timestamp
+            // FlyCoin: check transaction timestamp
             if (txPrev.nTime > nTime)
                 return DoS(100, error("ConnectInputs() : transaction timestamp earlier than input transaction"));
 
@@ -1494,7 +1494,7 @@ bool CBlock::DisconnectBlock(CTxDB& txdb, CBlockIndex* pindex)
             return error("DisconnectBlock() : WriteBlockIndex failed");
     }
 
-    // ColossusCoin2: clean up wallet after disconnecting coinstake
+    // FlyCoin: clean up wallet after disconnecting coinstake
     BOOST_FOREACH(CTransaction& tx, vtx)
         SyncWithWallets(tx, this, false, false);
 
@@ -1596,7 +1596,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
     }
     if (IsProofOfStake())
     {
-        // ColossusCoin2: coin stake tx earns reward instead of paying fee
+        // FlyCoin: coin stake tx earns reward instead of paying fee
         uint64_t nCoinAge;
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
             return error("ConnectBlock() : %s unable to get coin age for coinstake", vtx[1].GetHash().ToString().substr(0,10).c_str());
@@ -1607,7 +1607,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%"PRId64" vs calculated=%"PRId64")", nStakeReward, nCalculatedStakeReward));
     }
 
-    // ColossusCoin2: track money supply and mint amount info
+    // FlyCoin: track money supply and mint amount info
     pindex->nMint = nValueOut - nValueIn + nFees;
     pindex->nMoneySupply = (pindex->pprev? pindex->pprev->nMoneySupply : 0) + nValueOut - nValueIn;
     if (!txdb.WriteBlockIndex(CDiskBlockIndex(pindex)))
@@ -1883,7 +1883,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
     return true;
 }
 
-// ColossusCoin2: total coin age spent in transaction, in the unit of coin-days.
+// FlyCoin: total coin age spent in transaction, in the unit of coin-days.
 // Only those coins meeting minimum age requirement counts. As those
 // transactions not in main chain are not currently indexed so we
 // might not find out about their coin age. Older transactions are 
@@ -1932,7 +1932,7 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge) const
     return true;
 }
 
-// ColossusCoin2: total coin age spent in block, in the unit of coin-days.
+// FlyCoin: total coin age spent in block, in the unit of coin-days.
 bool CBlock::GetCoinAge(uint64_t& nCoinAge) const
 {
     nCoinAge = 0;
@@ -1973,17 +1973,17 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos, const u
         pindexNew->nHeight = pindexNew->pprev->nHeight + 1;
     }
 
-    // ColossusCoin2: compute chain trust score
+    // FlyCoin: compute chain trust score
     pindexNew->nChainTrust = (pindexNew->pprev ? pindexNew->pprev->nChainTrust : 0) + pindexNew->GetBlockTrust();
 
-    // ColossusCoin2: compute stake entropy bit for stake modifier
+    // FlyCoin: compute stake entropy bit for stake modifier
     if (!pindexNew->SetStakeEntropyBit(GetStakeEntropyBit()))
         return error("AddToBlockIndex() : SetStakeEntropyBit() failed");
 
-    // ColossusCoin2: record proof-of-stake hash value
+    // FlyCoin: record proof-of-stake hash value
     pindexNew->hashProofOfStake = hashProofOfStake;
 
-    // ColossusCoin2: compute stake modifier
+    // FlyCoin: compute stake modifier
     uint64_t nStakeModifier = 0;
     bool fGeneratedStakeModifier = false;
     if (!ComputeNextStakeModifier(pindexNew->pprev, nStakeModifier, fGeneratedStakeModifier))
@@ -2083,7 +2083,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         if (!tx.CheckTransaction())
             return DoS(tx.nDoS, error("CheckBlock() : CheckTransaction failed"));
 
-        // ColossusCoin2: check transaction timestamp
+        // FlyCoin: check transaction timestamp
         if (GetBlockTime() < (int64_t)tx.nTime)
             return DoS(50, error("CheckBlock() : block timestamp earlier than transaction timestamp"));
     }
@@ -2198,7 +2198,7 @@ bool CBlock::AcceptBlock()
                 pnode->PushInventory(CInv(MSG_BLOCK, hash));
     }
 
-    // ColossusCoin2: check pending sync-checkpoint
+    // FlyCoin: check pending sync-checkpoint
     Checkpoints::AcceptPendingSyncCheckpoint();
 
     return true;
@@ -2236,7 +2236,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     if (mapOrphanBlocks.count(hash))
         return error("ProcessBlock() : already have block (orphan) %s", hash.ToString().substr(0,20).c_str());
 
-    // ColossusCoin2: check proof-of-stake
+    // FlyCoin: check proof-of-stake
     // Limited duplicity on stake: prevents block flood attack
     // Duplicate stake allowed only when there is orphan child block
     if (pblock->IsProofOfStake() && setStakeSeen.count(pblock->GetProofOfStake()) && !mapOrphanBlocksByPrev.count(hash) && !Checkpoints::WantedByPendingSyncCheckpoint(hash))
@@ -2268,7 +2268,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         }
     }
 
-    // ColossusCoin2: ask for pending sync-checkpoint if any
+    // FlyCoin: ask for pending sync-checkpoint if any
     if (!IsInitialBlockDownload())
         Checkpoints::AskForPendingSyncCheckpoint(pfrom);
 
@@ -2277,7 +2277,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     {
         printf("ProcessBlock: ORPHAN BLOCK, prev=%s\n", pblock->hashPrevBlock.ToString().substr(0,20).c_str());
         CBlock* pblock2 = new CBlock(*pblock);
-        // ColossusCoin2: check proof-of-stake
+        // FlyCoin: check proof-of-stake
         if (pblock2->IsProofOfStake())
         {
             // Limited duplicity on stake: prevents block flood attack
@@ -2294,7 +2294,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
         if (pfrom)
         {
             pfrom->PushGetBlocks(pindexBest, GetOrphanRoot(pblock2));
-            // ColossusCoin2: getblocks may not obtain the ancestor block rejected
+            // FlyCoin: getblocks may not obtain the ancestor block rejected
             // earlier by duplicate-stake check so we ask for it again directly
             if (!IsInitialBlockDownload())
                 pfrom->AskFor(CInv(MSG_BLOCK, WantedByOrphan(pblock2)));
@@ -2337,14 +2337,14 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 		if (!pwalletMain->MultiSend() )
 			printf("ERROR While trying to use MultiSend");
 
-    // ColossusCoin2: if responsible for sync-checkpoint send it
+    // FlyCoin: if responsible for sync-checkpoint send it
     if (pfrom && !CSyncCheckpoint::strMasterPrivKey.empty())
         Checkpoints::SendSyncCheckpoint(Checkpoints::AutoSelectSyncCheckpoint());
 
     return true;
 }
 
-// ColossusCoin2: attempt to generate suitable proof-of-stake
+// FlyCoin: attempt to generate suitable proof-of-stake
 bool CBlock::SignBlock(CWallet& wallet, int64_t nFees)
 {
     // if we are trying to sign
@@ -2432,7 +2432,7 @@ bool CheckDiskSpace(uint64_t nAdditionalBytes)
         string strMessage = _("Warning: Disk space is low!");
         strMiscWarning = strMessage;
         printf("*** %s\n", strMessage.c_str());
-        uiInterface.ThreadSafeMessageBox(strMessage, "ColossusCoin2", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+        uiInterface.ThreadSafeMessageBox(strMessage, "FlyCoin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         StartShutdown();
         return false;
     }
@@ -2492,10 +2492,10 @@ bool LoadBlockIndex(bool fAllowNew)
 
     if (fTestNet)
     {
-        pchMessageStart[0] = 0x70;
-        pchMessageStart[1] = 0xa3;
-        pchMessageStart[2] = 0x27;
-        pchMessageStart[3] = 0xb3;
+        pchMessageStart[0] = 0x71;
+        pchMessageStart[1] = 0xb3;
+        pchMessageStart[2] = 0x26;
+        pchMessageStart[3] = 0xa3;
 
         bnTrustedModulus.SetHex("f0d14ff2623dacfe738d0892b599be7731052239cddd95a3f25101c801dc990453b38c9434efe3f372db39a32c2bb44cbaea72d62c8931fa785b0ec44531308df3e46069be5573e49bb29f4d479bfc3d162f57a5965db03810be7636da265bfced9c01a6b0296c77910ebdc8016f70174f0f18a57b3b971ac43a934c6aedbc5c866764a3622b5b7e3f9832b8b3f133c849dbcc0396588abcd1e41048555746e4823fb8aba5b3d23692c6857fccce733d6bb6ec1d5ea0afafecea14a0f6f798b6b27f77dc989c557795cc39a0940ef6bb29a7fc84135193a55bcfc2f01dd73efad1b69f45a55198bd0e6bef4d338e452f6a420f1ae2b1167b923f76633ab6e55");
         bnProofOfWorkLimit = bnProofOfWorkLimitTestNet; // 16 bits PoW target limit for testnet
@@ -2526,9 +2526,9 @@ bool LoadBlockIndex(bool fAllowNew)
     if (mapBlockIndex.empty())
     {
         if (!fAllowNew)
-            return false;
+            return true;
 
-        const char* pszTimestamp = "ColossusCoin, Big, Strong and Friendly";
+        const char* pszTimestamp = "FlyCoin, flying high!";
         CTransaction txNew;
         txNew.nTime = 1422775300;
         txNew.vin.resize(1);
@@ -2542,10 +2542,10 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nVersion = 1;
         block.nTime    = 1422775300;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
-        block.nNonce   = 1945645;
+        block.nNonce   = 0;
         if(fTestNet)
         {
-            block.nNonce   = 17539;
+            block.nNonce   = 0;
         }
         if (true  && (block.GetHash() != hashGenesisBlock)) {
 
@@ -2569,7 +2569,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
 
         //// debug print
-        assert(block.hashMerkleRoot == uint256("0x27809e0893c09fa1a11f3881d7a12d2820b226e4ff4e49a85af1ba850df376ac"));
+        assert(block.hashMerkleRoot == uint256("0x"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());
@@ -2582,7 +2582,7 @@ bool LoadBlockIndex(bool fAllowNew)
         if (!block.AddToBlockIndex(nFile, nBlockPos, 0))
             return error("LoadBlockIndex() : genesis block not accepted");
 
-        // ColossusCoin2: initialize synchronized checkpoint
+        // FlyCoin: initialize synchronized checkpoint
         if (!Checkpoints::WriteSyncCheckpoint((!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet)))
             return error("LoadBlockIndex() : failed to init sync checkpoint");
     }
@@ -3000,7 +3000,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 		pfrom->PushGetBlocks(pindexBest, uint256(0));
 	}
 
-        // ColossusCoin2: ask for pending sync-checkpoint if any
+        // FlyCoin: ask for pending sync-checkpoint if any
         if (!IsInitialBlockDownload())
             Checkpoints::AskForPendingSyncCheckpoint(pfrom);
     }
@@ -3169,7 +3169,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
                     // Trigger them to send a getblocks request for the next batch of inventory
                     if (inv.hash == pfrom->hashContinue)
                     {
-                        // ColossusCoin2: send latest proof-of-work block to allow the
+                        // FlyCoin: send latest proof-of-work block to allow the
                         // download node to accept as orphan (proof-of-stake 
                         // block might be rejected by stake connection check)
                         vector<CInv> vInv;
@@ -3228,7 +3228,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             if (pindex->GetBlockHash() == hashStop)
             {
                 printf("  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString().substr(0,20).c_str());
-                // ColossusCoin2: tell downloading node about the latest block if it's
+                // FlyCoin: tell downloading node about the latest block if it's
                 // without risk being rejected due to stake connection check
                 if (hashStop != hashBestChain && pindex->GetBlockTime() + nStakeMinAge > pindexBest->GetBlockTime())
                     pfrom->PushInventory(CInv(MSG_BLOCK, hashBestChain));

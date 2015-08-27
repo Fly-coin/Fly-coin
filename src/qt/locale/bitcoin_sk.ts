@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ColossusCoin2</source>
-        <translation>O ColossusCoin2</translation>
+        <source>About FlyCoin</source>
+        <translation>O FlyCoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ColossusCoin2&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;ColossusCoin2&lt;/b&gt; verzia</translation>
+        <source>&lt;b&gt;FlyCoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;FlyCoin&lt;/b&gt; verzia</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The ColossusCoin2 developers</source>
+Copyright © 2014 The FlyCoin developers</source>
         <translation>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The ColossusCoin2 developers</translation>
+Copyright © 2014 The FlyCoin developers</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -65,8 +65,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-46"/>
-        <source>These are your ColossusCoin2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Toto sú vaše ColossusCoin2 adresy pre príjem platieb. Možno budete chcieť dať inú každému odosielateľovi, takže môžete sledovať, kto Vám platí.</translation>
+        <source>These are your FlyCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Toto sú vaše FlyCoin adresy pre príjem platieb. Možno budete chcieť dať inú každému odosielateľovi, takže môžete sledovať, kto Vám platí.</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -80,8 +80,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a ColossusCoin2 address</source>
-        <translation>Podpísať správu, že vlastníte ColossusCoin2 adresu</translation>
+        <source>Sign a message to prove you own a FlyCoin address</source>
+        <translation>Podpísať správu, že vlastníte FlyCoin adresu</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -95,8 +95,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified ColossusCoin2 address</source>
-        <translation>Overte správu, aby ste zabezpečili, že bola podpísaná s určitou ColossusCoin2 adresou</translation>
+        <source>Verify a message to ensure it was signed with a specified FlyCoin address</source>
+        <translation>Overte správu, aby ste zabezpečili, že bola podpísaná s určitou FlyCoin adresou</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -263,8 +263,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-58"/>
-        <source>ColossusCoin2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>ColossusCoin2 sa teraz zavrie aby dokončil proces zašifrovania. Nezabudnite, že zašifrovanie vašej peňaženky nemôže plne chrániť vaše mince pred krádežou malwarom napadnutím vašeho počítača.</translation>
+        <source>FlyCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>FlyCoin sa teraz zavrie aby dokončil proces zašifrovania. Nezabudnite, že zašifrovanie vašej peňaženky nemôže plne chrániť vaše mince pred krádežou malwarom napadnutím vašeho počítača.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -377,8 +377,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+6"/>
-        <source>Show information about ColossusCoin2</source>
-        <translation>Zobraziť informácie o ColossusCoin2</translation>
+        <source>Show information about FlyCoin</source>
+        <translation>Zobraziť informácie o FlyCoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -427,13 +427,13 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-64"/>
-        <source>Send coins to a ColossusCoin2 address</source>
-        <translation>Poslať mince na ColossusCoin2 adresu</translation>
+        <source>Send coins to a FlyCoin address</source>
+        <translation>Poslať mince na FlyCoin adresu</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Modify configuration options for ColossusCoin2</source>
-        <translation>Upraviť možnosti konfigurácie pre ColossusCoin2</translation>
+        <source>Modify configuration options for FlyCoin</source>
+        <translation>Upraviť možnosti konfigurácie pre FlyCoin</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -472,8 +472,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-202"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -482,8 +482,8 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="+180"/>
-        <source>&amp;About ColossusCoin2</source>
-        <translation>&amp;O ColossusCoin2</translation>
+        <source>&amp;About FlyCoin</source>
+        <translation>&amp;O FlyCoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -539,13 +539,13 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     <message>
         <location line="+0"/>
         <location line="+60"/>
-        <source>ColossusCoin2 client</source>
-        <translation>ColossusCoin2 client</translation>
+        <source>FlyCoin client</source>
+        <translation>FlyCoin client</translation>
     </message>
     <message numerus="yes">
         <location line="+75"/>
-        <source>%n active connection(s) to ColossusCoin2 network</source>
-        <translation><numerusform>%n aktívne spojenie s ColossusCoin2 sieťov</numerusform><numerusform>%n aktívnych spojení s ColossusCoin2 sieťov</numerusform><numerusform>%n aktívnych spojení s ColossusCoin2 sieťov</numerusform></translation>
+        <source>%n active connection(s) to FlyCoin network</source>
+        <translation><numerusform>%n aktívne spojenie s FlyCoin sieťov</numerusform><numerusform>%n aktívnych spojení s FlyCoin sieťov</numerusform><numerusform>%n aktívnych spojení s FlyCoin sieťov</numerusform></translation>
     </message>
     <message>
         <location line="+40"/>
@@ -584,13 +584,13 @@ Tento produkt obsahuje softvér vyvinutý Projektom OpenSSL Project pre použiti
     </message>
     <message>
         <location line="-312"/>
-        <source>About ColossusCoin2 card</source>
-        <translation>O ColossusCoin2 karte</translation>
+        <source>About FlyCoin card</source>
+        <translation>O FlyCoin karte</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about ColossusCoin2 card</source>
-        <translation>Zobraziť informácie o ColossusCoin2 karte</translation>
+        <source>Show information about FlyCoin card</source>
+        <translation>Zobraziť informácie o FlyCoin karte</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -668,8 +668,8 @@ Adresa: %4</translation>
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters.</source>
-        <translation>URI nemožno analyzovať! To môže byť spôsobené neplatnou ColossusCoin2 adresu alebo chybnými URI parametrami.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters.</source>
+        <translation>URI nemožno analyzovať! To môže byť spôsobené neplatnou FlyCoin adresu alebo chybnými URI parametrami.</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -728,8 +728,8 @@ Adresa: %4</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
-        <source>A fatal error occurred. ColossusCoin2 can no longer continue safely and will quit.</source>
-        <translation>Došlo k závažnej chybe. ColossusCoin2 už nemôže pokračovať bezpečne a bude ukončený.</translation>
+        <source>A fatal error occurred. FlyCoin can no longer continue safely and will quit.</source>
+        <translation>Došlo k závažnej chybe. FlyCoin už nemôže pokračovať bezpečne a bude ukončený.</translation>
     </message>
 </context>
 <context>
@@ -1062,8 +1062,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ColossusCoin2 address.</source>
-        <translation>Zadaná adresa &quot;%1&quot; nie je platnou ColossusCoin2 adresou.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid FlyCoin address.</source>
+        <translation>Zadaná adresa &quot;%1&quot; nie je platnou FlyCoin adresou.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1081,8 +1081,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ColossusCoin2-Qt</source>
-        <translation>ColossusCoin2-Qt</translation>
+        <source>FlyCoin-Qt</source>
+        <translation>FlyCoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1154,13 +1154,13 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ColossusCoin2 after logging in to the system.</source>
-        <translation>Automaticky spustiť ColossusCoin2 po prihlásení sa do systému.</translation>
+        <source>Automatically start FlyCoin after logging in to the system.</source>
+        <translation>Automaticky spustiť FlyCoin po prihlásení sa do systému.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ColossusCoin2 on system login</source>
-        <translation>&amp;Spustiť ColossusCoin2 pri prihlásení do systému</translation>
+        <source>&amp;Start FlyCoin on system login</source>
+        <translation>&amp;Spustiť FlyCoin pri prihlásení do systému</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1179,8 +1179,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ColossusCoin2 client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automaticky otvoriť port klienta ColossusCoin2 na routeri. To funguje iba vtedy, ak váš router podporuje UPnP a je povolené.</translation>
+        <source>Automatically open the FlyCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automaticky otvoriť port klienta FlyCoin na routeri. To funguje iba vtedy, ak váš router podporuje UPnP a je povolené.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1189,8 +1189,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ColossusCoin2 network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Pripojenie k sieti ColossusCoin2 cez SOCKS proxy server (napr. pri pripojení cez Tor).</translation>
+        <source>Connect to the FlyCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Pripojenie k sieti FlyCoin cez SOCKS proxy server (napr. pri pripojení cez Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1264,8 +1264,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>Jazyk používateľského rozhrania je možné tu nastaviť. Toto nastavenie sa prejaví až po reštartovaní ColossusCoin2.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting FlyCoin.</source>
+        <translation>Jazyk používateľského rozhrania je možné tu nastaviť. Toto nastavenie sa prejaví až po reštartovaní FlyCoin.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1279,8 +1279,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show ColossusCoin2 addresses in the transaction list or not.</source>
-        <translation>Či chcete zobraziť ColossusCoin2 adresy v zozname transakcií alebo nie.</translation>
+        <source>Whether to show FlyCoin addresses in the transaction list or not.</source>
+        <translation>Či chcete zobraziť FlyCoin adresy v zozname transakcií alebo nie.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1326,8 +1326,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>Toto nastavenie sa prejaví až po reštartovaní ColossusCoin2.</translation>
+        <source>This setting will take effect after restarting FlyCoin.</source>
+        <translation>Toto nastavenie sa prejaví až po reštartovaní FlyCoin.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1345,8 +1345,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     <message>
         <location line="+33"/>
         <location line="+231"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ColossusCoin2 network after a connection is established, but this process has not completed yet.</source>
-        <translation>Zobrazené informácie môžu byť zastaralé. Vaša peňaženka sa automaticky synchronizuje so sieťou ColossusCoin2 po nadviazaní spojenia, ale tento proces nie je ešte dokončený.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the FlyCoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Zobrazené informácie môžu byť zastaralé. Vaša peňaženka sa automaticky synchronizuje so sieťou FlyCoin po nadviazaní spojenia, ale tento proces nie je ešte dokončený.</translation>
     </message>
     <message>
         <location line="-160"/>
@@ -1561,8 +1561,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ColossusCoin2-Qt help message to get a list with possible ColossusCoin2 command-line options.</source>
-        <translation>Zobraziť ColossusCoin2-Qt nápovedu k získaniu zoznamu pre možnosti ColossusCoin2 príkazového riadku.</translation>
+        <source>Show the FlyCoin-Qt help message to get a list with possible FlyCoin command-line options.</source>
+        <translation>Zobraziť FlyCoin-Qt nápovedu k získaniu zoznamu pre možnosti FlyCoin príkazového riadku.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1581,13 +1581,13 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="-104"/>
-        <source>ColossusCoin2 - Debug window</source>
-        <translation>ColossusCoin2 - Ladiace okno</translation>
+        <source>FlyCoin - Debug window</source>
+        <translation>FlyCoin - Ladiace okno</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ColossusCoin2 Core</source>
-        <translation>ColossusCoin2 Core</translation>
+        <source>FlyCoin Core</source>
+        <translation>FlyCoin Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1596,8 +1596,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ColossusCoin2 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Otvorte ColossusCoin2 ladenie log súbor z aktuálneho adresára dát. To môže trvať niekoľko sekúnd pre veľké súbory protokolu.</translation>
+        <source>Open the FlyCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Otvorte FlyCoin ladenie log súbor z aktuálneho adresára dát. To môže trvať niekoľko sekúnd pre veľké súbory protokolu.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1606,8 +1606,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the ColossusCoin2 RPC console.</source>
-        <translation>Vitajte v ColossusCoin2 RPC konzole.</translation>
+        <source>Welcome to the FlyCoin RPC console.</source>
+        <translation>Vitajte v FlyCoin RPC konzole.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1680,8 +1680,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 CV2</source>
-        <translation>123.456 CV2 {0.00 ?}</translation>
+        <source>0.00 FLY</source>
+        <translation>123.456 FLY {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1750,8 +1750,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 CV2</source>
-        <translation>123.456 CV2</translation>
+        <source>123.456 FLY</source>
+        <translation>123.456 FLY</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1765,8 +1765,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Zadajte ColossusCoin2 adresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Zadajte FlyCoin adresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1865,8 +1865,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+251"/>
-        <source>WARNING: Invalid ColossusCoin2 address</source>
-        <translation>VAROVANIE: Neplatná ColossusCoin2 adresa</translation>
+        <source>WARNING: Invalid FlyCoin address</source>
+        <translation>VAROVANIE: Neplatná FlyCoin adresa</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1939,8 +1939,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Zadaj a ColossusCoin2 addresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Zadaj a FlyCoin addresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
 </context>
 <context>
@@ -2000,8 +2000,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ColossusCoin2 address</source>
-        <translation>Podpísať správu ako dôkaz, že vlastníte túto ColossusCoin2 adresu</translation>
+        <source>Sign the message to prove you own this FlyCoin address</source>
+        <translation>Podpísať správu ako dôkaz, že vlastníte túto FlyCoin adresu</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2032,8 +2032,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ColossusCoin2 address</source>
-        <translation>Overte správu, aby zabezpečilo, že bola podpísaná s danou ColossusCoin2 adresu</translation>
+        <source>Verify the message to ensure it was signed with the specified FlyCoin address</source>
+        <translation>Overte správu, aby zabezpečilo, že bola podpísaná s danou FlyCoin adresu</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2043,8 +2043,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Zadajte ColossusCoin2 adresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Zadajte FlyCoin adresu (napr. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2053,8 +2053,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ColossusCoin2 signature</source>
-        <translation>Zadajte ColossusCoin2 podpis</translation>
+        <source>Enter FlyCoin signature</source>
+        <translation>Zadajte FlyCoin podpis</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2624,8 +2624,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+33"/>
-        <source>ColossusCoin2 version</source>
-        <translation>ColossusCoin2 verzia</translation>
+        <source>FlyCoin version</source>
+        <translation>FlyCoin verzia</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2634,8 +2634,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or ColossusCoin2d</source>
-        <translation>Pošli príkaz na -server alebo ColossusCoin2d</translation>
+        <source>Send command to -server or FlyCoind</source>
+        <translation>Pošli príkaz na -server alebo FlyCoind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2654,13 +2654,13 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ColossusCoin2.conf)</source>
-        <translation>Zadajte konfiguračný súbor (predvolené: ColossusCoin2.conf)</translation>
+        <source>Specify configuration file (default: FlyCoin.conf)</source>
+        <translation>Zadajte konfiguračný súbor (predvolené: FlyCoin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: ColossusCoin2d.pid)</source>
-        <translation>Zadajte pid súbor (predvolené: ColossusCoin2d.pid)</translation>
+        <source>Specify pid file (default: FlyCoind.pid)</source>
+        <translation>Zadajte pid súbor (predvolené: FlyCoind.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2809,8 +2809,8 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
     </message>
     <message>
         <location line="+61"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ColossusCoin2 will not work properly.</source>
-        <translation>Upozornenie: Skontrolujte, že dátum a čas počítača sú správne! Ak je Váš čas nesprávny ColossusCoin2 nebude pracovať správne.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong FlyCoin will not work properly.</source>
+        <translation>Upozornenie: Skontrolujte, že dátum a čas počítača sú správne! Ak je Váš čas nesprávny FlyCoin nebude pracovať správne.</translation>
     </message>
     <message>
         <location line="-31"/>
@@ -2999,24 +2999,24 @@ Sumy nižšie ako 0,546 násobok minimálneho poplatku sú zobrazené ako DUST.<
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;FlyCoin Alert&quot; admin@foo.com
 </source>
         <translation>%s, musíte nastaviť rpcpassword v konfiguračnom súbore:
  %s
 Je odporúčané použiť nasledujúce náhodné heslo:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (Nemusíte si pamätať toto heslo)
 Užívateľské meno a heslo nesmú byť rovnaké. 
 Ak súbor neexistuje, vytvorte ho s oprávneniami súborov vlastníkov iba na čítatanie.
 Odporúča sa tiež nastaviť alertnotify, takže budete upozornení na problémy;
-napríklad: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin@foo.com</translation>
+napríklad: alertnotify=echo %%s | mail -s &quot;FlyCoin Alert&quot; admin@foo.com</translation>
     </message>
     <message>
         <location line="+51"/>
@@ -3140,13 +3140,13 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin
     </message>
     <message>
         <location line="+1"/>
-        <source>Cannot obtain a lock on data directory %s.  ColossusCoin2 is probably already running.</source>
-        <translation>Nemožno získať zámok na dátový adresár %s. ColossusCoin2 už pravdepodobne beží.</translation>
+        <source>Cannot obtain a lock on data directory %s.  FlyCoin is probably already running.</source>
+        <translation>Nemožno získať zámok na dátový adresár %s. FlyCoin už pravdepodobne beží.</translation>
     </message>
     <message>
         <location line="-98"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+140"/>
@@ -3180,13 +3180,13 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ColossusCoin2</source>
-        <translation>Chyba pri načítaní wallet.dat: Peňaženka vyžaduje novšiu verziu ColossusCoin2</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of FlyCoin</source>
+        <translation>Chyba pri načítaní wallet.dat: Peňaženka vyžaduje novšiu verziu FlyCoin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ColossusCoin2 to complete</source>
-        <translation>Peňaženka potrebuje byť prepísaná: reštartujte ColossusCoin2 k dokončeniu</translation>
+        <source>Wallet needed to be rewritten: restart FlyCoin to complete</source>
+        <translation>Peňaženka potrebuje byť prepísaná: reštartujte FlyCoin k dokončeniu</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3255,8 +3255,8 @@ napríklad: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin
     </message>
     <message>
         <location line="+122"/>
-        <source>Unable to bind to %s on this computer. ColossusCoin2 is probably already running.</source>
-        <translation>Nemôžem sa pripojiť na %s na tomto počítači. ColossusCoin2 je pravdepodobne už beží.</translation>
+        <source>Unable to bind to %s on this computer. FlyCoin is probably already running.</source>
+        <translation>Nemôžem sa pripojiť na %s na tomto počítači. FlyCoin je pravdepodobne už beží.</translation>
     </message>
     <message>
         <location line="-97"/>

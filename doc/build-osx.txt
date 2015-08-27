@@ -7,12 +7,12 @@ software written by Eric Young (eay@cryptsoft.com) and UPnP software written by
 Thomas Bernard.
 
 
-Mac OS X ColossusCoin2d build instructions
+Mac OS X FlyCoind build instructions
 Laszlo Hanyecz <solar@heliacal.net>
 Douglas Huff <dhuff@jrbobdobbs.org>
 
 
-See readme-qt.rst for instructions on building ColossusCoin2 QT, the
+See readme-qt.rst for instructions on building FlyCoin QT, the
 graphical user interface.
 
 Tested on 10.5 and 10.6 intel.  PPC is not supported because it's big-endian.
@@ -27,7 +27,7 @@ but you can get the current version from http://developer.apple.com
 
 1.  Clone the github tree to get the source code:
 
-git clone git@github.com:rat4/ColossusCoin2.git ColossusCoin2
+git clone git@github.com:rat4/FlyCoin.git FlyCoin
 
 2.  Download and install MacPorts from http://www.macports.org/
 
@@ -41,14 +41,14 @@ sudo port install boost db48 openssl miniupnpc
 Optionally install qrencode (and set USE_QRCODE=1):
 sudo port install qrencode
 
-4.  Now you should be able to build ColossusCoin2d:
+4.  Now you should be able to build FlyCoind:
 
-cd ColossusCoin2/src
+cd FlyCoin/src
 make -f makefile.osx
 
 Run:
-  ./ColossusCoin2d --help  # for a list of command-line options.
+  ./FlyCoind --help  # for a list of command-line options.
 Run
-  ./ColossusCoin2d -daemon # to start the ColossusCoin2 daemon.
+  ./FlyCoind -daemon # to start the FlyCoin daemon.
 Run
-  ./ColossusCoin2d help # When the daemon is running, to get a list of RPC commands
+  ./FlyCoind help # When the daemon is running, to get a list of RPC commands

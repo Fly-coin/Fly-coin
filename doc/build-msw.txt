@@ -7,7 +7,7 @@ cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
 software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building ColossusCoin2 QT, the
+See readme-qt.rst for instructions on building FlyCoin QT, the
 graphical user interface.
 
 WINDOWS BUILD NOTES
@@ -153,10 +153,10 @@ mingw32-make
 
 Create libleveldb.a and libmemenv.a.
 ------------------------------------
-For this we have ColossusCoin2 in C:/ColossusCoin2
+For this we have FlyCoin in C:/FlyCoin
 In Msys shell. 
 
-cd /C/ColossusCoin2/src/leveldb
+cd /C/FlyCoin/src/leveldb
 TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a
 
 
@@ -164,7 +164,7 @@ TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a
 Compile the Windows QT.
 -----------------------
 
-Edit the ColossusCoin2-qt.pro file and add the following code above OBJECTS_DIR = build
+Edit the FlyCoin-qt.pro file and add the following code above OBJECTS_DIR = build
 
 BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
 BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
@@ -180,15 +180,15 @@ QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
 
 In cmd run
 set PATH=%PATH%;C:\Qt\4.8.6\bin
-cd C:\ColossusCoin2\
-qmake "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=1" ColossusCoin2-qt.pro
+cd C:\FlyCoin\
+qmake "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=1" FlyCoin-qt.pro
 mingw32-make -f Makefile.Release
 
-Your ColossusCoin2.exe will be in the release folder of the source code.
+Your FlyCoin.exe will be in the release folder of the source code.
 
-Compiling ColossusCoin2d.
+Compiling FlyCoind.
 -------------------
-Navigate to  C:\ColossusCoin2\src\makefile.mingw and open with your text editor. Make sure all the deps point to the correct path.
+Navigate to  C:\FlyCoin\src\makefile.mingw and open with your text editor. Make sure all the deps point to the correct path.
 
 BOOST_SUFFIX?=-mgw49-mt-s-1_55
 
@@ -219,9 +219,9 @@ LIBS= \
  -l crypto
 
 
-In the Msys shell, you can now compile ColossusCoin2d.
+In the Msys shell, you can now compile FlyCoind.
 
 Code:
-cd /c/ColossusCoin2/src
+cd /c/FlyCoin/src
 make -f makefile.mingw
-strip ColossusCoin2d.exe
+strip FlyCoind.exe

@@ -141,7 +141,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 CV2</string>
+          <string notr="true">0.00 FLY</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -221,7 +221,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 CV2</string>
+          <string notr="true">0.00 FLY</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -310,7 +310,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 CV2</string>
+          <string notr="true">0.00 FLY</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -348,7 +348,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 CV2</string>
+          <string notr="true">0.00 FLY</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>

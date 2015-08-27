@@ -154,7 +154,7 @@ OBJS= \
     obj/scrypt-x86.o \
     obj/scrypt-x86_64.o 
 
-all: ColossusCoin2d
+all: FlyCoind
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -195,11 +195,11 @@ obj/%.o: %.c
 		     -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 		  rm -f $(@:%.o=%.d)
 		  
-ColossusCoin2d: $(OBJS:obj/%=obj/%)
+FlyCoind: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f ColossusCoin2d
+	-rm -f FlyCoind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj-test/*.o

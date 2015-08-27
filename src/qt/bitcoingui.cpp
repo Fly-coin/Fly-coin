@@ -87,7 +87,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 {
     setMinimumSize(870,620);
             resize(870,620);
-    setWindowTitle(tr("ColossusCoin2") + " - " + tr("Wallet"));
+    setWindowTitle(tr("FlyCoin") + " - " + tr("Wallet"));
 #ifndef Q_OS_MAC
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
     setWindowIcon(QIcon(":icons/bitcoin"));
@@ -266,7 +266,7 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(chatAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
-    sendCoinsAction->setToolTip(tr("Send coins to a ColossusCoin2 address"));
+    sendCoinsAction->setToolTip(tr("Send coins to a FlyCoin address"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
@@ -313,8 +313,8 @@ void BitcoinGUI::createActions()
     quitAction->setToolTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About ColossusCoin2"), this);
-    aboutAction->setToolTip(tr("Show information about ColossusCoin2"));
+    aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About FlyCoin"), this);
+    aboutAction->setToolTip(tr("Show information about FlyCoin"));
     aboutAction->setMenuRole(QAction::AboutRole);
 
         charityAction = new QAction(QIcon(":/icons/bitcoin"), tr("&MultiSend"), this);
@@ -328,7 +328,7 @@ void BitcoinGUI::createActions()
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
-    optionsAction->setToolTip(tr("Modify configuration options for ColossusCoin2"));
+    optionsAction->setToolTip(tr("Modify configuration options for FlyCoin"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Show / Hide"), this);
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
@@ -483,7 +483,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
 #endif
             if(trayIcon)
             {
-                trayIcon->setToolTip(tr("ColossusCoin2 client") + QString(" ") + tr("[testnet]"));
+                trayIcon->setToolTip(tr("FlyCoin client") + QString(" ") + tr("[testnet]"));
                 trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
                 toggleHideAction->setIcon(QIcon(":/icons/toolbar_testnet"));
             }
@@ -547,7 +547,7 @@ void BitcoinGUI::createTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIconMenu = new QMenu(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setToolTip(tr("ColossusCoin2 client"));
+    trayIcon->setToolTip(tr("FlyCoin client"));
     trayIcon->setIcon(QIcon(":/icons/toolbar"));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -626,7 +626,7 @@ void BitcoinGUI::setNumConnections(int count)
     default: icon = ":/icons/connect_4"; break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to ColossusCoin2 network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to FlyCoin network", "", count));
 }
 
 void BitcoinGUI::setNumBlocks(int count, int nTotalBlocks)
@@ -950,7 +950,7 @@ void BitcoinGUI::dropEvent(QDropEvent *event)
         if (nValidUrisFound)
             gotoSendCoinsPage();
         else
-            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters."));
+            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters."));
     }
 
     event->acceptProposedAction();
@@ -965,7 +965,7 @@ void BitcoinGUI::handleURI(QString strURI)
         gotoSendCoinsPage();
     }
     else
-        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters."));
+        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters."));
 }
 
 void BitcoinGUI::setEncryptionStatus(int status)
@@ -1043,7 +1043,7 @@ void BitcoinGUI::checkWallet()
                 tr("Wallet passed integrity test!\n"
                    "Nothing found to fix."));
   else
-                notificator->notify(Notificator::Warning, //tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters."));
+                notificator->notify(Notificator::Warning, //tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters."));
                         tr("Check Wallet Information"), tr("Wallet failed integrity test!\n\n"
                   "Mismatched coin(s) found: %1.\n"
                   "Amount in question: %2.\n"

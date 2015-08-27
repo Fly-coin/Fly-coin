@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_WALLET_H
@@ -715,7 +715,7 @@ public:
         if (!IsFromMe()) // using wtx's cached debit
             return false;
 		
-		//presstab ColossusCoin2, removed code that checks walletdb for confirmation, we want blockchain info only
+		//presstab FlyCoin, removed code that checks walletdb for confirmation, we want blockchain info only
 		
         return false;
     }

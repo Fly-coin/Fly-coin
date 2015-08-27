@@ -1,4 +1,4 @@
-Copyright (c) 2014 ColossusCoin2 Developers <br />
+Copyright (c) 2014 FlyCoin Developers <br />
 Copyright (c) 2009-2012 Bitcoin Developers
 
 Distributed under the MIT/X11 software license, see the accompanying
@@ -10,7 +10,7 @@ software written by Thomas Bernard.
 
 <h1>Build Windows</h1>
 
-See readme-qt.rst for instructions on building ColossusCoin2 QT, the
+See readme-qt.rst for instructions on building FlyCoin QT, the
 graphical user interface.
 
 Compilers Supported
@@ -66,10 +66,10 @@ MSYS shell:
     mkdir miniupnpc
     cp *.h miniupnpc/
 
-ColossusCoin2
+FlyCoin
 -------
 DOS prompt:
 
-    cd \ColossusCoin2\src
+    cd \FlyCoin\src
     mingw32-make -f makefile.mingw
-    strip ColossusCoin2d.exe
+    strip FlyCoind.exe

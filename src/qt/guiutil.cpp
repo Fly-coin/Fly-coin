@@ -78,7 +78,7 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
     // coin: check prefix
-    if(uri.scheme() != QString("ColossusCoin2"))
+    if(uri.scheme() != QString("FlyCoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -123,13 +123,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert ColossusCoin2:// to ColossusCoin2:
+    // Convert FlyCoin:// to FlyCoin:
     //
     //    Cannot handle this later, because bitcoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("ColossusCoin2://"))
+    if(uri.startsWith("FlyCoin://"))
     {
-        uri.replace(0, 12, "ColossusCoin2:");
+        uri.replace(0, 12, "FlyCoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -273,7 +273,7 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "ColossusCoin2.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "FlyCoin.lnk";
 }
 
 bool GetStartOnSystemStartup()
@@ -355,7 +355,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "ColossusCoin2.desktop";
+    return GetAutostartDir() / "FlyCoin.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -396,7 +396,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         // Write a bitcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=ColossusCoin2\n";
+        optionFile << "Name=FlyCoin\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -417,10 +417,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("ColossusCoin2-Qt") + " " + tr("version") + " " +
+    header = tr("FlyCoin-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  ColossusCoin2-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  FlyCoin-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -429,7 +429,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("ColossusCoin2-Qt"));
+    setWindowTitle(tr("FlyCoin-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

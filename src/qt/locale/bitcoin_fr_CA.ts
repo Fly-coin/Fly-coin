@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ColossusCoin2</source>
-        <translation>Au sujet de ColossusCoin2</translation>
+        <source>About FlyCoin</source>
+        <translation>Au sujet de FlyCoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ColossusCoin2&lt;/b&gt; version</source>
-        <translation>Version de &lt;b&gt;ColossusCoin2&lt;/b&gt;</translation>
+        <source>&lt;b&gt;FlyCoin&lt;/b&gt; version</source>
+        <translation>Version de &lt;b&gt;FlyCoin&lt;/b&gt;</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The ColossusCoin2 developers</source>
+Copyright © 2014 The FlyCoin developers</source>
         <translation>Copyright © 2009-2014 Les développeurs Bitcoin
 Copyright © 2012-2014 Les développeurs NovaCoin
-Copyright © 2014 Les développeurs ColossusCoin2</translation>
+Copyright © 2014 Les développeurs FlyCoin</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -65,7 +65,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-46"/>
-        <source>These are your ColossusCoin2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your FlyCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation>Ce sont vos adresses pour recevoir vos paiements. Vous pouvez utiliser une adresse différente pour chaque réception afin d&apos;identifier facilement le payeur.</translation>
     </message>
     <message>
@@ -80,8 +80,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a ColossusCoin2 address</source>
-        <translation>Signer un message afin de valider l&apos;identité de votre adresse ColossusCoin2</translation>
+        <source>Sign a message to prove you own a FlyCoin address</source>
+        <translation>Signer un message afin de valider l&apos;identité de votre adresse FlyCoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -95,8 +95,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified ColossusCoin2 address</source>
-        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse ColossusCoin2 spécifique.</translation>
+        <source>Verify a message to ensure it was signed with a specified FlyCoin address</source>
+        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse FlyCoin spécifique.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -237,7 +237,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+1"/>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR COINS&lt;/b&gt;!</source>
-        <translation>ATTENTION : Si vous cryptez votre portefeuille et perdez votre passphrase, vous ne pourrez plus accéder à vos ColossusCoin2s</translation>
+        <translation>ATTENTION : Si vous cryptez votre portefeuille et perdez votre passphrase, vous ne pourrez plus accéder à vos FlyCoins</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -263,8 +263,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-58"/>
-        <source>ColossusCoin2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>L&apos;application ColossusCoin2 va désormais se terminer afin de finaliser le processus de cryptage. Merci de noter que le cryptage du portefeuille ne garantit pas de se prémunir du vol via l&apos;utilisation de malware, qui auraient pu infecter votre ordinateur. </translation>
+        <source>FlyCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>L&apos;application FlyCoin va désormais se terminer afin de finaliser le processus de cryptage. Merci de noter que le cryptage du portefeuille ne garantit pas de se prémunir du vol via l&apos;utilisation de malware, qui auraient pu infecter votre ordinateur. </translation>
     </message>
     <message>
         <location line="+13"/>
@@ -377,8 +377,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+6"/>
-        <source>Show information about ColossusCoin2</source>
-        <translation>Afficher des informations au sujet du ColossusCoin2</translation>
+        <source>Show information about FlyCoin</source>
+        <translation>Afficher des informations au sujet du FlyCoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -427,13 +427,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-64"/>
-        <source>Send coins to a ColossusCoin2 address</source>
-        <translation>Envoyer des monnaies vers une adresse ColossusCoin2</translation>
+        <source>Send coins to a FlyCoin address</source>
+        <translation>Envoyer des monnaies vers une adresse FlyCoin</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Modify configuration options for ColossusCoin2</source>
-        <translation>Modification des options de configuration de ColossusCoin2</translation>
+        <source>Modify configuration options for FlyCoin</source>
+        <translation>Modification des options de configuration de FlyCoin</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -472,8 +472,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-202"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -482,8 +482,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+180"/>
-        <source>&amp;About ColossusCoin2</source>
-        <translation>A propos de ColossusCoin2</translation>
+        <source>&amp;About FlyCoin</source>
+        <translation>A propos de FlyCoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -539,13 +539,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+60"/>
-        <source>ColossusCoin2 client</source>
-        <translation>Client ColossusCoin2</translation>
+        <source>FlyCoin client</source>
+        <translation>Client FlyCoin</translation>
     </message>
     <message numerus="yes">
         <location line="+75"/>
-        <source>%n active connection(s) to ColossusCoin2 network</source>
-        <translation><numerusform>%n connexion active au réseau ColossusCoin2</numerusform><numerusform>%n connexions actives au réseau ColossusCoin2</numerusform></translation>
+        <source>%n active connection(s) to FlyCoin network</source>
+        <translation><numerusform>%n connexion active au réseau FlyCoin</numerusform><numerusform>%n connexions actives au réseau FlyCoin</numerusform></translation>
     </message>
     <message>
         <location line="+40"/>
@@ -584,13 +584,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-312"/>
-        <source>About ColossusCoin2 card</source>
-        <translation>Au sujet de la carte ColossusCoin2</translation>
+        <source>About FlyCoin card</source>
+        <translation>Au sujet de la carte FlyCoin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about ColossusCoin2 card</source>
-        <translation>Informations sur la carte ColossusCoin2</translation>
+        <source>Show information about FlyCoin card</source>
+        <translation>Informations sur la carte FlyCoin</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -669,8 +669,8 @@ Adresse : %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters.</source>
-        <translation>L&apos;adresse du portefeuille ColossusCoin2 n&apos;as pas pu être correctement identifiée, car invalide ou malformée.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters.</source>
+        <translation>L&apos;adresse du portefeuille FlyCoin n&apos;as pas pu être correctement identifiée, car invalide ou malformée.</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -729,8 +729,8 @@ Adresse : %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
-        <source>A fatal error occurred. ColossusCoin2 can no longer continue safely and will quit.</source>
-        <translation>Une erreur fatale a été rencontrée. L&apos;application ColossusCoin2 ne peut plus être s&apos;exécuter de façon correcte et doit se terminer.</translation>
+        <source>A fatal error occurred. FlyCoin can no longer continue safely and will quit.</source>
+        <translation>Une erreur fatale a été rencontrée. L&apos;application FlyCoin ne peut plus être s&apos;exécuter de façon correcte et doit se terminer.</translation>
     </message>
 </context>
 <context>
@@ -1063,8 +1063,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ColossusCoin2 address.</source>
-        <translation>L&apos;adresse &quot;%1&quot; renseignée n&apos;est pas une adresse ColossusCoin2 valide.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid FlyCoin address.</source>
+        <translation>L&apos;adresse &quot;%1&quot; renseignée n&apos;est pas une adresse FlyCoin valide.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1082,8 +1082,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ColossusCoin2-Qt</source>
-        <translation>ColossusCoin2-Qt</translation>
+        <source>FlyCoin-Qt</source>
+        <translation>FlyCoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1155,13 +1155,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ColossusCoin2 after logging in to the system.</source>
-        <translation>Démarrage automatique du client ColossusCoin2 lors de la connexion au système</translation>
+        <source>Automatically start FlyCoin after logging in to the system.</source>
+        <translation>Démarrage automatique du client FlyCoin lors de la connexion au système</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ColossusCoin2 on system login</source>
-        <translation>&amp;Démarrage du client ColossusCoin2 à la connexion au système</translation>
+        <source>&amp;Start FlyCoin on system login</source>
+        <translation>&amp;Démarrage du client FlyCoin à la connexion au système</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1180,8 +1180,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ColossusCoin2 client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Ouverture automatique du port client de ColossusCoin2 sur le routeur. Ceci ne fonctionne que dans le cas où le support UPnP sur votre routeur existe et est actif.</translation>
+        <source>Automatically open the FlyCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Ouverture automatique du port client de FlyCoin sur le routeur. Ceci ne fonctionne que dans le cas où le support UPnP sur votre routeur existe et est actif.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1190,8 +1190,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ColossusCoin2 network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Connexion au réseau ColossusCoin2 à travers un proxy SOCKS (e.g. Connexion via le réseau Tor).</translation>
+        <source>Connect to the FlyCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Connexion au réseau FlyCoin à travers un proxy SOCKS (e.g. Connexion via le réseau Tor).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1265,8 +1265,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>La langue d&apos;interface de de l&apos;utilisateur peut être définie ici. Ces modification seront effectives après redémarrage de l&apos;application ColossusCoin2</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting FlyCoin.</source>
+        <translation>La langue d&apos;interface de de l&apos;utilisateur peut être définie ici. Ces modification seront effectives après redémarrage de l&apos;application FlyCoin</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1280,8 +1280,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show ColossusCoin2 addresses in the transaction list or not.</source>
-        <translation>Afficher les adresses ColossusCoin2 au sein de la liste de transactions</translation>
+        <source>Whether to show FlyCoin addresses in the transaction list or not.</source>
+        <translation>Afficher les adresses FlyCoin au sein de la liste de transactions</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1327,8 +1327,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>Les paramètres prendront effet après redémarrage du client ColossusCoin2</translation>
+        <source>This setting will take effect after restarting FlyCoin.</source>
+        <translation>Les paramètres prendront effet après redémarrage du client FlyCoin</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1346,8 +1346,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="+33"/>
         <location line="+231"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ColossusCoin2 network after a connection is established, but this process has not completed yet.</source>
-        <translation>Les informations affichées peuvent être obsolètes. Votre portefeuille se synchronise automatiquement avec le réseau ColossusCoin2 mais ce processus n&apos;est pas encore terminé.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the FlyCoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Les informations affichées peuvent être obsolètes. Votre portefeuille se synchronise automatiquement avec le réseau FlyCoin mais ce processus n&apos;est pas encore terminé.</translation>
     </message>
     <message>
         <location line="-160"/>
@@ -1562,8 +1562,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ColossusCoin2-Qt help message to get a list with possible ColossusCoin2 command-line options.</source>
-        <translation>Afficher le message d&apos;aide ColossusCoin2-Qt afin d&apos;obtenir la liste des options de de L&apos;outil en ligne de commande ColossusCoin2</translation>
+        <source>Show the FlyCoin-Qt help message to get a list with possible FlyCoin command-line options.</source>
+        <translation>Afficher le message d&apos;aide FlyCoin-Qt afin d&apos;obtenir la liste des options de de L&apos;outil en ligne de commande FlyCoin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1582,13 +1582,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="-104"/>
-        <source>ColossusCoin2 - Debug window</source>
-        <translation>ColossusCoin2 - Fenêtre de déboggage</translation>
+        <source>FlyCoin - Debug window</source>
+        <translation>FlyCoin - Fenêtre de déboggage</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ColossusCoin2 Core</source>
-        <translation>ColossusCoin2 Core</translation>
+        <source>FlyCoin Core</source>
+        <translation>FlyCoin Core</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1597,8 +1597,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ColossusCoin2 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Ouvrir le fichier journal de debug ColossusCoin2 au sein du répertoire courant. Cette opération peut prendre quelques secondes dans le cas de fichiers journaux volumineux.</translation>
+        <source>Open the FlyCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Ouvrir le fichier journal de debug FlyCoin au sein du répertoire courant. Cette opération peut prendre quelques secondes dans le cas de fichiers journaux volumineux.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1607,8 +1607,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the ColossusCoin2 RPC console.</source>
-        <translation>Bienvenue sur la console ColossusCoin2 RPC.</translation>
+        <source>Welcome to the FlyCoin RPC console.</source>
+        <translation>Bienvenue sur la console FlyCoin RPC.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1681,8 +1681,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 CV2</source>
-        <translation>123.456 CV2 {0.00 ?}</translation>
+        <source>0.00 FLY</source>
+        <translation>123.456 FLY {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1751,8 +1751,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 CV2</source>
-        <translation>123.456 CV2</translation>
+        <source>123.456 FLY</source>
+        <translation>123.456 FLY</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1766,8 +1766,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Entrer une adresse ColossusCoin2 (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Entrer une adresse FlyCoin (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1866,8 +1866,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+251"/>
-        <source>WARNING: Invalid ColossusCoin2 address</source>
-        <translation>AVERTISSEMENT: Adresse ColossusCoin2 Invalide</translation>
+        <source>WARNING: Invalid FlyCoin address</source>
+        <translation>AVERTISSEMENT: Adresse FlyCoin Invalide</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1877,7 +1877,7 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="+4"/>
         <source>WARNING: unknown change address</source>
-        <translation>AVERTISSEMET: Adresse ColossusCoin2 Invalide</translation>
+        <translation>AVERTISSEMET: Adresse FlyCoin Invalide</translation>
     </message>
 </context>
 <context>
@@ -1940,8 +1940,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Entrer une adresse ColossusCoin2 (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Entrer une adresse FlyCoin (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
 </context>
 <context>
@@ -1965,7 +1965,7 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location line="+18"/>
         <source>The address to sign the message with (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Entrer une adresse ColossusCoin2 (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <translation>Entrer une adresse FlyCoin (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2001,8 +2001,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ColossusCoin2 address</source>
-        <translation>Signer le message afin de prouver l&apos;identité de votre adresse ColossusCoin2</translation>
+        <source>Sign the message to prove you own this FlyCoin address</source>
+        <translation>Signer le message afin de prouver l&apos;identité de votre adresse FlyCoin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2033,8 +2033,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ColossusCoin2 address</source>
-        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse ColossusCoin2 spécifique.</translation>
+        <source>Verify the message to ensure it was signed with the specified FlyCoin address</source>
+        <translation>Vérifier un message pour s&apos;assurer qu&apos;il vient d&apos;un adresse FlyCoin spécifique.</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2044,8 +2044,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Entrer une adresse ColossusCoin2 (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Entrer une adresse FlyCoin (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2054,8 +2054,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ColossusCoin2 signature</source>
-        <translation>Entrer une signature ColossusCoin2</translation>
+        <source>Enter FlyCoin signature</source>
+        <translation>Entrer une signature FlyCoin</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2625,8 +2625,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+33"/>
-        <source>ColossusCoin2 version</source>
-        <translation>Version ColossusCoin2</translation>
+        <source>FlyCoin version</source>
+        <translation>Version FlyCoin</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2635,8 +2635,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or ColossusCoin2d</source>
-        <translation>Envoyer commande à -server ou ColossusCoin2d</translation>
+        <source>Send command to -server or FlyCoind</source>
+        <translation>Envoyer commande à -server ou FlyCoind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2655,13 +2655,13 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ColossusCoin2.conf)</source>
-        <translation>Spécifier le fichier de configuration (defaut: ColossusCoin2.conf)</translation>
+        <source>Specify configuration file (default: FlyCoin.conf)</source>
+        <translation>Spécifier le fichier de configuration (defaut: FlyCoin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: ColossusCoin2d.pid)</source>
-        <translation>Spécifier le fichier pid (defaut: ColossusCoin2d.pid)
+        <source>Specify pid file (default: FlyCoind.pid)</source>
+        <translation>Spécifier le fichier pid (defaut: FlyCoind.pid)
 </translation>
     </message>
     <message>
@@ -2811,8 +2811,8 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
     </message>
     <message>
         <location line="+61"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ColossusCoin2 will not work properly.</source>
-        <translation>Avertissement: Veuillez vérifier la date et l&apos;heure de votre ordinateur. ColossusCoin2 ne pourra pas fonctionner correctement si l&apos;horloge est réglée de façon incorrecte</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong FlyCoin will not work properly.</source>
+        <translation>Avertissement: Veuillez vérifier la date et l&apos;heure de votre ordinateur. FlyCoin ne pourra pas fonctionner correctement si l&apos;horloge est réglée de façon incorrecte</translation>
     </message>
     <message>
         <location line="-31"/>
@@ -3001,24 +3001,24 @@ Les montants inférieurs à  0.546 fois les frais minimum de relais apparaissent
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;FlyCoin Alert&quot; admin@foo.com
 </source>
         <translation>%s, vous devez définir un mot de passe rpc &apos;rpcpassword&apos; au sein du fichier de configuration:
  %s
 Il est recommandé d&apos;utiliser le mot de passe aléatoire suivant:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (il n&apos;est pas nécessaire de retenir ce mot de passe)
 Le nom d&apos;utilisateur et le mot de passe doivent IMPERATIVEMENT être différents.
 Si le fichier n&apos;existe pas, il est nécessaire de le créer, avec les droit de lecture au propriétaire seulement.
 Il est également recommandé d&apos;utiliser l&apos;option alertnotify afin d&apos;être notifié des problèmes;
-par exemple: alertnotify=echo %%s | mail -s &quot;Alerte ColossusCoin2&quot; admin@foo.com
+par exemple: alertnotify=echo %%s | mail -s &quot;Alerte FlyCoin&quot; admin@foo.com
 </translation>
     </message>
     <message>
@@ -3143,13 +3143,13 @@ par exemple: alertnotify=echo %%s | mail -s &quot;Alerte ColossusCoin2&quot; adm
     </message>
     <message>
         <location line="+1"/>
-        <source>Cannot obtain a lock on data directory %s.  ColossusCoin2 is probably already running.</source>
-        <translation>Echec lors de la tentative de verrouillage des données du répertoire %s. L&apos;application ColossusCoin2 est probablement déjà en cours d&apos;exécution</translation>
+        <source>Cannot obtain a lock on data directory %s.  FlyCoin is probably already running.</source>
+        <translation>Echec lors de la tentative de verrouillage des données du répertoire %s. L&apos;application FlyCoin est probablement déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <location line="-98"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+140"/>
@@ -3183,13 +3183,13 @@ par exemple: alertnotify=echo %%s | mail -s &quot;Alerte ColossusCoin2&quot; adm
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ColossusCoin2</source>
-        <translation>Erreur de chargement du fichier wallet.dat: le portefeuille nécessite une version plus récente de l&apos;application ColossusCoin2</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of FlyCoin</source>
+        <translation>Erreur de chargement du fichier wallet.dat: le portefeuille nécessite une version plus récente de l&apos;application FlyCoin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ColossusCoin2 to complete</source>
-        <translation>le portefeuille nécessite d&apos;être réédité : Merci de relancer l&apos;application ColossusCoin2</translation>
+        <source>Wallet needed to be rewritten: restart FlyCoin to complete</source>
+        <translation>le portefeuille nécessite d&apos;être réédité : Merci de relancer l&apos;application FlyCoin</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3258,8 +3258,8 @@ par exemple: alertnotify=echo %%s | mail -s &quot;Alerte ColossusCoin2&quot; adm
     </message>
     <message>
         <location line="+122"/>
-        <source>Unable to bind to %s on this computer. ColossusCoin2 is probably already running.</source>
-        <translation>Connexion au port %s impossible. L&apos;application ColossusCoin2 est probablement déjà en cours d&apos;exécution</translation>
+        <source>Unable to bind to %s on this computer. FlyCoin is probably already running.</source>
+        <translation>Connexion au port %s impossible. L&apos;application FlyCoin est probablement déjà en cours d&apos;exécution</translation>
     </message>
     <message>
         <location line="-97"/>

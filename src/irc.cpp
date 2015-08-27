@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -190,7 +190,7 @@ bool GetIPFromIRC(SOCKET hSocket, string strMyName, CNetAddr& ipRet)
 void ThreadIRCSeed(void* parg)
 {
     // Make this thread recognisable as the IRC seeding thread
-    RenameThread("ColossusCoin2-ircseed");
+    RenameThread("FlyCoin-ircseed");
 
     try
     {
@@ -303,16 +303,16 @@ void ThreadIRCSeed2(void* parg)
         }
 
         if (fTestNet) {
-            Send(hSocket, "JOIN #ColossusCoin2TEST\r");
-            Send(hSocket, "WHO #ColossusCoin2TEST\r");
+            Send(hSocket, "JOIN #FlyCoinTEST\r");
+            Send(hSocket, "WHO #FlyCoinTEST\r");
         } else {
-            // randomly join #ColossusCoin200-#ColossusCoin205
+            // randomly join #FlyCoin00-#FlyCoin05
             //int channel_number = GetRandInt(5);
             int channel_number = 0;
             // Channel number is always 0 for initial release
             //int channel_number = 0;
-            Send(hSocket, strprintf("JOIN #ColossusCoin2%02d\r", channel_number).c_str());
-            Send(hSocket, strprintf("WHO #ColossusCoin2%02d\r", channel_number).c_str());
+            Send(hSocket, strprintf("JOIN #FlyCoin%02d\r", channel_number).c_str());
+            Send(hSocket, strprintf("WHO #FlyCoin%02d\r", channel_number).c_str());
         }
 
         int64_t nStart = GetTime();

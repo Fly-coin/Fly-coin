@@ -1,4 +1,4 @@
-<h1>ColossusCoin2</h1>
+<h1>FlyCoin</h1>
 <h4><i>Environmentally friendly, peer to peer digital currency</i></h4>
 <img src="https://i.imgur.com/fY47HwT.jpg" />
 
@@ -11,8 +11,8 @@
 | Stake Weight | 7/28 min/max days |
 | Stake Threshold | 10 days |
 | Fee | 20 Coin |
-| RPC Port  | 43521  |
-| P2P Port | 43522 |
+| RPC Port  | 41567  |
+| P2P Port | 41566 |
 | Cryptographic Algorithm  | x11  |
 | Difficulty Retarget  | 16 minutes or 8 blocks |
 

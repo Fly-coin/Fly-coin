@@ -11,4 +11,4 @@
 | src/qt/res/icons/bitcoin.png, src/qt/res/icons/toolbar.png | Bitboy (optimized for 16x16 by Wladimir van der Laan) | Public Domain |
 | scripts/img/reload.xcf (modified),src/qt/res/movies/update_spinner.mng, pack: Kids | Everaldo (Everaldo Coelho) | GNU/GPL |
 | src/qt/res/images/splash2.jpg (Wallet image) | Crobbo (forum) | Public domain |
-| ColossusCoin2 Logo | Evan | Creative Commons Attribution 4.0 International License |
+| FlyCoin Logo | Evan | Creative Commons Attribution 4.0 International License |

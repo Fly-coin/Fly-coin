@@ -1,9 +1,9 @@
 #################
 ## Build
 #################
-/ColossusCoin2d
-/src/ColossusCoin2d
-/ColossusCoin2-qt
+/FlyCoind
+/src/FlyCoind
+/FlyCoin-qt
 /Makefile
 /qrc_Background.cpp
 /qrc_bitcoin.cpp

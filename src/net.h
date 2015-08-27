@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_NET_H
@@ -204,7 +204,7 @@ public:
     std::set<CAddress> setAddrKnown;
     bool fGetAddr;
     std::set<uint256> setKnown;
-    uint256 hashCheckpointKnown; // ColossusCoin2: known sent sync-checkpoint
+    uint256 hashCheckpointKnown; // FlyCoin: known sent sync-checkpoint
 
     // inventory based relay
     mruset<CInv> setInventoryKnown;

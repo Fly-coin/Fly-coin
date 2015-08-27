@@ -71,7 +71,7 @@ QFrame {
 
 /* Coin Image */
 #label_2 {
-	qproperty-pixmap: url($themes-dir/Luminous/ColossusCoin128.png);
+	qproperty-pixmap: url($themes-dir/Luminous/FlyCoin128.png);
 }
 
 /* Bottom status bar */

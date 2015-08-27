@@ -3,19 +3,19 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About ColossusCoin2</source>
-        <translation>Tietoa ColossusCoin2ista</translation>
+        <source>About FlyCoin</source>
+        <translation>Tietoa FlyCoinista</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;ColossusCoin2&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;ColossusCoin2&lt;/b&gt; versio</translation>
+        <source>&lt;b&gt;FlyCoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;FlyCoin&lt;/b&gt; versio</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The ColossusCoin2 developers</source>
+Copyright © 2014 The FlyCoin developers</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -64,8 +64,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-46"/>
-        <source>These are your ColossusCoin2 addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>Nämä ovat ColossusCoin2-osoitteesi rahansiirtojen vastaanottoa varten. Jos haluat, voit antaa jokaiselle lähettäjälle oman osoitteen jotta voit pitää kirjaa sinulle rahaa siirtäneistä henkilöistä.</translation>
+        <source>These are your FlyCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>Nämä ovat FlyCoin-osoitteesi rahansiirtojen vastaanottoa varten. Jos haluat, voit antaa jokaiselle lähettäjälle oman osoitteen jotta voit pitää kirjaa sinulle rahaa siirtäneistä henkilöistä.</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -79,8 +79,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="+11"/>
-        <source>Sign a message to prove you own a ColossusCoin2 address</source>
-        <translation>Allekirjoita viesti osoittaaksesi ColossusCoin2-osoitteesi omistajuus</translation>
+        <source>Sign a message to prove you own a FlyCoin address</source>
+        <translation>Allekirjoita viesti osoittaaksesi FlyCoin-osoitteesi omistajuus</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -94,8 +94,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-14"/>
-        <source>Verify a message to ensure it was signed with a specified ColossusCoin2 address</source>
-        <translation>Vahvista viesti varmistaaksesi että kyseinen ColossusCoin2-osoitteesi on allekirjoittanut sen</translation>
+        <source>Verify a message to ensure it was signed with a specified FlyCoin address</source>
+        <translation>Vahvista viesti varmistaaksesi että kyseinen FlyCoin-osoitteesi on allekirjoittanut sen</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -262,8 +262,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-58"/>
-        <source>ColossusCoin2 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>ColossusCoin2-ohjelma sulkee itsensä päättääkseen salauksen luonnin. Muista, että lompakon salaaminen ei täysin turvaa kolikoitasi haittaohjelmien aiheuttamien varkauksien uhalta.</translation>
+        <source>FlyCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>FlyCoin-ohjelma sulkee itsensä päättääkseen salauksen luonnin. Muista, että lompakon salaaminen ei täysin turvaa kolikoitasi haittaohjelmien aiheuttamien varkauksien uhalta.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -376,8 +376,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="+6"/>
-        <source>Show information about ColossusCoin2</source>
-        <translation>Näytä tietoja ColossusCoin2ista</translation>
+        <source>Show information about FlyCoin</source>
+        <translation>Näytä tietoja FlyCoinista</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -426,13 +426,13 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-64"/>
-        <source>Send coins to a ColossusCoin2 address</source>
-        <translation>Lähetä kolikkoja ColossusCoin2 osoitteeseen</translation>
+        <source>Send coins to a FlyCoin address</source>
+        <translation>Lähetä kolikkoja FlyCoin osoitteeseen</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>Modify configuration options for ColossusCoin2</source>
-        <translation>Mukauta ColossusCoin2in konfigurointiasetuksia</translation>
+        <source>Modify configuration options for FlyCoin</source>
+        <translation>Mukauta FlyCoinin konfigurointiasetuksia</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -471,8 +471,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-202"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -481,8 +481,8 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="+180"/>
-        <source>&amp;About ColossusCoin2</source>
-        <translation>&amp;Tietoa ColossusCoin2ista</translation>
+        <source>&amp;About FlyCoin</source>
+        <translation>&amp;Tietoa FlyCoinista</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -538,13 +538,13 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     <message>
         <location line="+0"/>
         <location line="+60"/>
-        <source>ColossusCoin2 client</source>
-        <translation>ColossusCoin2-asiakas</translation>
+        <source>FlyCoin client</source>
+        <translation>FlyCoin-asiakas</translation>
     </message>
     <message numerus="yes">
         <location line="+75"/>
-        <source>%n active connection(s) to ColossusCoin2 network</source>
-        <translation><numerusform>%n aktiivinen yhteys ColossusCoin2-verkkoon</numerusform><numerusform>%n aktiivista yhteyttä ColossusCoin2-verkkoon</numerusform></translation>
+        <source>%n active connection(s) to FlyCoin network</source>
+        <translation><numerusform>%n aktiivinen yhteys FlyCoin-verkkoon</numerusform><numerusform>%n aktiivista yhteyttä FlyCoin-verkkoon</numerusform></translation>
     </message>
     <message>
         <location line="+40"/>
@@ -583,12 +583,12 @@ Tämä tuote sisältää OpenSSL-projektin kehittämää ohjelmistoa OpenSSL-ty�
     </message>
     <message>
         <location line="-312"/>
-        <source>About ColossusCoin2 card</source>
+        <source>About FlyCoin card</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about ColossusCoin2 card</source>
+        <source>Show information about FlyCoin card</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -667,8 +667,8 @@ Osoite: %4</translation>
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid ColossusCoin2 address or malformed URI parameters.</source>
-        <translation>URI-merkkijonoa ei voida jäsentää! Tämä voi johtua väärästä ColossusCoin2-osoitteesta tai väärässä muodossa olevista URI-parametreistä.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid FlyCoin address or malformed URI parameters.</source>
+        <translation>URI-merkkijonoa ei voida jäsentää! Tämä voi johtua väärästä FlyCoin-osoitteesta tai väärässä muodossa olevista URI-parametreistä.</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -727,8 +727,8 @@ Osoite: %4</translation>
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+109"/>
-        <source>A fatal error occurred. ColossusCoin2 can no longer continue safely and will quit.</source>
-        <translation>Vakava virhe kohdattu. ColossusCoin2-ohjelma ei voi enää jatkaa turvallisesti ja sulkee itsensä.</translation>
+        <source>A fatal error occurred. FlyCoin can no longer continue safely and will quit.</source>
+        <translation>Vakava virhe kohdattu. FlyCoin-ohjelma ei voi enää jatkaa turvallisesti ja sulkee itsensä.</translation>
     </message>
 </context>
 <context>
@@ -1061,8 +1061,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid ColossusCoin2 address.</source>
-        <translation>Syöttämäsi osoite &quot;%1&quot; ei ole hyväksytty ColossusCoin2-osoite.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid FlyCoin address.</source>
+        <translation>Syöttämäsi osoite &quot;%1&quot; ei ole hyväksytty FlyCoin-osoite.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1080,8 +1080,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     <message>
         <location filename="../guiutil.cpp" line="+420"/>
         <location line="+12"/>
-        <source>ColossusCoin2-Qt</source>
-        <translation>ColossusCoin2-Qt</translation>
+        <source>FlyCoin-Qt</source>
+        <translation>FlyCoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1153,13 +1153,13 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start ColossusCoin2 after logging in to the system.</source>
-        <translation>Käynnistä ColossusCoin2-asiakasohjelma automaattisesti kun olet kirjautunut järjestelmään.</translation>
+        <source>Automatically start FlyCoin after logging in to the system.</source>
+        <translation>Käynnistä FlyCoin-asiakasohjelma automaattisesti kun olet kirjautunut järjestelmään.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start ColossusCoin2 on system login</source>
-        <translation>%Käynnistä ColossusCoin2-asiakasohjelma kirjautuessasi</translation>
+        <source>&amp;Start FlyCoin on system login</source>
+        <translation>%Käynnistä FlyCoin-asiakasohjelma kirjautuessasi</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1178,8 +1178,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the ColossusCoin2 client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Avaa ColossusCoin2-asiakkaalle automaattisesti portti reitittimestä. Tämä toimii vain, kun reitittimesi tukee UPnP:tä ja se on aktivoituna.</translation>
+        <source>Automatically open the FlyCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Avaa FlyCoin-asiakkaalle automaattisesti portti reitittimestä. Tämä toimii vain, kun reitittimesi tukee UPnP:tä ja se on aktivoituna.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1188,8 +1188,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the ColossusCoin2 network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Yhdistä ColossusCoin2-verkkoon SOCKS-välityspalvelimen lävitse. (esim. yhdistettäessä Tor:n läpi).</translation>
+        <source>Connect to the FlyCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Yhdistä FlyCoin-verkkoon SOCKS-välityspalvelimen lävitse. (esim. yhdistettäessä Tor:n läpi).</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1263,8 +1263,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>Käyttöliittymän kieli voidaan valita tästä. Tämä asetus tulee voimaan vasta ColossusCoin2-asiakasohjelman uudelleenkäynnistyksen jälkeen.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting FlyCoin.</source>
+        <translation>Käyttöliittymän kieli voidaan valita tästä. Tämä asetus tulee voimaan vasta FlyCoin-asiakasohjelman uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1278,8 +1278,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Whether to show ColossusCoin2 addresses in the transaction list or not.</source>
-        <translation>Näytä tai piilota ColossusCoin2-osoitteet rahansiirtolistassa.</translation>
+        <source>Whether to show FlyCoin addresses in the transaction list or not.</source>
+        <translation>Näytä tai piilota FlyCoin-osoitteet rahansiirtolistassa.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1325,8 +1325,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting ColossusCoin2.</source>
-        <translation>Tämä asetus tulee voimaan vasta ColossusCoin2-asiakasohjelman uudelleenkäynnistyksen jälkeen.</translation>
+        <source>This setting will take effect after restarting FlyCoin.</source>
+        <translation>Tämä asetus tulee voimaan vasta FlyCoin-asiakasohjelman uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1344,8 +1344,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     <message>
         <location line="+33"/>
         <location line="+231"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ColossusCoin2 network after a connection is established, but this process has not completed yet.</source>
-        <translation>Näytettävät tiedot voivat olla vanhentuneet. Lompakkosi synkronoituu automaattisesti ColossusCoin2-verkon kanssa kun yhteys on muodostettu, mutta tätä prosessia ei ole viety vielä päätökseen.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the FlyCoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Näytettävät tiedot voivat olla vanhentuneet. Lompakkosi synkronoituu automaattisesti FlyCoin-verkon kanssa kun yhteys on muodostettu, mutta tätä prosessia ei ole viety vielä päätökseen.</translation>
     </message>
     <message>
         <location line="-160"/>
@@ -1560,8 +1560,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the ColossusCoin2-Qt help message to get a list with possible ColossusCoin2 command-line options.</source>
-        <translation>Näytä ColossusCoin2-Qt:n avustusohje saadaksesi listan käytettävistä ColossusCoin2in komentokehotteen määritteistä.</translation>
+        <source>Show the FlyCoin-Qt help message to get a list with possible FlyCoin command-line options.</source>
+        <translation>Näytä FlyCoin-Qt:n avustusohje saadaksesi listan käytettävistä FlyCoinin komentokehotteen määritteistä.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1580,13 +1580,13 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="-104"/>
-        <source>ColossusCoin2 - Debug window</source>
-        <translation>ColossusCoin2 - Debug-ikkuna</translation>
+        <source>FlyCoin - Debug window</source>
+        <translation>FlyCoin - Debug-ikkuna</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>ColossusCoin2 Core</source>
-        <translation>ColossusCoin2in ydin</translation>
+        <source>FlyCoin Core</source>
+        <translation>FlyCoinin ydin</translation>
     </message>
     <message>
         <location line="+279"/>
@@ -1595,8 +1595,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the ColossusCoin2 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Avaa ColossusCoin2-asiakasohjelman debug-lokitiedosto nykyisestä hakemistostaan. Tämä voi kestää muutaman sekunnin avattaessa suuria lokitiedostoja.</translation>
+        <source>Open the FlyCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Avaa FlyCoin-asiakasohjelman debug-lokitiedosto nykyisestä hakemistostaan. Tämä voi kestää muutaman sekunnin avattaessa suuria lokitiedostoja.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1605,8 +1605,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="-33"/>
-        <source>Welcome to the ColossusCoin2 RPC console.</source>
-        <translation>Tervetuloa ColossusCoin2in RPC-konsoliin.</translation>
+        <source>Welcome to the FlyCoin RPC console.</source>
+        <translation>Tervetuloa FlyCoinin RPC-konsoliin.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1679,8 +1679,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 CV2</source>
-        <translation>123.456 CV2 {0.00 ?}</translation>
+        <source>0.00 FLY</source>
+        <translation>123.456 FLY {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1749,8 +1749,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 CV2</source>
-        <translation>123.456 CV2</translation>
+        <source>123.456 FLY</source>
+        <translation>123.456 FLY</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1764,8 +1764,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Syötä ColossusCoin2-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Syötä FlyCoin-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1864,8 +1864,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+251"/>
-        <source>WARNING: Invalid ColossusCoin2 address</source>
-        <translation>VAROITUS: Epäkelpo ColossusCoin2-osoite</translation>
+        <source>WARNING: Invalid FlyCoin address</source>
+        <translation>VAROITUS: Epäkelpo FlyCoin-osoite</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1938,8 +1938,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Syötä ColossusCoin2-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Syötä FlyCoin-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
 </context>
 <context>
@@ -1999,8 +1999,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this ColossusCoin2 address</source>
-        <translation>Allekirjoita viesti vahvistaaksesi, että omistat tämän ColossusCoin2-osoitteen</translation>
+        <source>Sign the message to prove you own this FlyCoin address</source>
+        <translation>Allekirjoita viesti vahvistaaksesi, että omistat tämän FlyCoin-osoitteen</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2031,8 +2031,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified ColossusCoin2 address</source>
-        <translation>Vahvista viesti varmistaaksesi että se on allekirjoitettu kyseisellä ColossusCoin2-osoitteella</translation>
+        <source>Verify the message to ensure it was signed with the specified FlyCoin address</source>
+        <translation>Vahvista viesti varmistaaksesi että se on allekirjoitettu kyseisellä FlyCoin-osoitteella</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2042,8 +2042,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a ColossusCoin2 address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
-        <translation>Syötä ColossusCoin2-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
+        <source>Enter a FlyCoin address (e.g. CfwYhBmGXcFP2Po1NpRUEiK8km2)</source>
+        <translation>Syötä FlyCoin-osoite (esim. CfwYhBmGXcFP2Po1NpRUEiK8km2)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2052,8 +2052,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter ColossusCoin2 signature</source>
-        <translation>Syötä ColossusCoin2-allekirjoitus</translation>
+        <source>Enter FlyCoin signature</source>
+        <translation>Syötä FlyCoin-allekirjoitus</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2623,8 +2623,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+33"/>
-        <source>ColossusCoin2 version</source>
-        <translation>ColossusCoin2in versio</translation>
+        <source>FlyCoin version</source>
+        <translation>FlyCoinin versio</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2633,8 +2633,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or ColossusCoin2d</source>
-        <translation>Syötä komento kohteeseen -server tai ColossusCoin2d</translation>
+        <source>Send command to -server or FlyCoind</source>
+        <translation>Syötä komento kohteeseen -server tai FlyCoind</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2653,13 +2653,13 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: ColossusCoin2.conf)</source>
-        <translation>Määritä asetustiedosto (oletus: ColossusCoin2.conf)</translation>
+        <source>Specify configuration file (default: FlyCoin.conf)</source>
+        <translation>Määritä asetustiedosto (oletus: FlyCoin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: ColossusCoin2d.pid)</source>
-        <translation>Määritä prosessitiedosto (oletus: ColossusCoin2.pid)</translation>
+        <source>Specify pid file (default: FlyCoind.pid)</source>
+        <translation>Määritä prosessitiedosto (oletus: FlyCoin.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2808,8 +2808,8 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
     </message>
     <message>
         <location line="+61"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ColossusCoin2 will not work properly.</source>
-        <translation>Varoitus: Tarkista, että tietokoneesi aika ja päivämäärä ovat oikeassa! Jos kellosi on väärässä, ColossusCoin2 ei toimi oikein.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong FlyCoin will not work properly.</source>
+        <translation>Varoitus: Tarkista, että tietokoneesi aika ja päivämäärä ovat oikeassa! Jos kellosi on väärässä, FlyCoin ei toimi oikein.</translation>
     </message>
     <message>
         <location line="-31"/>
@@ -2998,23 +2998,23 @@ Tämä tarkoittaa, että ainakin %2 rahansiirtopalkkio tarvitaan.</translation>
         <source>%s, you must set a rpcpassword in the configuration file:
  %s
 It is recommended you use the following random password:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;FlyCoin Alert&quot; admin@foo.com
 </source>
         <translation>%s, sinun on asetettava rpcpassword asetustiedostoon:
 %s
 On suositeltavaa, että käytät seuraavaa arvottua salasanaa:
-rpcuser=ColossusCoin2rpc
+rpcuser=FlyCoinrpc
 rpcpassword=%s
 (Sinun ei tarvitse muistaa tätä salasanaa)
 Käyttäjänimen ja salasanan EI TULE OLLA SAMOJA.
 Jos tiedostoa ei ole olemassa, luo se asettaen samalla omistajan lukuoikeudet.
-On myös suositeltavaa asettaa alertnotify jolloin olet tiedotettu ongelmista; esimerkiksi: alertnotify=echo %%s | mail -s &quot;ColossusCoin2 Alert&quot; admin@foo.com
+On myös suositeltavaa asettaa alertnotify jolloin olet tiedotettu ongelmista; esimerkiksi: alertnotify=echo %%s | mail -s &quot;FlyCoin Alert&quot; admin@foo.com
 </translation>
     </message>
     <message>
@@ -3139,13 +3139,13 @@ On myös suositeltavaa asettaa alertnotify jolloin olet tiedotettu ongelmista; e
     </message>
     <message>
         <location line="+1"/>
-        <source>Cannot obtain a lock on data directory %s.  ColossusCoin2 is probably already running.</source>
-        <translation>Ei voida saavuttaa lukkoa datatiedostossa %s. ColossusCoin2-asiakasohjelma on ehkä jo käynnissä.</translation>
+        <source>Cannot obtain a lock on data directory %s.  FlyCoin is probably already running.</source>
+        <translation>Ei voida saavuttaa lukkoa datatiedostossa %s. FlyCoin-asiakasohjelma on ehkä jo käynnissä.</translation>
     </message>
     <message>
         <location line="-98"/>
-        <source>ColossusCoin2</source>
-        <translation>ColossusCoin2</translation>
+        <source>FlyCoin</source>
+        <translation>FlyCoin</translation>
     </message>
     <message>
         <location line="+140"/>
@@ -3179,13 +3179,13 @@ On myös suositeltavaa asettaa alertnotify jolloin olet tiedotettu ongelmista; e
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of ColossusCoin2</source>
-        <translation>Virhe ladattaessa wallet.dat-tiedostoa: Lompakko tarvitsee uudemman version ColossusCoin2-asiakasohjelmasta</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of FlyCoin</source>
+        <translation>Virhe ladattaessa wallet.dat-tiedostoa: Lompakko tarvitsee uudemman version FlyCoin-asiakasohjelmasta</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart ColossusCoin2 to complete</source>
-        <translation>Lompakko on kirjoitettava uudelleen: käynnistä ColossusCoin2-asiakasohjelma uudelleen päättääksesi toiminnon</translation>
+        <source>Wallet needed to be rewritten: restart FlyCoin to complete</source>
+        <translation>Lompakko on kirjoitettava uudelleen: käynnistä FlyCoin-asiakasohjelma uudelleen päättääksesi toiminnon</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3254,8 +3254,8 @@ On myös suositeltavaa asettaa alertnotify jolloin olet tiedotettu ongelmista; e
     </message>
     <message>
         <location line="+122"/>
-        <source>Unable to bind to %s on this computer. ColossusCoin2 is probably already running.</source>
-        <translation>Ei voitu liittää %s tällä tietokoneella. ColossusCoin2-asiakasohjelma on jo ehkä päällä.</translation>
+        <source>Unable to bind to %s on this computer. FlyCoin is probably already running.</source>
+        <translation>Ei voitu liittää %s tällä tietokoneella. FlyCoin-asiakasohjelma on jo ehkä päällä.</translation>
     </message>
     <message>
         <location line="-97"/>

@@ -69,25 +69,25 @@ void StatisticsPage::updateStatistics()
     QString subsidy = "";
     if(pindexBest->nHeight < 100)
     {
-        subsidy = "190000000 CV2";
+        subsidy = "15000 FLY";
     }
 		else if(pindexBest->nHeight < 10000)
     {
-        subsidy = "1000 CV2";
+        subsidy = "1 FLY";
     }
         else if(pindexBest->nHeight < 100000000)
     {
-        subsidy = "0 CV2";
+        subsidy = "0 FLY";
     }
 
     QString subsidy2 = "";
     if(pindexBest->nHeight < 5000)
     {
-        subsidy2 = "0 CV2";
+        subsidy2 = "0 FLY";
     }
         else if(pindexBest->nHeight < 10000000)
     {
-        subsidy2 = "5000 CV2";
+        subsidy2 = "0.5 FLY";
     }
 
     QString hardness = QString::number(pHardness, 'f', 6);
@@ -183,11 +183,11 @@ void StatisticsPage::updateStatistics()
 
     if(volume > volumePrevious)
     {
-        ui->volumeBox->setText("<b><font color=\"green\">" + qVolume + " CV2" + "</font></b>");
+        ui->volumeBox->setText("<b><font color=\"green\">" + qVolume + " FLY" + "</font></b>");
     } else if(volume < volumePrevious) {
-        ui->volumeBox->setText("<b><font color=\"red\">" + qVolume + " CV2" + "</font></b>");
+        ui->volumeBox->setText("<b><font color=\"red\">" + qVolume + " FLY" + "</font></b>");
     } else {
-        ui->volumeBox->setText(qVolume + " CV2");
+        ui->volumeBox->setText(qVolume + " FLY");
     }
     updatePrevious(nHeight, nMinWeight, nNetworkWeight, phase, subsidy, subsidy2, pHardness, pHardness2, pPawrate2, Qlpawrate, peers, volume);
 }

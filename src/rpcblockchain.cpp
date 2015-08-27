@@ -1,6 +1,6 @@
 // Copyright (c) 2010-2015 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin developers
-// Copyright (c) 2015 The ColossusCoin2 developers
+// Copyright (c) 2015 The FlyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -275,7 +275,7 @@ Value getblockbynumber(const Array& params, bool fHelp)
     return blockToJSON(block, pblockindex, params.size() > 1 ? params[1].get_bool() : false);
 }
 
-// ColossusCoin2: get information of sync-checkpoint
+// FlyCoin: get information of sync-checkpoint
 Value getcheckpoint(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)

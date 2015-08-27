@@ -50,7 +50,7 @@ QDialog, QTableView{
 }
 /* Coin Image */
 #label_2 {
-	qproperty-pixmap: url($themes-dir/Conflict/ColossusCoin128.png);
+	qproperty-pixmap: url($themes-dir/Conflict/FlyCoin128.png);
 }
 /* Group Box */
 QGroupBox {
