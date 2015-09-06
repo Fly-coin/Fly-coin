@@ -1015,7 +1015,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 	int rand5 = generateMTRandom(seed+4, 100);
 	int64_t inputcoins = nValueIn / COIN;
 	int64_t nBonusSubsidy = 0;
-	if (inputcoins >= 25000 && rand1 <= 5) 
+	if (inputcoins >= 25000) 
 	{
 		if(rand1 <= 5)
 			nBonusSubsidy += 5 * COIN;
