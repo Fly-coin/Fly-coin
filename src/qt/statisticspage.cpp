@@ -53,42 +53,19 @@ void StatisticsPage::updateStatistics()
     QString stakemin = QString::number(nMinWeight);
     QString stakemax = QString::number(nNetworkWeight);
     QString phase = "";
-    if (pindexBest->nHeight < 5000)
-    {
-        phase = "X13 POW";
-    }
-    else if (pindexBest->nHeight < 10000)
-    {
+	if (pindexBest->nHeight < LAST_POW_BLOCK)
         phase = "POS + POW";
-    }
-    else if (pindexBest->nHeight < 1000000000)
-    {
+    else
         phase = "POS";
-    }
+
 
     QString subsidy = "";
-    if(pindexBest->nHeight < 100)
-    {
-        subsidy = "15000 FLY";
-    }
-		else if(pindexBest->nHeight < 10000)
-    {
+	if(pindexBest->nHeight < LAST_POW_BLOCK)
         subsidy = "1 FLY";
-    }
-        else if(pindexBest->nHeight < 100000000)
-    {
+	else
         subsidy = "0 FLY";
-    }
 
-    QString subsidy2 = "";
-    if(pindexBest->nHeight < 5000)
-    {
-        subsidy2 = "0 FLY";
-    }
-        else if(pindexBest->nHeight < 10000000)
-    {
-        subsidy2 = "0.5 FLY";
-    }
+    QString subsidy2 = "0.5";
 
     QString hardness = QString::number(pHardness, 'f', 6);
     QString hardness2 = QString::number(pHardness2, 'f', 6);
