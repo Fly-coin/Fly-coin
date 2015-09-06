@@ -95,7 +95,7 @@ void StatisticsPage::updateStatistics()
     QString pawrate = QString::number(pPawrate2, 'f', 3);
     QString Qlpawrate = model->getLastBlockDate().toString();
     QString QPeers = QString::number(peers);
-    QString qVolume = QLocale(QLocale::English).toString(int64_t(volume));
+    QString qVolume = QLocale(QLocale::English).toString(int(volume));
 
     if(nHeight > heightPrevious)
     {
