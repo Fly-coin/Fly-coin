@@ -15,6 +15,8 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
 
 
 using namespace std;
@@ -988,21 +990,51 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     return nSubsidy + nFees;
 }
 
-// miner's coin stake reward based on coin age spent (coin-days)
-int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees)
+int static generateMTRandom(unsigned int s, int range)
 {
+	random::mt19937 gen(s);
+    random::uniform_int_distribution<> dist(0, range);
+    return dist(gen);
+}
+
+// miner's coin stake reward based on coin age spent (coin-days)
+int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash)
+{
+	//calculate coin reward before super block
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-
-	int64_t nSubsidyLimit = 0.5 * COIN;
-
     int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
+	
+	//super block calculations from breakcoin
+	std::string cseed_str = prevHash.ToString().substr(7,7);
+    const char* cseed = cseed_str.c_str();
+    long seed = hex2long(cseed);
+    int rand1 = generateMTRandom(seed, 100);
+	int rand2 = generateMTRandom(seed+1, 100);
+	int rand3 = generateMTRandom(seed+2, 100);
+	int rand4 = generateMTRandom(seed+3, 100);
+	int rand5 = generateMTRandom(seed+4, 100);
+	int64_t inputcoins = nValueIn / COIN;
+	int64_t nBonusSubsidy = 0;
+	if (inputcoins >= 25000 && rand1 <= 5) 
+	{
+		if(rand1 <= 5)
+			nBonusSubsidy += 5 * COIN;
+		if(rand2 <= 4)
+			nBonusSubsidy += 10 * COIN;
+		if(rand3 <= 3)
+			nBonusSubsidy += 25 * COIN;
+		if(rand4 <= 2)
+			nBonusSubsidy += 100 * COIN;
+		if(rand5 <= 1)
+			nBonusSubsidy += 500 * COIN;
+		
+		//printf("creation", "BONUS stake: nBonusSubsidy = %s  inputcoins =%s nCoinAge=%s rand1=%s prevHash=%s\n", nBonusSubsidy, inputcoins, nCoinAge, rand1, prevHash.ToString());
+	}	
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
 
-	nSubsidy = min(nSubsidy, nSubsidyLimit);
-
-    return nSubsidy + nFees;
+    return nSubsidy + nBonusSubsidy + nFees;
 }
 
 static const int nTargetTimespan = 30 * 60; // 15 blocks  
@@ -1594,6 +1626,11 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
                    vtx[0].GetValueOut(),
                    nReward));
     }
+	
+	uint256 prevHash = 0;
+	if(pindex->pprev)
+		prevHash = pindex->pprev->GetBlockHash();
+	
     if (IsProofOfStake())
     {
         // FlyCoin: coin stake tx earns reward instead of paying fee
@@ -1601,7 +1638,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
             return error("ConnectBlock() : %s unable to get coin age for coinstake", vtx[1].GetHash().ToString().substr(0,10).c_str());
 
-        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees);
+        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees, nValueIn, prevHash);
 
         if (nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%"PRId64" vs calculated=%"PRId64")", nStakeReward, nCalculatedStakeReward));
