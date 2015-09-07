@@ -972,15 +972,14 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 {
     int64_t nSubsidy = 0 * COIN;
     
-    if (pindexBest->nHeight+1 <= 10)
+    if (pindexBest->nHeight == 1)
     {
-      nSubsidy = 15000 * COIN;
+      nSubsidy = 150000 * COIN;
       return nSubsidy + nFees;
     }   
-
     else if (pindexBest->nHeight+1 <= LAST_POW_BLOCK)
     {
-      nSubsidy = 1 * COIN;
+      nSubsidy = 50 * CENT;
       return nSubsidy + nFees;
     }
 
@@ -1018,15 +1017,15 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 	if (inputcoins >= 25000) 
 	{
 		if(rand1 <= 5)
-			nBonusSubsidy += 5 * COIN;
+			nBonusSubsidy += 1 * COIN;
 		if(rand2 <= 4)
-			nBonusSubsidy += 10 * COIN;
+			nBonusSubsidy += 2 * COIN;
 		if(rand3 <= 3)
-			nBonusSubsidy += 25 * COIN;
+			nBonusSubsidy += 3 * COIN;
 		if(rand4 <= 2)
-			nBonusSubsidy += 100 * COIN;
+			nBonusSubsidy += 5 * COIN;
 		if(rand5 <= 1)
-			nBonusSubsidy += 500 * COIN;
+			nBonusSubsidy += 10 * COIN;
 		
 		//printf("creation", "BONUS stake: nBonusSubsidy = %s  inputcoins =%s nCoinAge=%s rand1=%s prevHash=%s\n", nBonusSubsidy, inputcoins, nCoinAge, rand1, prevHash.ToString());
 	}	
@@ -2567,7 +2566,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
         const char* pszTimestamp = "FlyCoin, flying high!";
         CTransaction txNew;
-        txNew.nTime = 1422775300;
+        txNew.nTime = 1441657188;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2577,7 +2576,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1422775300;
+        block.nTime    = 1441657188; // Mon, 07 Sep 2015 20:19:48 GMT
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = 0;
         if(fTestNet)
@@ -2606,7 +2605,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
 
         //// debug print
-        assert(block.hashMerkleRoot == uint256("0x"));
+        assert(block.hashMerkleRoot == uint256("0x5ecdd31de4d904d8986f5126a7f277398bfa8abbe15ad7d6eb0c27790b2dba47"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());
