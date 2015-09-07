@@ -46,7 +46,7 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 30);
 unsigned int nTargetSpacing = 2 * 60; // 2 minute
 unsigned int nStakeMinAge = 7 * 24 * 60 * 60; // 7 days
 unsigned int nStakeMaxAge = 28 * 24 * 60 * 60; // 28 days
-unsigned int nModifierInterval = 10 * 60; // time to elapse before new modifier is computed
+unsigned int nModifierInterval = 17150; // time to elapse before new modifier is computed
 unsigned int nStakeTargetSpacing = nTargetSpacing;
 int64_t devCoin = 0 * COIN;
 int nCoinbaseMaturity = 50;
