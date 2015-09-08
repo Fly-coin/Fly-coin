@@ -15,6 +15,8 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
 
 
 using namespace std;
@@ -44,7 +46,7 @@ static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 30);
 unsigned int nTargetSpacing = 2 * 60; // 2 minute
 unsigned int nStakeMinAge = 7 * 24 * 60 * 60; // 7 days
 unsigned int nStakeMaxAge = 28 * 24 * 60 * 60; // 28 days
-unsigned int nModifierInterval = 10 * 60; // time to elapse before new modifier is computed
+unsigned int nModifierInterval = 17150; // time to elapse before new modifier is computed
 unsigned int nStakeTargetSpacing = nTargetSpacing;
 int64_t devCoin = 0 * COIN;
 int nCoinbaseMaturity = 50;
@@ -970,15 +972,14 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 {
     int64_t nSubsidy = 0 * COIN;
     
-    if (pindexBest->nHeight+1 <= 10)
+    if (pindexBest->nHeight == 1)
     {
-      nSubsidy = 15000 * COIN;
+      nSubsidy = 150000 * COIN;
       return nSubsidy + nFees;
     }   
-
     else if (pindexBest->nHeight+1 <= LAST_POW_BLOCK)
     {
-      nSubsidy = 1 * COIN;
+      nSubsidy = 50 * CENT;
       return nSubsidy + nFees;
     }
 
@@ -988,21 +989,51 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     return nSubsidy + nFees;
 }
 
-// miner's coin stake reward based on coin age spent (coin-days)
-int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees)
+int static generateMTRandom(unsigned int s, int range)
 {
+	random::mt19937 gen(s);
+    random::uniform_int_distribution<> dist(0, range);
+    return dist(gen);
+}
+
+// miner's coin stake reward based on coin age spent (coin-days)
+int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash)
+{
+	//calculate coin reward before super block
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-
-	int64_t nSubsidyLimit = 0.5 * COIN;
-
     int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
+	
+	//super block calculations from breakcoin
+	std::string cseed_str = prevHash.ToString().substr(7,7);
+    const char* cseed = cseed_str.c_str();
+    long seed = hex2long(cseed);
+    int rand1 = generateMTRandom(seed, 100);
+	int rand2 = generateMTRandom(seed+1, 100);
+	int rand3 = generateMTRandom(seed+2, 100);
+	int rand4 = generateMTRandom(seed+3, 100);
+	int rand5 = generateMTRandom(seed+4, 100);
+	int64_t inputcoins = nValueIn / COIN;
+	int64_t nBonusSubsidy = 0;
+	if (inputcoins >= 25000) 
+	{
+		if(rand1 <= 5)
+			nBonusSubsidy += 1 * COIN;
+		if(rand2 <= 4)
+			nBonusSubsidy += 2 * COIN;
+		if(rand3 <= 3)
+			nBonusSubsidy += 3 * COIN;
+		if(rand4 <= 2)
+			nBonusSubsidy += 5 * COIN;
+		if(rand5 <= 1)
+			nBonusSubsidy += 10 * COIN;
+		
+		//printf("creation", "BONUS stake: nBonusSubsidy = %s  inputcoins =%s nCoinAge=%s rand1=%s prevHash=%s\n", nBonusSubsidy, inputcoins, nCoinAge, rand1, prevHash.ToString());
+	}	
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
 
-	nSubsidy = min(nSubsidy, nSubsidyLimit);
-
-    return nSubsidy + nFees;
+    return nSubsidy + nBonusSubsidy + nFees;
 }
 
 static const int nTargetTimespan = 30 * 60; // 15 blocks  
@@ -1082,7 +1113,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
 
-    int nTargetSpacing = fProofOfStake? nStakeTargetSpacing : min(nTargetSpacingWorkMax, (int) nStakeTargetSpacing * (1 + pindexLast->nHeight - pindexPrev->nHeight));
+    int nTargetSpacing = nStakeTargetSpacing;
     int nInterval = nTargetTimespan / nTargetSpacing;
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
@@ -1594,6 +1625,11 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
                    vtx[0].GetValueOut(),
                    nReward));
     }
+	
+	uint256 prevHash = 0;
+	if(pindex->pprev)
+		prevHash = pindex->pprev->GetBlockHash();
+	
     if (IsProofOfStake())
     {
         // FlyCoin: coin stake tx earns reward instead of paying fee
@@ -1601,7 +1637,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
             return error("ConnectBlock() : %s unable to get coin age for coinstake", vtx[1].GetHash().ToString().substr(0,10).c_str());
 
-        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees);
+        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees, nValueIn, prevHash);
 
         if (nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%"PRId64" vs calculated=%"PRId64")", nStakeReward, nCalculatedStakeReward));
@@ -2530,7 +2566,7 @@ bool LoadBlockIndex(bool fAllowNew)
 
         const char* pszTimestamp = "FlyCoin, flying high!";
         CTransaction txNew;
-        txNew.nTime = 1422775300;
+        txNew.nTime = 1441657188;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2540,7 +2576,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1422775300;
+        block.nTime    = 1441657188; // Mon, 07 Sep 2015 20:19:48 GMT
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = 0;
         if(fTestNet)
@@ -2569,7 +2605,7 @@ bool LoadBlockIndex(bool fAllowNew)
         printf("block.nNonce = %u \n", block.nNonce);
 
         //// debug print
-        assert(block.hashMerkleRoot == uint256("0x"));
+        assert(block.hashMerkleRoot == uint256("0x5ecdd31de4d904d8986f5126a7f277398bfa8abbe15ad7d6eb0c27790b2dba47"));
         block.print();
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));
         assert(block.CheckBlock());
