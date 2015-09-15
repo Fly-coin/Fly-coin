@@ -852,7 +852,7 @@ void CoinControlDialog::updateView()
 
 			// Age
 			uint64_t nAge = (GetTime() - nTime);
-			int64_t age = COIN * nAge / (720 * 60);
+			int64_t age = COIN * nAge / (1440 * 60);
 			itemOutput->setText(COLUMN_AGE, strPad(BitcoinUnits::formatAge(nDisplayUnit, age), 2, " "));
 			itemOutput->setText(COLUMN_AGE_INT64, strPad(QString::number(age), 15, " "));
 
