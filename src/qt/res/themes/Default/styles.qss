@@ -6,21 +6,21 @@
 
 /* General */
 QMainWindow, QDialog, QFrame {
-	color:#777;
+	color:#02898f;
 	background:#000;
 	border:none;
 }
 
 /* QWidget */
 QWidget {
-	color:#777;
+	color:#02898f;
 	background:#000;
 	selection-background-color:#2a2a2a;
-	selection-color:#777;
+	selection-color:#02898f;
 	outline: 0;
 }
 QWidget:item:selected {
-	color:#777;
+	color:#02898f;
 	background:#f4cc0e;
 }
 
@@ -45,7 +45,7 @@ QLabel[ok="true"], QLabel[status="ok"] {
 
 /* Menu */
 QMenuBar {
-	color:#777;
+	color:#02898f;
 	background-color: #000;
 	border-bottom:1px solid #333;
 }
@@ -66,7 +66,7 @@ QMenuBar::item:pressed {
 	background-color:#f4cc0e;
 }
 QMenu {
-	color: #777;
+	color: #02898f;
 	background:#000;
 	border:none;
 	border-left:1px solid #333;
@@ -77,7 +77,7 @@ QMenu {
 	border-bottom-right-radius:6px;
 }
 QMenu::item {
-	color: #777;
+	color: #02898f;
 	background:#000;
 }
 QMenu::item:selected { 
@@ -100,7 +100,7 @@ QToolBar::handle {
 	background-position: top center;
 }
 QToolButton {
-	color:#777;
+	color:#02898f;
 	background:#2a2a2a;
 	qproperty-toolButtonStyle: ToolButtonTextBesideIcon;
 	border:none;
@@ -133,7 +133,7 @@ QToolButton:disabled {
 
 /* PushButtons */
 QPushButton {
-	color:#777;
+	color:#02898f;
 	background:#2a2a2a;
 	border:none;
 	border-radius:8px;
@@ -173,7 +173,7 @@ QProgressBar::chunk {
 
 /* TextFields + SpinBox + Calendar*/
 QLineEdit, QSpinBox, QDoubleSpinBox, QDateTimeEdit  {
-	color:#777;
+	color:#02898f;
 	background:#1a1a1a;
 	border-radius:4px;
 	border-top:1px solid #151515;
@@ -226,10 +226,10 @@ QCalendarWidget QWidget {
 
 /* CheckBox + RadioButton */
 QCheckBox, QRadioButton {
-	color:#777;
+	color:#02898f;
 }
 QCheckBox::indicator, QRadioButton::indicator {
-	color:#777;
+	color:#02898f;
 	background:#1a1a1a;
 	border-radius:4px;
 	border-top:1px solid #151515;
@@ -246,7 +246,7 @@ QCheckBox::indicator:checked, QRadioButton::indicator:checked  {
 
 /* ComboBox */
 QComboBox {
-	color: #777;
+	color: #02898f;
 	background: #000;
 	border: 1px solid #333;
 	border-radius: 4px;
@@ -292,7 +292,7 @@ QTabWidget::pane {
 	border:1px solid #333;
 }
 QTabBar::tab {
-	color:#777;
+	color:#02898f;
 	background:#2a2a2a;
 	border:1px solid #333;
 	border-bottom:0px;
@@ -314,7 +314,7 @@ QTabBar::tab:!selected {
 
 /* Table */
 CoinControlTreeWidget, QTableView {
-	color:#777;
+	color:#02898f;
 	background:transparent;
 	alternate-background-color:#151515;
 	border-style: none;
@@ -329,7 +329,7 @@ QTableWidget::item:focus {
 	border:none;
 }
 QTreeView {
-	color: #777;
+	color: #02898f;
 	background:transparent;
 	alternate-background-color:#151515;
 }
@@ -346,7 +346,7 @@ QTreeView::item:selected {
 	background:#f4cc0e;
 }
 QAbstractItemView {
-	color:#777;
+	color:#02898f;
 	alternate-background-color: #151515;
 }
 QAbstractItemView::item:hover {
@@ -361,7 +361,7 @@ QHeaderView {
 	border-right:none;
 }
 QHeaderView::section {
-	color: #777;
+	color: #02898f;
 	background:#000;
 	border:none;
 	border-right:1px solid #151515;
@@ -478,7 +478,7 @@ QToolTip, QBalloonTip {
 	font-size:13px;
 }
 QBalloonTip QPushButton {
-	color:#777;
+	color:#02898f;
 	background:#2a2a2a;
 	min-width: 16px;
 	min-height: 16px;
