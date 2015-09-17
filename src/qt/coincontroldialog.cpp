@@ -616,7 +616,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         //nPayFee = nFee;
 		if(pwalletMain->fSplitBlock)
 		{
-			nPayFee = COIN * 200; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
+			nPayFee = 0.0125 * COIN; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
 		}
 	        
         if (nPayAmount > 0)
