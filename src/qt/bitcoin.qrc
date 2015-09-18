@@ -51,6 +51,7 @@
         <file alias="face">res/icons/face.png</file>
         <file alias="forums">res/icons/forums.png</file>
         <file alias="youtube">res/icons/youtube.png</file>
+		<file alias="slack">res/icons/slack.png</file>
         <file alias="ccex">res/icons/ccex.png</file>
         <file alias="cryptopia">res/icons/cryptopia.png</file>
         <file alias="yobit">res/icons/yobit.png</file>
