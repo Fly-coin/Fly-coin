@@ -58,7 +58,9 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QDragEnterEvent>
+#if QT_VERSION < 0x050000
 #include <QUrl>
+#endif
 #include <QStyle>
 #include <QFile>
 #include <QTextStream>
@@ -1413,7 +1415,12 @@ void BitcoinGUI::loadTheme(QString theme)
 		"#scrollAreaWidgetContents {background:#000;}"
 		"#scrollAreaWidgetContents > QFrame {border:none;border-top:1px solid #333;}"
 		"QCheckBox, QRadioButton {color:#02898f;}"
-		"QCheckBox::indicator, QRadioButton::indicator {	color:#02898f;	background:#1a1a1a;	border-radius:4px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	width:16px;	height:16px;padding: 2px;}"
+		"QCheckBox::indicator, QRadioButton::indicator {	color:#02898f;	background:#1a1a1a;	border-radius:4px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	width:16px;	height:16px;padding: 2px;	}"
+		"QCheckBox::indicator:checked { image: url(:/icons/cb-checked); }"
+                "QRadioButton::indicator:unchecked { image: url(:/icons/radio); }"
+                "QRadioButton::indicator:unchecked:hover { image: url(:/icons/radio-hover); }"
+                "QRadioButton::indicator:checked { image: url(:/icons/radio-checked); }"
+                "QRadioButton::indicator:checked:hover { image: url(:/icons/radio-checked-hover); }"
 		"QComboBox {	color: #02898f;	background: #000;	border: 1px solid #333;	border-radius: 4px;	padding: 2px 18px 2px 4px;}"
 		"QComboBox:on {	background:transparent;}"
 		"QComboBox:disabled {	color: #555;}"
