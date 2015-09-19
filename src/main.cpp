@@ -1001,7 +1001,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 {
 	//calculate coin reward before super block
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-    int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
+    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 	
 	//super block calculations from breakcoin
 	std::string cseed_str = prevHash.ToString().substr(7,7);
