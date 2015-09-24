@@ -291,7 +291,7 @@ Value getwork(const Array& params, bool fHelp)
         }
 
         // Update nTime
-        pblock->UpdateTime(pindexPrev);
+        //pblock->UpdateTime(pindexPrev);
         pblock->nNonce = 0;
 
         // Update nExtraNonce
@@ -425,7 +425,7 @@ Value getblocktemplate(const Array& params, bool fHelp)
     }
 
     // Update nTime
-    pblock->UpdateTime(pindexPrev);
+    //pblock->UpdateTime(pindexPrev);
     pblock->nNonce = 0;
 
     Array transactions;

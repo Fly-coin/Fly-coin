@@ -51,12 +51,18 @@
         <file alias="face">res/icons/face.png</file>
         <file alias="forums">res/icons/forums.png</file>
         <file alias="youtube">res/icons/youtube.png</file>
+		<file alias="slack">res/icons/slack.png</file>
         <file alias="ccex">res/icons/ccex.png</file>
         <file alias="cryptopia">res/icons/cryptopia.png</file>
         <file alias="yobit">res/icons/yobit.png</file>
         <file alias="social">res/icons/social.png</file>
 		<file alias="block">res/icons/block.png</file>
 		<file alias="statistics">res/icons/stats.png</file>
+	<file alias="cb-checked">res/icons/cb-checked.png</file>
+        <file alias="radio">res/icons/r.png</file>
+        <file alias="radio-hover">res/icons/r-hover.png</file>
+        <file alias="radio-checked">res/icons/r-checked.png</file>
+        <file alias="radio-checked-hover">res/icons/r-checked-hover.png</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="about">res/images/about.png</file>

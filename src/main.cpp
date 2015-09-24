@@ -1001,7 +1001,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 {
 	//calculate coin reward before super block
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-    int64_t nSubsidy = (nCoinAge * 33 * nRewardCoinYear) / (365 * 33 + 8);
+    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 	
 	//super block calculations from breakcoin
 	std::string cseed_str = prevHash.ToString().substr(7,7);
@@ -2088,7 +2088,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
             return DoS(100, error("CheckBlock() : more than one coinbase"));
 
     // Check coinbase timestamp
-    if (GetBlockTime() > (int64_t)vtx[0].nTime + GetClockDrift(GetBlockTime()))
+    if (GetBlockTime() > (int64_t)vtx[0].nTime + GetClockDrift((int64_t)vtx[0].nTime))
         return DoS(50, error("CheckBlock() : coinbase timestamp is too early"));
 
     if (IsProofOfStake())

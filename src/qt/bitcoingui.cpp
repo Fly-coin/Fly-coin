@@ -58,7 +58,9 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QDragEnterEvent>
+#if QT_VERSION < 0x050000
 #include <QUrl>
+#endif
 #include <QStyle>
 #include <QFile>
 #include <QTextStream>
@@ -390,6 +392,8 @@ void BitcoinGUI::createActions()
         }
         connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(changeTheme(QString)));
     }
+	else
+		loadTheme("HardDefault");
     /* zeewolf: Hot swappable wallet themes */
 }
 
@@ -1295,9 +1299,9 @@ void BitcoinGUI::charityClicked(QString addr)
 void BitcoinGUI::changeTheme(QString theme)
 {
     // load Default theme first (if present) to apply default styles
-    loadTheme("Default");
+    loadTheme("HardDefault");
 
-    if (theme != "Default") {
+    if (theme != "") {
         loadTheme(theme);
     }
 }
@@ -1311,7 +1315,7 @@ void BitcoinGUI::loadTheme(QString theme)
     QString themeDir = themesDir + "/" + theme;
 
     // if theme selected
-    if (theme != "") {
+    if (theme != "HardDefault") {
         QFile qss(themeDir + "/styles.qss");
         // open qss
         if (qss.open(QFile::ReadOnly))
@@ -1373,8 +1377,89 @@ void BitcoinGUI::loadTheme(QString theme)
             /*}*/
         }
     } else {
-        // If not theme name given - clear styles
-        qApp->setStyleSheet(QString(""));
+		std::string strDefaultStyle = "QMainWindow, QDialog, QFrame {color:#02898f;background:#000;border:none;}"
+		"QWidget {color:#02898f;background:#000;selection-background-color:#2a2a2a;selection-color:#02898f;outline: 0;}"
+		"QWidget:item:selected {color:#02898f;background:#f4cc0e;}"
+		"QFrame #frame, QFrame #frame_2 {border-radius:6px;border-top:1px solid #151515;border-left:1px solid #151515;border-bottom:1px solid #2a2a2a;border-right:1px solid #2a2a2a;padding:8px;background:#1a1a1a;}"
+		"QLabel {background:transparent;}"
+		"QLabel[error='true'], QLabel[status='error'] {color:red;}"
+		"QLabel[ok='true'], QLabel[status='ok'] {color:yellow;}"
+		"QMenuBar {color:#02898f;background-color: #000;border-bottom:1px solid #333;}"
+		"QMenuBar::item {background: transparent;border:none;border-radius:6px;margin:4px 6px 4px 6px;padding:4px;}"
+		"QMenuBar::item:selected {background: transparent;border: none;color:#f4cc0e;}"
+		"QMenuBar::item:pressed {color: #000;background-color:#f4cc0e;}"
+		"QMenu {color: #02898f;background:#000;border:none;border-left:1px solid #333;border-bottom:1px solid #333;border-right:1px solid #333;padding:10px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;}"
+		"QMenu::item {color: #02898f;background:#000;}"
+		"QMenu::item:selected { color: #000;background-color:#f4cc0e;}"
+		"QToolBar {background:#000;qproperty-iconSize: 24px 24px;qproperty-toolButtonStyle: ToolButtonTextBesideIcon;border:none;border-bottom:1px solid #333;padding:10px;}"
+		"QToolBar::handle {padding: 0px;background-repeat: repeat-y;background-position: top center;}"
+		"QToolButton {color:#02898f;background:#2a2a2a;qproperty-toolButtonStyle: ToolButtonTextBesideIcon;border:none;border-radius:10px;padding:2px;margin:2px;}"
+		"QToolButton:hover {color: #000;background:#f4cc0e;}"
+		"QToolButton:checked {	color:#f4cc0e;	background:#2a2a2a;}"
+		"QToolButton:pressed {	color: #000;	background:#f4cc0e;}"
+		"QToolButton:disabled {color:#000;	background:#000;}"
+		
+		"QPushButton {color:#02898f;	background:#2a2a2a;	border:none;	border-radius:8px;		margin:2px;}"
+		"QPushButton:hover {	color:#000;	background:#f4cc0e;}"
+		"QStatusBar {	border:none;	border-top:1px solid #333;}"
+		"QStatusBar::item {	border:none;}"
+		"QProgressBar {	color:#000;	background:#1a1a1a;	border-radius:4px;	border-top:1px solid #151515;	border-left:1px solid #151515;	border-bottom:1px solid #2a2a2a;	border-right:1px solid #2a2a2a;		margin:4px;}"
+		"QProgressBar::chunk {	background:QLinearGradient(x1: 0, y1: 0, x2: 0.5, y2: 0.5, stop: 0 #e5ca4d, stop: 1 #f4cc0e);	border:none;	border-radius:2px;	margin:1px;}"
+		"QLineEdit, QSpinBox, QDoubleSpinBox, QDateTimeEdit  {	color:#02898f;	background:#1a1a1a;	border-radius:4px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	padding:2px;}"
+		"QLineEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus, QDateTimeEdit:focus {color:#fff;}"
+		"QLineEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QDateTimeEdit:disabled {	background:#000000;}"
+		"QDateTimeEdit::drop-down {border: 0px;}"
+		"QCalendarWidget QWidget#qt_calendar_navigationbar { }"
+		"QCalendarWidget QMenu {border: 1px solid #333;border-radius: 4px;}"
+		"QCalendarWidget QWidget { alternate-background-color:#000;border:1px solid #333; }"
+		"#scrollAreaWidgetContents {background:#000;}"
+		"#scrollAreaWidgetContents > QFrame {border:none;border-top:1px solid #333;}"
+		"QCheckBox, QRadioButton {color:#02898f;}"
+		"QCheckBox::indicator, QRadioButton::indicator {	color:#02898f;	background:#1a1a1a;	border-radius:4px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	width:16px;	height:16px;padding: 2px;	}"
+		"QCheckBox::indicator:checked { image: url(:/icons/cb-checked); }"
+                "QRadioButton::indicator:unchecked { image: url(:/icons/radio); }"
+                "QRadioButton::indicator:unchecked:hover { image: url(:/icons/radio-hover); }"
+                "QRadioButton::indicator:checked { image: url(:/icons/radio-checked); }"
+                "QRadioButton::indicator:checked:hover { image: url(:/icons/radio-checked-hover); }"
+		"QComboBox {	color: #02898f;	background: #000;	border: 1px solid #333;	border-radius: 4px;	padding: 2px 18px 2px 4px;}"
+		"QComboBox:on {	background:transparent;}"
+		"QComboBox:disabled {	color: #555;}"
+		"QComboBox::drop-down:disabled {	border-color: #444;}"
+		"QComboBox::drop-down {	border: 0px;}"
+		"QComboBox QAbstractItemView {background:#000;	border: 1px solid #333;	border-radius: 4px;}"
+		"QComboBox QListView {	border: 1px solid #333;	border-radius: 4px;}"
+		"QTabWidget {	background:#000;}"
+		"QTabWidget::pane {	background:transparent;	border:1px solid #333;}"
+		"QTabBar::tab {	color:#02898f;	background:#2a2a2a;	border:1px solid #333;	border-bottom:0px;	padding:6px}"
+		"QTabBar::tab:hover {	color: #000;	background:#f4cc0e;}"
+		"QTabBar::tab:selected {	color:#f4cc0e;	background-color:#2a2a2a;	border-top-left-radius: 4px;	border-top-right-radius: 4px;}"
+		"QTabBar::tab:!selected {	margin-top:4px;}"
+		"CoinControlTreeWidget, QTableView {	color:#02898f;	background:transparent;	alternate-background-color:#151515;	border-style: none;	outline: none;}"
+		"QTableView QTableCornerButton::section {	border:none;	outline: none;}"
+		"QTableWidget::item:focus {	outline: none;	border:none;}"
+		"QTreeView {	color: #02898f;	background:transparent;	alternate-background-color:#151515;}"
+		"QTreeView::item {	border:1px solid #151515;	outline:none;}"
+		"QTreeView::item:hover {	color:#f4cc0e;	background:transparent;}"
+		"QTreeView::item:selected {	color:#000;		background:#f4cc0e;}"
+		"QAbstractItemView {	color:#02898f;	alternate-background-color: #151515;}"
+		"QAbstractItemView::item:hover {	color:#f4cc0e;}"
+		"QAbstractItemView::item:selected {	color:#000;}"
+		"QHeaderView {	background:#000;	border:1px solid #151515;	border-right:none;}"
+		"QHeaderView::section {	color: #02898f;	background:#000;	border:none;	border-right:1px solid #151515;	margin-right:1px;	padding-top:5px;	padding-left:2px;	padding-bottom:5px;	padding-right:2px;}"
+		"QScrollBar:vertical {	background:#1a1a1a;	width:15px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	border-radius:4px;	margin:12px 0 12px 0;}"
+		"QScrollBar::handle:vertical {	background:QLinearGradient( x1: 1, y1: 0, x2: 0, y2: 0, stop: 0 #000, stop: 1 #444);	min-height:5px;	border-radius:4px;}"
+		"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {	background:none;}"
+		"QScrollBar:horizontal {	background:#1a1a1a;	height:16px;	border-top:1px solid #151515;	border-right:1px solid #2a2a2a;	border-bottom:1px solid #2a2a2a;	border-left:1px solid #151515;	border-radius:4px;	margin:0px 12px 0px 12px;}"
+		"QScrollBar::handle:horizontal {	background:QLinearGradient( x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 #000, stop: 1 #444);	min-width:5px;	border-radius:4px;}"
+		"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal, QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {	background:none;}"
+		"QToolTip, QBalloonTip {	color:#fff;	background:#000;	border:1px solid #000;	opacity:200;	padding:2px;	font-size:13px;}"
+		"QBalloonTip QPushButton {	color:#02898f;	background:#2a2a2a;	min-width: 16px;	min-height: 16px;	padding: 2px;	border-radius: 2px;}"
+		"#charityAddressEdit, #charityPercentEdit {	color:#f4cc0e;	font-size:10px;	font-weight:600;}"
+		"#StatisticsPage #label_5, #BlockBrowser #label_5, #ChatWindowClass #label_9, #ChatWindowClass #label_11, #ChatWindowClass #label_12, #charityDialog #label { 	color:#f4cc0e;	background:transparent;	font-size:20px;	font-weight:600;}";
+		
+		
+	   // If not theme name given - clear styles
+        qApp->setStyleSheet(QString(strDefaultStyle.c_str()));
     }
 
     // set selected theme and store it in registry
@@ -1416,7 +1501,7 @@ void BitcoinGUI::listThemes(QStringList& themes)
     selectedTheme = settings.value("Template").toString();
     // or use default theme - Blackwood
     if (selectedTheme=="") {
-        selectedTheme = "Default";
+        selectedTheme = "HardDefault";
     }
     // load it!
     loadTheme(selectedTheme);
@@ -1440,3 +1525,5 @@ void BitcoinGUI::keyPressEvent(QKeyEvent * e)
 }
 
 /* /zeewolf: Hot swappable wallet themes */
+
+

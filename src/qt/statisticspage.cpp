@@ -61,11 +61,11 @@ void StatisticsPage::updateStatistics()
 
     QString subsidy = "";
 	if(pindexBest->nHeight < LAST_POW_BLOCK)
-        subsidy = "1 FLY";
+        subsidy = "0.5 FLY";
 	else
         subsidy = "0 FLY";
 
-    QString subsidy2 = "0.5";
+    QString subsidy2 = "50% Annual w/ Super Blocks";
 
     QString hardness = QString::number(pHardness, 'f', 6);
     QString hardness2 = QString::number(pHardness2, 'f', 6);

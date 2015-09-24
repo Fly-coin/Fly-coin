@@ -616,7 +616,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         //nPayFee = nFee;
 		if(pwalletMain->fSplitBlock)
 		{
-			nPayFee = COIN * 200; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
+			nPayFee = 0.0125 * COIN; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
 		}
 	        
         if (nPayAmount > 0)
@@ -852,7 +852,7 @@ void CoinControlDialog::updateView()
 
 			// Age
 			uint64_t nAge = (GetTime() - nTime);
-			int64_t age = COIN * nAge / (720 * 60);
+			int64_t age = COIN * nAge / (1440 * 60);
 			itemOutput->setText(COLUMN_AGE, strPad(BitcoinUnits::formatAge(nDisplayUnit, age), 2, " "));
 			itemOutput->setText(COLUMN_AGE_INT64, strPad(QString::number(age), 15, " "));
 

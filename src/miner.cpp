@@ -368,10 +368,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
         // Fill in header
         pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
-        pblock->nTime          = max(pindexPrev->GetPastTimeLimit()+1, pblock->GetMaxTransactionTime());
-        pblock->nTime          = max(pblock->GetBlockTime(), pindexPrev->GetBlockTime() - GetClockDrift(pindexPrev->GetBlockTime()));
-        if (!fProofOfStake)
-            pblock->UpdateTime(pindexPrev);
+        pblock->nTime          = pblock->vtx[0].nTime;
         pblock->nNonce         = 0;
     }
 
