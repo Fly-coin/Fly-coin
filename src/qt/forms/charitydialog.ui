@@ -61,10 +61,10 @@
     <number>1</number>
    </property>
    <property name="text">
-    <string>MultiSend allows you to automatically send up to 100% of your Stake to a list of other FlyCoin address after it matures.
-To Add: enter percentage to give and FlyCoin address to add to the MultiSend vector. 
+    <string>Savings allows you to automatically send up to 100% of your Stake to a list of other FlyCoin address after it matures.
+To Add: enter percentage to give and FlyCoin address to add to the Savings vector. 
 To Delete: Enter address to delete and press delete.
-MultiSend will not be activated unless you have clicked Activate.</string>
+Savings will not be activated unless you have clicked Activate.</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -99,7 +99,7 @@ MultiSend will not be activated unless you have clicked Activate.</string>
     <string/>
    </property>
    <property name="statusTip">
-    <string>Add to MultiSend Vector</string>
+    <string>Add to Savings Vector</string>
    </property>
    <property name="text">
     <string>Add</string>
@@ -115,7 +115,7 @@ MultiSend will not be activated unless you have clicked Activate.</string>
     </rect>
    </property>
    <property name="statusTip">
-    <string>Deactivate MultiSend</string>
+    <string>Deactivate Savings</string>
    </property>
    <property name="text">
     <string>Deactivate</string>
@@ -192,7 +192,7 @@ MultiSend will not be activated unless you have clicked Activate.</string>
     <string/>
    </property>
    <property name="statusTip">
-    <string>Delete Address From MultiSend Vector</string>
+    <string>Delete Address From Savings Vector</string>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -208,7 +208,7 @@ MultiSend will not be activated unless you have clicked Activate.</string>
     </rect>
    </property>
    <property name="statusTip">
-    <string>Activate MultiSend</string>
+    <string>Activate Savings</string>
    </property>
    <property name="text">
     <string>Activate</string>
@@ -227,10 +227,10 @@ MultiSend will not be activated unless you have clicked Activate.</string>
     <string/>
    </property>
    <property name="statusTip">
-    <string>View MultiSend Vector</string>
+    <string>View Savings Vector</string>
    </property>
    <property name="text">
-    <string>View MultiSend</string>
+    <string>View Savings</string>
    </property>
   </widget>
   <widget class="QLabel" name="imagelabel">
