@@ -1487,10 +1487,10 @@ Value getconfs(const Array& params, bool fHelp)
 				}
 				else
 					entry.push_back(Pair("confirmations", 0));
-            }*/
-			return entry;
-        }
-		
+            }
+		}
+		return entry;
+	}
 	
 	else return "failed";
 }
