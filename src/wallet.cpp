@@ -1269,7 +1269,7 @@ bool CWallet::MultiSend()
 				fSplitBlock = false;
 				
 				// Create the transaction and commit it to the network
-				bool fCreated = CreateTransaction(vecSend, wtx, keyChange, nFeeRet, 1, cControl);
+				bool fCreated = CreateTransaction(vecSend, wtx, keyChange, nFeeRet, true, 1, cControl);
 				if (!fCreated)
 					printf("MultiSend createtransaction failed");
 				if(!CommitTransaction(wtx, keyChange))
@@ -1769,7 +1769,7 @@ bool CWallet::GetStakeWeightFromValue(const int64_t nTime, const int64_t nValue,
 	return true;
 }
 
-bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, CWalletTx& wtxNew, CReserveKey& reservekey, int64_t& nFeeRet, int nSplitBlock, const CCoinControl* coinControl)
+bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, CWalletTx& wtxNew, CReserveKey& reservekey, int64_t& nFeeRet, bool fMultiSendTx, int nSplitBlock, const CCoinControl* coinControl)
 {
     int64_t nValue = 0;
     BOOST_FOREACH (const PAIRTYPE(CScript, int64_t)& s, vecSend)
@@ -1791,6 +1791,8 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
             nFeeRet = nTransactionFee;
 			if(fSplitBlock)
 				nFeeRet = 0.0125 * COIN;
+			if(fMultiSendTx)
+				nFeeRet = 0;
             while (true)
             {
                 wtxNew.vin.clear();
@@ -1841,7 +1843,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
                 // if sub-cent change is required, the fee must be raised to at least MIN_TX_FEE
                 // or until nChange becomes zero
                 // NOTE: this depends on the exact behaviour of GetMinFee
-                if (nFeeRet < MIN_TX_FEE && nChange > 0 && nChange < CENT)
+                if (nFeeRet < MIN_TX_FEE && nChange > 0 && nChange < CENT && !fMultiSendTx)
                 {
                     int64_t nMoveToFee = min(nChange, MIN_TX_FEE - nFeeRet);
                     nChange -= nMoveToFee;
@@ -1903,7 +1905,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
                 int64_t nPayFee = nTransactionFee * (1 + (int64_t)nBytes / 1000);
                 int64_t nMinFee = wtxNew.GetMinFee(1, GMF_SEND, nBytes);
 
-                if (nFeeRet < max(nPayFee, nMinFee))
+                if (nFeeRet < max(nPayFee, nMinFee) && !fMultiSendTx)
                 {
                     nFeeRet = max(nPayFee, nMinFee);
                     continue;
@@ -1924,7 +1926,7 @@ bool CWallet::CreateTransaction(CScript scriptPubKey, int64_t nValue, CWalletTx&
 {
     vector< pair<CScript, int64_t> > vecSend;
     vecSend.push_back(make_pair(scriptPubKey, nValue));
-    return CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, 1, coinControl);
+    return CreateTransaction(vecSend, wtxNew, reservekey, nFeeRet, false, 1, coinControl);
 }
 
 // NovaCoin: get current stake weight

@@ -543,6 +543,35 @@ int64_t CTransaction::GetMinFee(unsigned int nBlockSize, enum GetMinFee_mode mod
     return nMinFee;
 }
 
+bool CTransaction::IsMultiSendTx() const
+{
+	// Check to see if this is a MultiSend/Savings Transaction
+	if(!IsCoinBase() && !IsCoinStake())
+	{
+		CTxDB txdb("r");	
+		CTransaction txThis;		
+		CTxIndex txindex;
+		int nFirstDepth;
+		if (!txThis.ReadFromDisk(txdb, COutPoint(GetHash(), 0), txindex))
+			nFirstDepth = 0;
+		else
+			nFirstDepth = txindex.GetDepthInMainChain();
+		
+		CTransaction txPrev;
+		CTxIndex txindexprev;
+		if (!txPrev.ReadFromDisk(txdb, vin[0].prevout, txindexprev))
+		{
+			printf("CTransaction::IsMultiSendTx() failed to read 2nd transaction \n");
+			return false;
+		}
+		
+		int nDepth = txindexprev.GetDepthInMainChain() - nFirstDepth;	
+		if(nDepth >= 69 && nDepth <= 73 && txPrev.IsCoinStake()) //if the tx is in the correct range for multisend && the first input is coinstake then mark as MultiSend/Savings
+			return true;
+	}
+		return false;
+}
+
 
 bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
                         bool* pfMissingInputs)
@@ -632,38 +661,40 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
 
         int64_t nFees = tx.GetValueIn(mapInputs)-tx.GetValueOut();
         unsigned int nSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
+		
 
-        // Don't accept it if it can't get into a block
-        int64_t txMinFee = tx.GetMinFee(1000, GMF_RELAY, nSize);
-        if (nFees < txMinFee)
-            return error("CTxMemPool::accept() : not enough fees %s, %"PRId64" < %"PRId64,
-                         hash.ToString().c_str(),
-                         nFees, txMinFee);
+		int64_t txMinFee = tx.GetMinFee(1000, GMF_RELAY, nSize);
+		if(tx.IsMultiSendTx())
+			txMinFee = 0;
+		if (nFees < txMinFee)
+			return error("CTxMemPool::accept() : not enough fees %s, %"PRId64" < %"PRId64,
+				 hash.ToString().c_str(),
+				 nFees, txMinFee);
+	
+		// Continuously rate-limit free transactions
+		// This mitigates 'penny-flooding' -- sending thousands of free transactions just to
+		// be annoying or make others' transactions take longer to confirm.
+		if (nFees < MIN_RELAY_TX_FEE && !tx.IsMultiSendTx())
+		{
+			static CCriticalSection cs;
+			static double dFreeCount;
+			static int64_t nLastTime;
+			int64_t nNow = GetTime();
 
-        // Continuously rate-limit free transactions
-        // This mitigates 'penny-flooding' -- sending thousands of free transactions just to
-        // be annoying or make others' transactions take longer to confirm.
-        if (nFees < MIN_RELAY_TX_FEE)
-        {
-            static CCriticalSection cs;
-            static double dFreeCount;
-            static int64_t nLastTime;
-            int64_t nNow = GetTime();
-
-            {
-                LOCK(cs);
-                // Use an exponentially decaying ~10-minute window:
-                dFreeCount *= pow(1.0 - 1.0/600.0, (double)(nNow - nLastTime));
-                nLastTime = nNow;
-                // -limitfreerelay unit is thousand-bytes-per-minute
-                // At default rate it would take over a month to fill 1GB
-                if (dFreeCount > GetArg("-limitfreerelay", 15)*10*1000 && !IsFromMe(tx))
-                    return error("CTxMemPool::accept() : free transaction rejected by rate limiter");
-                if (fDebug)
-                    printf("Rate limit dFreeCount: %g => %g\n", dFreeCount, dFreeCount+nSize);
-                dFreeCount += nSize;
-            }
-        }
+			{
+				LOCK(cs);
+				// Use an exponentially decaying ~10-minute window:
+				dFreeCount *= pow(1.0 - 1.0/600.0, (double)(nNow - nLastTime));
+				nLastTime = nNow;
+				// -limitfreerelay unit is thousand-bytes-per-minute
+				// At default rate it would take over a month to fill 1GB
+				if (dFreeCount > GetArg("-limitfreerelay", 15)*10*1000 && !IsFromMe(tx))
+					return error("CTxMemPool::accept() : free transaction rejected by rate limiter");
+				if (fDebug)
+					printf("Rate limit dFreeCount: %g => %g\n", dFreeCount, dFreeCount+nSize);
+				dFreeCount += nSize;
+			}
+		}
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
@@ -1446,7 +1477,7 @@ bool CTransaction::ConnectInputs(CTxDB& txdb, MapPrevTx inputs, map<uint256, CTx
                 return DoS(100, error("ConnectInputs() : %s nTxFee < 0", GetHash().ToString().substr(0,10).c_str()));
 
             // enforce transaction fees for every block
-            if (nTxFee < GetMinFee())
+            if (nTxFee < GetMinFee() && !IsMultiSendTx())
                 return fBlock? DoS(100, error("ConnectInputs() : %s not paying required fee=%s, paid=%s", GetHash().ToString().substr(0,10).c_str(), FormatMoney(GetMinFee()).c_str(), FormatMoney(nTxFee).c_str())) : false;
 
             nFees += nTxFee;

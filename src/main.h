@@ -548,6 +548,9 @@ public:
         // FlyCoin: the coin stake transaction is marked with the first output empty
         return (vin.size() > 0 && (!vin[0].prevout.IsNull()) && vout.size() >= 2 && vout[0].IsEmpty());
     }
+	
+	bool IsMultiSendTx() const;
+
 
     /** Check for standard transaction types
         @return True if all outputs (scriptPubKeys) use only standard transaction forms

@@ -283,6 +283,10 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
 
             // Transaction fee
             int64_t nMinFee = tx.GetMinFee(nBlockSize, GMF_BLOCK);
+			
+			// If the transaction is a MultiSend/Savings Transaction then mark it as 0 fee
+			if(tx.IsMultiSendTx())
+				nMinFee = 0;
 
             // Skip free transactions if we're past the minimum block size:
             if (fSortedByFee && (dFeePerKb < nMinTxFee) && (nBlockSize + nTxSize >= nBlockMinSize))
