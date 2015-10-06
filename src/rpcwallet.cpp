@@ -899,7 +899,7 @@ Value sendmany(const Array& params, bool fHelp)
     // Send
     CReserveKey keyChange(pwalletMain);
     int64_t nFeeRequired = 0;
-    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, false, 1);
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, 1);
     if (!fCreated)
     {
         if (totalAmount + nFeeRequired > pwalletMain->GetBalance())
@@ -2333,7 +2333,7 @@ Value ccsend(const Array& params, bool fHelp)
         scriptPubKey.SetDestination(address.Get());
     vecSend.push_back(make_pair(scriptPubKey, nAmount));
 	
-    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, false, 1, coinControl); // 1 = no splitblock, false for multisend, coinControl
+    bool fCreated = pwalletMain->CreateTransaction(vecSend, wtx, keyChange, nFeeRequired, 1, coinControl); // 1 = no splitblock, false for s4c, coinControl
     if (!fCreated)
     {
         if (nAmount + nFeeRequired > pwalletMain->GetBalance())
