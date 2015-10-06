@@ -74,7 +74,7 @@ CScript COINBASE_FLAGS;
 const string strMessageMagic = "FlyCoin Signed Message:\n";
 
 // Settings
-int64_t nTransactionFee = MIN_TX_FEE;
+int64_t nTransactionFee = MIN_TX_FEE_V2;
 int64_t nReserveBalance = 0;
 int64_t nMinimumInputValue = 0;
 int64_t nCombineThreshold = DEF_COMBINE_AMOUNT;
@@ -517,7 +517,11 @@ bool CTransaction::CheckTransaction() const
 int64_t CTransaction::GetMinFee(unsigned int nBlockSize, enum GetMinFee_mode mode, unsigned int nBytes) const
 {
     // Base fee is either MIN_TX_FEE or MIN_RELAY_TX_FEE
-    int64_t nBaseFee = (mode == GMF_RELAY) ? MIN_RELAY_TX_FEE : MIN_TX_FEE;
+    int64_t nBaseFee = 0;
+	if(this->nTime < FORK_TIME)
+		nBaseFee = (mode == GMF_RELAY) ? MIN_RELAY_TX_FEE : MIN_TX_FEE;
+	else
+		nBaseFee = (mode == GMF_RELAY) ? MIN_RELAY_TX_FEE_V2 : MIN_TX_FEE_V2;
 
     unsigned int nNewBlockSize = nBlockSize + nBytes;
     int64_t nMinFee = (1 + (int64_t)nBytes / 1000) * nBaseFee;
@@ -643,7 +647,7 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
         // Continuously rate-limit free transactions
         // This mitigates 'penny-flooding' -- sending thousands of free transactions just to
         // be annoying or make others' transactions take longer to confirm.
-        if (nFees < MIN_RELAY_TX_FEE)
+        if (nFees < (tx.nTime < FORK_TIME ? MIN_RELAY_TX_FEE : MIN_RELAY_TX_FEE_V2))
         {
             static CCriticalSection cs;
             static double dFreeCount;
@@ -999,41 +1003,72 @@ int static generateMTRandom(unsigned int s, int range)
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash)
 {
-	//calculate coin reward before super block
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 	
-	//super block calculations from breakcoin
-	std::string cseed_str = prevHash.ToString().substr(7,7);
-    const char* cseed = cseed_str.c_str();
-    long seed = hex2long(cseed);
-    int rand1 = generateMTRandom(seed, 100);
-	int rand2 = generateMTRandom(seed+1, 100);
-	int rand3 = generateMTRandom(seed+2, 100);
-	int rand4 = generateMTRandom(seed+3, 100);
-	int rand5 = generateMTRandom(seed+4, 100);
-	int64_t inputcoins = nValueIn / COIN;
-	int64_t nBonusSubsidy = 0;
-	if (inputcoins >= 25000) 
+	if(nTime < FORK_TIME) //old superblock reward
 	{
-		if(rand1 <= 5)
-			nBonusSubsidy += 1 * COIN;
-		if(rand2 <= 4)
-			nBonusSubsidy += 2 * COIN;
-		if(rand3 <= 3)
-			nBonusSubsidy += 3 * COIN;
-		if(rand4 <= 2)
-			nBonusSubsidy += 5 * COIN;
-		if(rand5 <= 1)
-			nBonusSubsidy += 10 * COIN;
+		int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+		int64_t nBonusSubsidy = 0;
+		//super block calculations from breakcoin
+		std::string cseed_str = prevHash.ToString().substr(7,7);
+		const char* cseed = cseed_str.c_str();
+		long seed = hex2long(cseed);
+		int rand1 = generateMTRandom(seed, 100);
+		int rand2 = generateMTRandom(seed+1, 100);
+		int rand3 = generateMTRandom(seed+2, 100);
+		int rand4 = generateMTRandom(seed+3, 100);
+		int rand5 = generateMTRandom(seed+4, 100);
+		int64_t inputcoins = nValueIn / COIN;
 		
-		//printf("creation", "BONUS stake: nBonusSubsidy = %s  inputcoins =%s nCoinAge=%s rand1=%s prevHash=%s\n", nBonusSubsidy, inputcoins, nCoinAge, rand1, prevHash.ToString());
-	}	
+		if (inputcoins >= 25000) 
+		{
+			if(rand1 <= 5)
+				nBonusSubsidy += 1 * COIN;
+			if(rand2 <= 4)
+				nBonusSubsidy += 2 * COIN;
+			if(rand3 <= 3)
+				nBonusSubsidy += 3 * COIN;
+			if(rand4 <= 2)
+				nBonusSubsidy += 5 * COIN;
+			if(rand5 <= 1)
+				nBonusSubsidy += 10 * COIN;
+		}	
+		
+		if (fDebug && GetBoolArg("-printcreation"))
+			printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
 
-    if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
+		return nSubsidy + nBonusSubsidy + nFees;
+	}
+	else //new superblock reward
+	{
+		CBigNum bnSubsidy = CBigNum(nCoinAge) * nRewardCoinYear / 365 / COIN;
+		int64_t nSubsidy = bnSubsidy.getuint64();
+		int64_t nBonusMultiplier = 1;
+		
+		//super block calculations from breakcoin
+		std::string cseed_str = prevHash.ToString().substr(7,7);
+		const char* cseed = cseed_str.c_str();
+		long seed = hex2long(cseed);
+		int rand1 = generateMTRandom(seed, 1000000);
 
-    return nSubsidy + nBonusSubsidy + nFees;
+		if(rand1 <= 500) // 0.5% chance
+			nBonusMultiplier = 2;
+		if(rand1 <= 400) // 0.4% chance
+			nBonusMultiplier = 3;
+		if(rand1 <= 90) // 0.09% chance
+			nBonusMultiplier = 5;
+		if(rand1 <= 9) // 0.009% chance
+			nBonusMultiplier = 10;
+		if(rand1 <= 1) // 0.0001% chance
+			nBonusMultiplier = 20;
+			
+		if (fDebug && GetBoolArg("-printcreation"))
+			printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" nBits=%d\n", FormatMoney(nSubsidy).c_str(), nCoinAge, nBits);
+
+		return (nSubsidy * nBonusMultiplier) + nFees;
+	}
+	
+	return false;
 }
 
 static const int nTargetTimespan = 30 * 60; // 15 blocks  
@@ -2913,7 +2948,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION)
+        if (pfrom->nVersion < (GetAdjustedTime() > FORK_TIME ? MIN_PROTO_VERSION_FORK : MIN_PROTO_VERSION))
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
@@ -3000,8 +3035,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         static int nAskedForBlocks = 0;
         if (!pfrom->fClient && !pfrom->fOneShot &&
             (pfrom->nStartingHeight > (nBestHeight - 144)) &&
-            (pfrom->nVersion < NOBLKS_VERSION_START ||
-             pfrom->nVersion >= NOBLKS_VERSION_END) &&
+            (pfrom->nVersion < NOBLKS_VERSION_START || pfrom->nVersion > (GetAdjustedTime() > FORK_TIME ? NOBLKS_VERSION_END_FORK : NOBLKS_VERSION_END)) &&
              (nAskedForBlocks < 1 || vNodes.size() <= 1))
         {
             nAskedForBlocks++;

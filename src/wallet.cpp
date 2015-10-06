@@ -1310,9 +1310,9 @@ bool CWallet::StakeForCharity()
                 nNet = ( ( pcoin->GetCredit() - pcoin->GetDebit() ) * nStakeForCharityPercent )/100;
 
                 // Do not send if amount is too low
-                if (nNet < MIN_RELAY_TX_FEE )
+                if (nNet < MIN_RELAY_TX_FEE_V2 )
                 {
-                    printf("StakeForCharity: Amount: %s is below MIN_RELAY_TX_FEE: %s\n",FormatMoney(nNet).c_str(),FormatMoney(MIN_RELAY_TX_FEE).c_str());
+                    printf("StakeForCharity: Amount: %s is below MIN_RELAY_TX_FEE: %s\n",FormatMoney(nNet).c_str(),FormatMoney(MIN_RELAY_TX_FEE_V2).c_str());
                     return false;
                 }
 
@@ -1789,8 +1789,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
         CTxDB txdb("r");
         {
             nFeeRet = nTransactionFee;
-			if(fSplitBlock)
-				nFeeRet = 0.0125 * COIN;
+
             while (true)
             {
                 wtxNew.vin.clear();
@@ -1841,9 +1840,9 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
                 // if sub-cent change is required, the fee must be raised to at least MIN_TX_FEE
                 // or until nChange becomes zero
                 // NOTE: this depends on the exact behaviour of GetMinFee
-                if (nFeeRet < MIN_TX_FEE && nChange > 0 && nChange < CENT)
+                if (nFeeRet < MIN_TX_FEE_V2 && nChange > 0 && nChange < CENT)
                 {
-                    int64_t nMoveToFee = min(nChange, MIN_TX_FEE - nFeeRet);
+                    int64_t nMoveToFee = min(nChange, MIN_TX_FEE_V2 - nFeeRet);
                     nChange -= nMoveToFee;
                     nFeeRet += nMoveToFee;
                 }

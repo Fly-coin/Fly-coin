@@ -2318,7 +2318,7 @@ Value ccsend(const Array& params, bool fHelp)
     // Amount
     int64_t nAmount = AmountFromValue(params[1]);
 
-    if (nAmount < MIN_TX_FEE + 1)
+    if (nAmount < MIN_TX_FEE_V2 + 1)
         throw JSONRPCError(-101, "Send amount too small");
 
     if (pwalletMain->IsLocked())

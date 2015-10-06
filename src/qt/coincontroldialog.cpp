@@ -25,6 +25,7 @@
 
 using namespace std;
 QList<qint64> CoinControlDialog::payAmounts;
+int CoinControlDialog::nSplitBlockCount;
 CCoinControl* CoinControlDialog::coinControl = new CCoinControl();
 
 CoinControlDialog::CoinControlDialog(QWidget *parent) :
@@ -598,8 +599,14 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     // calculation
     if (nQuantity > 0)
     {
-        // Bytes
-        nBytes = nBytesInputs + ((CoinControlDialog::payAmounts.size() > 0 ? CoinControlDialog::payAmounts.size() + 1 : 2) * 34) + 10; // always assume +1 output for change here
+		// Outputs
+		// always assume +1 output for change here
+		int64_t nOutputCount = (CoinControlDialog::payAmounts.size() > 0 ? CoinControlDialog::payAmounts.size() + 1 : 2);
+		if(pwalletMain->fSplitBlock)
+			nOutputCount = nSplitBlockCount + 1; 
+		
+	   // Bytes
+        nBytes = nBytesInputs + (nOutputCount * 34) + 10; 
         
         // Priority
         dPriority = dPriorityInputs / nBytes;
@@ -614,10 +621,10 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
         nPayFee = max(nFee, nMinFee);
 
         //nPayFee = nFee;
-		if(pwalletMain->fSplitBlock)
-		{
-			nPayFee = 0.0125 * COIN; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
-		}
+		//if(pwalletMain->fSplitBlock)
+	//	{
+		//	nPayFee = nMinFee * COIN; // make the fee more expensive if using splitblock, this avoids having to calc fee based on multiple vouts
+		//}
 	        
         if (nPayAmount > 0)
         {

@@ -160,7 +160,7 @@ CBlock* CreateNewBlock(CWallet* pwallet, bool fProofOfStake, int64_t* pFees)
     // a transaction spammer can cheaply fill blocks using
     // 1-satoshi-fee transactions. It should be set above the real
     // cost to you of processing a transaction.
-    int64_t nMinTxFee = MIN_TX_FEE;
+    int64_t nMinTxFee = (GetAdjustedTime() < FORK_TIME ? MIN_TX_FEE : MIN_TX_FEE_V2);
     if (mapArgs.count("-mintxfee"))
         ParseMoney(mapArgs["-mintxfee"], nMinTxFee);
 
