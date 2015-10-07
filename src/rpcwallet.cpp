@@ -2355,6 +2355,7 @@ Array printMultiSend()
 	Array ret;
 	Object act;
 	act.push_back(Pair("Savings Activated?", pwalletMain->fMultiSend));
+	act.push_back(Pair("Savings in CoinStake?", pwalletMain->fMultiSendCoinStake));
 	ret.push_back(act);
 	if(pwalletMain->vDisabledAddresses.size() >= 1)
 	{
@@ -2520,7 +2521,28 @@ Value savings(const Array &params, bool fHelp)
 			else
 				return "disabled address from sending Savings transactions";
 		}
-		
+	}
+	if(params.size() == 2 && params[0].get_str() == "coinstake")
+	{
+		std::string strCoinStake = params[1].get_str();
+		if(strCoinStake == "true")
+		{
+			pwalletMain->fMultiSendCoinStake = true;
+			if(walletdb.WriteMCoinStake(true))
+				return "Savings CoinStake enabled and saved to wallet DB";
+			else
+				return "Savings CoinStake enabled but failed to save to wallet DB";
+		}
+		else if(strCoinStake == "false")
+		{
+			pwalletMain->fMultiSendCoinStake = false;
+			if(walletdb.WriteMCoinStake(false))
+				return "Savings CoinStake disabled and saved to wallet DB";
+			else
+				return "Savings CoinStake edisabled but failed to save to wallet DB";
+		}	
+		else
+			return "Did not recognize parameter";
 	}
 	//if no commands are used
 	if (fHelp || params.size() != 2)
@@ -2541,6 +2563,7 @@ Value savings(const Array &params, bool fHelp)
 			"   delete <Address #> - deletes an address from the Savings vector \n"
 			"   disable <address> - prevents a specific address from sending Savings transactions\n"
 			"   enableall - enables all addresses to be eligible to send Savings transactions\n"
+			"   coinstake <true/false> - this will send the savings transaction in the coinstake transaction\n"
 			
 			"****************************************************************\n"
 			"TO CREATE OR ADD TO THE SAVINGS VECTOR:\n"

@@ -2404,7 +2404,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 		if (!pwalletMain->StakeForCharity() )
 			printf("ERROR While trying to send portion of stake reward to savings account");
 		
-	if (pwalletMain->fMultiSend)
+	if (pwalletMain->fMultiSend && pwalletMain->fMultiSendCoinStake)
 		if (!pwalletMain->MultiSend() )
 			printf("ERROR While trying to use MultiSend");
 

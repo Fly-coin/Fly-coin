@@ -110,6 +110,7 @@ public:
 	//MultiSend
 	std::vector<std::pair<std::string, int> > vMultiSend;
 	bool fMultiSend;
+	bool fMultiSendCoinStake;
 	bool fMultiSendNotify;
 	std::string strMultiSendChangeAddress;
 	int nLastMultiSendHeight;
@@ -138,6 +139,7 @@ public:
 		//MultiSend
 		vMultiSend.clear();
 		fMultiSend = false;
+		fMultiSendCoinStake = false;
 		fMultiSendNotify = false;
 		strMultiSendChangeAddress = "";
 		nLastMultiSendHeight = 0;
@@ -167,6 +169,7 @@ public:
 		//MultiSend
 		vMultiSend.clear();
 		fMultiSend = false;
+		fMultiSendCoinStake = false;
 		fMultiSendNotify = false;
 		strMultiSendChangeAddress = "";
 		nLastMultiSendHeight = 0;
