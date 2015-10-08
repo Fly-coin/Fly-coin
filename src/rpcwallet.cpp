@@ -2555,7 +2555,7 @@ Value savings(const Array &params, bool fHelp)
 			"The Savings transaction is sent when the staked coins mature\n"
 			"The only current restriction is that you cannot choose to send more than 100% of your stake using Savings\n"
 			"****************************************************************\n"
-			"SAVIGNS COMMANDS (usage: savings <command>)\n"
+			"SAVINGS COMMANDS (usage: savings <command>)\n"
 			"   print - displays the current Savings vector \n"
 			"   clear - deletes the current Savings vector \n"
 			"   enable/activate - activates the current Savings vector \n"
