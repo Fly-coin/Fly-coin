@@ -1002,7 +1002,7 @@ int static generateMTRandom(unsigned int s, int range)
 }
 
 // miner's coin stake reward based on coin age spent (coin-days)
-int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash)
+int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash, int64_t& nBonusMultiplier)
 {
     int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
 	
@@ -1044,7 +1044,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int
 	{
 		CBigNum bnSubsidy = CBigNum(nCoinAge) * nRewardCoinYear / 365 / COIN;
 		int64_t nSubsidy = bnSubsidy.getuint64();
-		int64_t nBonusMultiplier = 1;
+		nBonusMultiplier = 1;
 		
 		//super block calculations from breakcoin
 		std::string cseed_str = prevHash.ToString().substr(7,7);
@@ -1676,7 +1676,8 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
             return error("ConnectBlock() : %s unable to get coin age for coinstake", vtx[1].GetHash().ToString().substr(0,10).c_str());
 
-        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees, nValueIn, prevHash);
+		int64_t nBonusMultiplier = 1;
+        int64_t nCalculatedStakeReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, nTime, nFees, nValueIn, prevHash, nBonusMultiplier);
 
         if (nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%"PRId64" vs calculated=%"PRId64")", nStakeReward, nCalculatedStakeReward));

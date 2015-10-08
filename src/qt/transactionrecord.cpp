@@ -2,6 +2,7 @@
 
 #include "wallet.h"
 #include "base58.h"
+#include "txdb.h"
 
 /* Return positive answer if transaction should be shown in list.
  */
@@ -59,6 +60,30 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 			TransactionRecord txrCoinStake = TransactionRecord(hash, nTime, TransactionRecord::StakeMint, CBitcoinAddress(address).ToString(), -nDebit, wtx.GetValueOut());
 			// Stake generation
 			parts.append(txrCoinStake);
+			
+			// Find the block the tx is in
+			CBlockIndex* pindex = NULL;
+			std::map<uint256, CBlockIndex*>::iterator mi = mapBlockIndex.find(wtx.hashBlock);
+			if (mi != mapBlockIndex.end())
+				pindex = (*mi).second;
+			uint256 prevHash = 0;
+			if(pindex->pprev)
+				prevHash = pindex->pprev->GetBlockHash();
+			
+			uint64_t nCoinAge;
+			CTxDB txdb("r");
+			if (!wtx.GetCoinAge(txdb, nCoinAge))
+				return parts;
+			int64_t nRewardMultiplier = 1;
+			int64_t nReward = GetProofOfStakeReward(nCoinAge, pindex->nBits, wtx.nTime,nDebit - wtx.GetValueOut(), nDebit, prevHash, nRewardMultiplier);
+			int64_t nBaseReward = nReward / nRewardMultiplier;
+			if(nRewardMultiplier > 1)
+			{
+				TransactionRecord txrCoinStakeBonus = TransactionRecord(hash, nTime, TransactionRecord::StakeMintBonus, CBitcoinAddress(address).ToString(), nReward - nBaseReward, wtx.GetValueOut());
+				// Stake generation
+				txrCoinStake.credit = nBaseReward;
+				parts.append(txrCoinStakeBonus);
+			}
 			
 			//if some of your outputs went to another address we will make them as a sendtoaddress tx
 			for(unsigned int i = 0; i < wtx.vout.size(); i++)
