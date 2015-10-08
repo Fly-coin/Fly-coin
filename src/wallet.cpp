@@ -1763,8 +1763,11 @@ bool CWallet::GetStakeWeightFromValue(const int64_t nTime, const int64_t nValue,
 	int64_t nTimeWeight = GetWeight2(nTime, (int64_t)GetTime());
 	if (nTimeWeight < 0 )
 		nTimeWeight=0;
-	
-	CBigNum bnCoinDayWeight = CBigNum(nValue) * nTimeWeight / COIN / (24 * 60 * 60);
+	CBigNum bnCoinDayWeight;
+	if(nTime > FORK_TIME)
+		bnCoinDayWeight = CBigNum(nValue) * nTimeWeight * 100 / COIN / (24 * 60 * 60);
+	else
+		bnCoinDayWeight = CBigNum(nValue) * nTimeWeight / COIN / (24 * 60 * 60);
 	nWeight = bnCoinDayWeight.getuint64();
 	return true;
 }
@@ -1960,7 +1963,11 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, ui
         }
 
         int64_t nTimeWeight = GetWeight((int64_t)pcoin.first->nTime, (int64_t)GetTime());
-        CBigNum bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
+		CBigNum bnCoinDayWeight;
+		if(pcoin.first->nTime > FORK_TIME)
+			bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight * 100 / COIN / (24 * 60 * 60);
+		else
+			bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
 
         // Weight is greater than zero
         if (nTimeWeight > 0)
