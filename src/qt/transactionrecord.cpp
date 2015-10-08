@@ -59,7 +59,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 		{
 			TransactionRecord txrCoinStake = TransactionRecord(hash, nTime, TransactionRecord::StakeMint, CBitcoinAddress(address).ToString(), -nDebit, wtx.GetValueOut());
 			// Stake generation
-			parts.append(txrCoinStake);
+			
 			
 			// Find the block the tx is in
 			CBlockIndex* pindex = NULL;
@@ -82,8 +82,11 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
 				TransactionRecord txrCoinStakeBonus = TransactionRecord(hash, nTime, TransactionRecord::StakeMintBonus, CBitcoinAddress(address).ToString(), nReward - nBaseReward, wtx.GetValueOut());
 				// Stake generation
 				txrCoinStake.credit = nBaseReward;
+				parts.append(txrCoinStake);
 				parts.append(txrCoinStakeBonus);
 			}
+			else
+				parts.append(txrCoinStake);
 			
 			//if some of your outputs went to another address we will make them as a sendtoaddress tx
 			for(unsigned int i = 0; i < wtx.vout.size(); i++)
