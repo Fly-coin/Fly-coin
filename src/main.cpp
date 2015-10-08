@@ -44,6 +44,7 @@ static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 16);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 30);
 
 unsigned int nTargetSpacing = 2 * 60; // 2 minute
+unsigned int nTargetSpacing2 = 5 * 60; // 5 minute
 unsigned int nStakeMinAge = 7 * 24 * 60 * 60; // 7 days
 unsigned int nStakeMaxAge = 28 * 24 * 60 * 60; // 28 days
 unsigned int nModifierInterval = 17150; // time to elapse before new modifier is computed
@@ -1121,7 +1122,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
 
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
-    CBigNum bnTargetLimit = bnProofOfWorkLimit;
+	CBigNum bnTargetLimit = bnProofOfWorkLimit;
 
     if(fProofOfStake)
     {
@@ -1148,10 +1149,13 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
 
-    int nTargetSpacing = nStakeTargetSpacing;
-    int nInterval = nTargetTimespan / nTargetSpacing;
-    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
-    bnNew /= ((nInterval + 1) * nTargetSpacing);
+    int nTargetTemp = nStakeTargetSpacing;
+	if(pindexLast->nTime > FORK_TIME)
+		nTargetTemp = nTargetSpacing2; //fork target to 5 minute blocks
+	
+    int nInterval = nTargetTimespan / nTargetTemp;
+    bnNew *= ((nInterval - 1) * nTargetTemp + nActualSpacing + nActualSpacing);
+    bnNew /= ((nInterval + 1) * nTargetTemp);
     
     /*
     printf(">> Height = %d, fProofOfStake = %d, nInterval = %"PRI64d", nTargetSpacing = %"PRI64d", nActualSpacing = %"PRI64d"\n", 
