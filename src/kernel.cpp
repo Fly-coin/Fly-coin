@@ -11,6 +11,7 @@ using namespace std;
 
 extern unsigned int nStakeMaxAge;
 extern unsigned int nTargetSpacing;
+extern unsigned int nTargetSpacing2;
 
 typedef std::map<int, unsigned int> MapModifierCheckpoints;
 
@@ -159,7 +160,10 @@ bool ComputeNextStakeModifier(const CBlockIndex* pindexPrev, uint64_t& nStakeMod
 
     // Sort candidate blocks by timestamp
     vector<pair<int64_t, uint256> > vSortedByTimestamp;
-    vSortedByTimestamp.reserve(64 * nModifierInterval / nTargetSpacing);
+	if(pindexPrev->nTime > FORK_TIME)
+		vSortedByTimestamp.reserve(64 * nModifierInterval / nTargetSpacing2);
+	else
+		vSortedByTimestamp.reserve(64 * nModifierInterval / nTargetSpacing);
     int64_t nSelectionInterval = GetStakeModifierSelectionInterval();
     int64_t nSelectionIntervalStart = (pindexPrev->GetBlockTime() / nModifierInterval) * nModifierInterval - nSelectionInterval;
     const CBlockIndex* pindex = pindexPrev;
@@ -296,10 +300,14 @@ uint256 stakeHash(unsigned int nTimeTx, unsigned int nTxPrevTime, CDataStream ss
 }
 
 //HyperStake test hash vs target
-bool stakeTargetHit(uint256 hashProofOfStake, int64_t nTimeWeight, int64_t nValueIn, CBigNum bnTargetPerCoinDay)
+bool stakeTargetHit(uint256 hashProofOfStake, int64_t nTimeWeight, int64_t nValueIn, CBigNum bnTargetPerCoinDay, int nTime)
 {	
 	//get the stake weight
-	CBigNum bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
+	CBigNum bnCoinDayWeight;
+	if(nTime < FORK_TIME)
+		bnCoinDayWeight = CBigNum(nValueIn) * nTimeWeight / COIN / (24 * 60 * 60);
+	else
+		bnCoinDayWeight = CBigNum(nValueIn * 100) * nTimeWeight / COIN / (24 * 60 * 60); // increase weight by a factor of 100 to make difficulty more sensitive
 	
 	// Now check if proof-of-stake hash meets target protocol
 	return (CBigNum(hashProofOfStake) < bnCoinDayWeight * bnTargetPerCoinDay);
@@ -339,7 +347,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
 	if(fCheck)
 	{
 		hashProofOfStake = stakeHash(nTimeTx, nTxPrevTime, ss, prevout.n, nTxPrevOffset, nTimeBlockFrom); 
-		return stakeTargetHit(hashProofOfStake, GetWeight((int64_t)nTxPrevTime, (int64_t)nTimeTx), nValueIn, bnTargetPerCoinDay);
+		return stakeTargetHit(hashProofOfStake, GetWeight((int64_t)nTxPrevTime, (int64_t)nTimeTx), nValueIn, bnTargetPerCoinDay, nTimeTx);
 	}
 	
     bool fSuccess = false;
@@ -352,7 +360,7 @@ bool CheckStakeKernelHash(unsigned int nBits, const CBlock& blockFrom, unsigned 
 		hashProofOfStake = stakeHash(nTryTime, nTxPrevTime, ss, prevout.n, nTxPrevOffset, nTimeBlockFrom); 
 
 		// if stake hash does not meet the target then continue to next iteration
-		if(!stakeTargetHit(hashProofOfStake, GetWeight((int64_t)nTxPrevTime, (int64_t)nTimeTx), nValueIn, bnTargetPerCoinDay))
+		if(!stakeTargetHit(hashProofOfStake, GetWeight((int64_t)nTxPrevTime, (int64_t)nTimeTx), nValueIn, bnTargetPerCoinDay, nTimeTx))
 			continue;
 		
 		fSuccess = true; // if we make it this far then we have successfully created a stake hash 

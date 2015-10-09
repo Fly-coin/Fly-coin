@@ -32,6 +32,7 @@ public:
 
     static QList<qint64> payAmounts;
     static CCoinControl *coinControl;
+	static int nSplitBlockCount;
 
 private:
     Ui::CoinControlDialog *ui;

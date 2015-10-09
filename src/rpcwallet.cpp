@@ -1488,9 +1488,10 @@ Value getconfs(const Array& params, bool fHelp)
 				else
 					entry.push_back(Pair("confirmations", 0));
             }
-        }
+		}
 		return entry;
 	}
+	
 	else return "failed";
 }
 
@@ -2317,7 +2318,7 @@ Value ccsend(const Array& params, bool fHelp)
     // Amount
     int64_t nAmount = AmountFromValue(params[1]);
 
-    if (nAmount < MIN_TX_FEE + 1)
+    if (nAmount < MIN_TX_FEE_V2 + 1)
         throw JSONRPCError(-101, "Send amount too small");
 
     if (pwalletMain->IsLocked())
@@ -2353,7 +2354,8 @@ Array printMultiSend()
 {
 	Array ret;
 	Object act;
-	act.push_back(Pair("MultiSend Activated?", pwalletMain->fMultiSend));
+	act.push_back(Pair("Savings Activated?", pwalletMain->fMultiSend));
+	act.push_back(Pair("Savings in CoinStake?", pwalletMain->fMultiSendCoinStake));
 	ret.push_back(act);
 	if(pwalletMain->vDisabledAddresses.size() >= 1)
 	{
@@ -2365,7 +2367,7 @@ Array printMultiSend()
 		ret.push_back(disAdd);
 	}
 	
-	ret.push_back("MultiSend Addresses to Send To:");
+	ret.push_back("Savings Addresses to Send To:");
 	Object vMS;
 	for(unsigned int i = 0; i < pwalletMain->vMultiSend.size(); i++)
 	{
@@ -2423,7 +2425,7 @@ unsigned int sumMultiSend()
 }
 
 // presstab HyperStake
-Value multisend(const Array &params, bool fHelp)
+Value savings(const Array &params, bool fHelp)
 {
     CWalletDB walletdb(pwalletMain->strWalletFile);
 	bool fFileBacked;
@@ -2450,36 +2452,36 @@ Value multisend(const Array &params, bool fHelp)
 				if(fFileBacked)
 				{
 					if(walletdb.EraseMultiSend(pwalletMain->vMultiSend))						
-						strRet += "erased MultiSend vector from database & ";
+						strRet += "erased Savings vector from database & ";
 					
 				}
 				pwalletMain->vMultiSend.clear();
 				pwalletMain->fMultiSend = false;
-				strRet += "cleared MultiSend vector from RAM";
+				strRet += "cleared Savings vector from RAM";
 				return strRet;
 			}
 		}
 		else if (strCommand == "enable" || strCommand == "activate" )
 		{
 			if(pwalletMain->vMultiSend.size() < 1)
-				return "Unable to activate MultiSend, check MultiSend vector";
+				return "Unable to activate Savings, check Savings vector";
 			if(CBitcoinAddress(pwalletMain->vMultiSend[0].first).IsValid())
 			{
 				pwalletMain->fMultiSend = true;
 				if(!walletdb.WriteMSettings(true, pwalletMain->nLastMultiSendHeight))
-					return "MultiSend activated but writing settings to DB failed";
+					return "Savings activated but writing settings to DB failed";
 				else
-				return "MultiSend activated";
+				return "Savings activated";
 			}
 			else
-				return "Unable to activate MultiSend, check MultiSend vector";
+				return "Unable to activate Savings, check Savings vector";
 		}
 		else if (strCommand == "disable" || strCommand == "deactivate" )
 		{
 			pwalletMain->fMultiSend = false;
 			if(!walletdb.WriteMSettings(false, pwalletMain->nLastMultiSendHeight))
-					return "MultiSend deactivated but writing settings to DB failed";
-			return "MultiSend deactivated";
+					return "Savings deactivated but writing settings to DB failed";
+			return "Savings deactivated";
 		}
 		else if(strCommand == "enableall")
 		{
@@ -2488,7 +2490,7 @@ Value multisend(const Array &params, bool fHelp)
 			else
 			{
 				pwalletMain->vDisabledAddresses.clear();
-				return "all addresses will now send MultiSend transactions";
+				return "all addresses will now send Savings transactions";
 			}
 		}
 	}
@@ -2496,12 +2498,12 @@ Value multisend(const Array &params, bool fHelp)
 	{
 		int del = boost::lexical_cast<int>(params[1].get_str());
 		if(!walletdb.EraseMultiSend(pwalletMain->vMultiSend))
-		   return "failed to delete old MultiSend vector from database";
+		   return "failed to delete old Savings vector from database";
 		
 		pwalletMain->vMultiSend.erase(pwalletMain->vMultiSend.begin() + del);
 		
 		if(!walletdb.WriteMultiSend(pwalletMain->vMultiSend))
-			return "walletdb WriteMultiSend failed!";
+			return "walletdb Write Savings failed!";
 		return printMultiSend();
 	}
 	if(params.size() == 2 && params[0].get_str() == "disable")
@@ -2517,34 +2519,56 @@ Value multisend(const Array &params, bool fHelp)
 			if(!walletdb.WriteMSDisabledAddresses(pwalletMain->vDisabledAddresses))
 				return "disabled address from sending, but failed to store it to walletDB";
 			else
-				return "disabled address from sending MultiSend transactions";
+				return "disabled address from sending Savings transactions";
 		}
-		
+	}
+	if(params.size() == 2 && params[0].get_str() == "coinstake")
+	{
+		std::string strCoinStake = params[1].get_str();
+		if(strCoinStake == "true")
+		{
+			pwalletMain->fMultiSendCoinStake = true;
+			if(walletdb.WriteMCoinStake(true))
+				return "Savings CoinStake enabled and saved to wallet DB";
+			else
+				return "Savings CoinStake enabled but failed to save to wallet DB";
+		}
+		else if(strCoinStake == "false")
+		{
+			pwalletMain->fMultiSendCoinStake = false;
+			if(walletdb.WriteMCoinStake(false))
+				return "Savings CoinStake disabled and saved to wallet DB";
+			else
+				return "Savings CoinStake edisabled but failed to save to wallet DB";
+		}	
+		else
+			return "Did not recognize parameter";
 	}
 	//if no commands are used
 	if (fHelp || params.size() != 2)
         throw runtime_error(
-			"multisend <command>\n"
+			"savings <command>\n"
 			"****************************************************************\n"
-			"WHAT IS MULTISEND?\n"
-			"MultiSend is a rebuild of what used to be called Stake For Charity (s4c)\n"
-			"MultiSend allows a user to automatically send a percent of their stake reward to as many addresses as you would like\n"
-			"The MultiSend transaction is sent when the staked coins mature\n"
-			"The only current restriction is that you cannot choose to send more than 100% of your stake using MultiSend\n"
+			"WHAT IS SAVINGS?\n"
+			"Savings is a rebuild of what used to be called Stake For Charity (s4c)\n"
+			"Savings allows a user to automatically send a percent of their stake reward to as many addresses as you would like\n"
+			"The Savings transaction is sent when the staked coins mature\n"
+			"The only current restriction is that you cannot choose to send more than 100% of your stake using Savings\n"
 			"****************************************************************\n"
-			"MULTISEND COMMANDS (usage: multisend <command>)\n"
-			"   print - displays the current MultiSend vector \n"
-			"   clear - deletes the current MultiSend vector \n"
-			"   enable/activate - activates the current MultiSend vector \n"
-			"   disable/deactivate - disables the current MultiSend vector \n"
-			"   delete <Address #> - deletes an address from the MultiSend vector \n"
-			"   disable <address> - prevents a specific address from sending MultiSend transactions\n"
-			"   enableall - enables all addresses to be eligible to send MultiSend transactions\n"
+			"SAVINGS COMMANDS (usage: savings <command>)\n"
+			"   print - displays the current Savings vector \n"
+			"   clear - deletes the current Savings vector \n"
+			"   enable/activate - activates the current Savings vector \n"
+			"   disable/deactivate - disables the current Savings vector \n"
+			"   delete <Address #> - deletes an address from the Savings vector \n"
+			"   disable <address> - prevents a specific address from sending Savings transactions\n"
+			"   enableall - enables all addresses to be eligible to send Savings transactions\n"
+			"   coinstake <true/false> - this will send the savings transaction in the coinstake transaction\n"
 			
 			"****************************************************************\n"
-			"TO CREATE OR ADD TO THE MULTISEND VECTOR:\n"
-			"multisend <FlyCoin Address> <percent>\n"
-            "This will add a new address to the MultiSend vector\n"
+			"TO CREATE OR ADD TO THE SAVINGS VECTOR:\n"
+			"savings <FlyCoin Address> <percent>\n"
+            "This will add a new address to the Savings vector\n"
             "Percent is a whole number 1 to 100.\n"
 			"****************************************************************\n"
             );
@@ -2573,12 +2597,12 @@ Value multisend(const Array &params, bool fHelp)
 		
 		//MultiSend can only send 100% of your stake
         if (nPercent + sumMultiSend() > 100)
-			return "Failed to add to MultiSend vector, the sum of your MultiSend is greater than 100%";
+			return "Failed to add to Savings vector, the sum of your Savings is greater than 100%";
 		
 		for(unsigned int i = 0; i < pwalletMain->vMultiSend.size(); i++)
 		{
 			if(pwalletMain->vMultiSend[i].first == strAddress)
-				return "Failed to add to MultiSend vector, cannot use the same address twice";
+				return "Failed to add to Savings vector, cannot use the same address twice";
 		}
 			
 		if(fFileBacked)
@@ -2592,7 +2616,7 @@ Value multisend(const Array &params, bool fHelp)
 		if(fFileBacked)
 		{	
 			if(!walletdb.WriteMultiSend(pwalletMain->vMultiSend))
-				return "walletdb WriteMultiSend failed!";
+				return "walletdb Write Savings failed!";
 		}
 	}
 	return printMultiSend();

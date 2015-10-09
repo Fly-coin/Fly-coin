@@ -59,9 +59,9 @@ void StakeForCharityDialog::on_viewButton_clicked()
 	std::pair<std::string, int> pMultiSend;
 	std::string strMultiSendPrint = "";
 	if(pwalletMain->fMultiSend)
-		strMultiSendPrint += "MultiSend Active\n";
+		strMultiSendPrint += "Savings Active\n";
 	else
-		strMultiSendPrint += "MultiSend Not Active\n";
+		strMultiSendPrint += "Savings Not Active\n";
 	
 	for(int i = 0; i < (int)pwalletMain->vMultiSend.size(); i++)
 	{
@@ -103,7 +103,7 @@ void StakeForCharityDialog::on_addButton_clicked()
 	{
 		ui->message->setProperty("status", "error");
         ui->message->style()->polish(ui->message);
-        ui->message->setText(tr("The total amount of your MultiSend vector is over 100% of your stake reward\n"));
+        ui->message->setText(tr("The total amount of your Savings vector is over 100% of your stake reward\n"));
         ui->charityAddressEdit->setFocus();
         return;
 	}
@@ -135,7 +135,7 @@ void StakeForCharityDialog::on_addButton_clicked()
 	}
 	CWalletDB walletdb(pwalletMain->strWalletFile);
 	walletdb.WriteMultiSend(pwalletMain->vMultiSend);
-    ui->message->setText(tr("MultiSend Vector\n") + QString(strMultiSendPrint.c_str()));
+    ui->message->setText(tr("Savings Vector\n") + QString(strMultiSendPrint.c_str()));
     return;
 }
 
@@ -171,15 +171,15 @@ void StakeForCharityDialog::on_activateButton_clicked()
 {
 	std::string strRet = "";
 	if(pwalletMain->vMultiSend.size() < 1)
-		strRet = "Unable to activate MultiSend, check MultiSend vector\n";
+		strRet = "Unable to activate Savings, check Savings vector\n";
 	else if(CBitcoinAddress(pwalletMain->vMultiSend[0].first).IsValid())
 	{
 		pwalletMain->fMultiSend = true;
 		CWalletDB walletdb(pwalletMain->strWalletFile);
 		if(!walletdb.WriteMSettings(true, pwalletMain->nLastMultiSendHeight))
-			strRet = "MultiSend activated but writing settings to DB failed";
+			strRet = "Savings activated but writing settings to DB failed";
 		else
-			strRet = "MultiSend activated";
+			strRet = "Savings activated";
 	}
 	else
 		strRet = "First Address Not Valid";
@@ -196,9 +196,9 @@ void StakeForCharityDialog::on_disableButton_clicked()
 	pwalletMain->fMultiSend = false;
 	CWalletDB walletdb(pwalletMain->strWalletFile);
 	if(!walletdb.WriteMSettings(false, pwalletMain->nLastMultiSendHeight))
-		strRet = "MultiSend deactivated but writing settings to DB failed";
+		strRet = "Savings deactivated but writing settings to DB failed";
 	else
-		strRet = "MultiSend deactivated";
+		strRet = "Savings deactivated";
 	
     ui->message->setProperty("status", "");
     ui->message->style()->polish(ui->message);

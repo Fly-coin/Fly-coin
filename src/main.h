@@ -35,13 +35,16 @@ static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 0.001 * COIN;
+static const int64_t MIN_TX_FEE_V2 = 0.1 * COIN;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+static const int64_t MIN_RELAY_TX_FEE_V2 = MIN_TX_FEE_V2;
 static const int64_t MAX_MONEY = 5000000 * COIN;
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 50 * CENT; // 50% per year
 static const int MAX_TIME_SINCE_BEST_BLOCK = 10; // how many seconds to wait before sending next PushGetBlocks()
 static const int MODIFIER_INTERVAL_SWITCH = 100;
 
 static const unsigned int BLOCK_SWITCH_TIME = 1435708800; // 07/01/2015 @ 12:00am (UTC)
+static const unsigned int FORK_TIME = 1444752000; // (GMT): Tue, 13 Oct 2015 16:00:00 GMT
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -129,7 +132,7 @@ bool LoadExternalBlockFile(FILE* fileIn);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake);
 int64_t GetProofOfWorkReward(int64_t nFees);
-int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash);
+int64_t GetProofOfStakeReward(int64_t nCoinAge, unsigned int nBits, unsigned int nTime, int64_t nFees, int64_t nValueIn, uint256 prevHash, int64_t& nBonusMultiplier);
 unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime);
 unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBlockTime);
 int GetNumBlocksOfPeers();

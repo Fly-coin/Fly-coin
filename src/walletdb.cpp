@@ -445,6 +445,12 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
 		   ssValue >> strDisabledAddress;
 		   pwallet->vDisabledAddresses.push_back(strDisabledAddress);
 		}
+		else if (strType == "mcoinstake")
+		{
+			bool fMultiSendCoinStake;
+			ssValue >> fMultiSendCoinStake;
+			pwallet->fMultiSendCoinStake = fMultiSendCoinStake;
+		}
 		else if(strType == "hashdrift")//presstab HyperStake  
 		{  
 		   unsigned int nHashDrift;  

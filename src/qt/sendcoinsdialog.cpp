@@ -538,7 +538,9 @@ void SendCoinsDialog::splitBlockLineEditChanged(const QString & text)
 	double nSize = 0;
 	if (nAfterFee > 0 && text.toDouble() > 0)
 		nSize = nAfterFee / text.toDouble();
+	CoinControlDialog::nSplitBlockCount = text.toDouble();
 	ui->labelBlockSize->setText(QString::number(nSize));
+	coinControlUpdateLabels();
 }
 
 // Coin Control: checkbox custom change address

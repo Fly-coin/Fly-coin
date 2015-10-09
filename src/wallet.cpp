@@ -1230,7 +1230,7 @@ bool CWallet::MultiSend()
 			if(!ExtractDestination(out.tx->vout[out.i].scriptPubKey, address)) continue;
 			if (nBestHeight <= nLastMultiSendHeight ) 
 					return false;	
-			if (out.tx->IsCoinStake() && out.tx->GetBlocksToMaturity() == 0  && out.tx->GetDepthInMainChain() == nCoinbaseMaturity+10)
+			if (out.tx->IsCoinStake() && out.tx->GetBlocksToMaturity() == 0  && out.tx->GetDepthInMainChain() == nCoinbaseMaturity+20)
 			{
 				//Disabled Addresses won't send MultiSend transactions
 				if(vDisabledAddresses.size() > 0)
@@ -1310,9 +1310,9 @@ bool CWallet::StakeForCharity()
                 nNet = ( ( pcoin->GetCredit() - pcoin->GetDebit() ) * nStakeForCharityPercent )/100;
 
                 // Do not send if amount is too low
-                if (nNet < MIN_RELAY_TX_FEE )
+                if (nNet < MIN_RELAY_TX_FEE_V2 )
                 {
-                    printf("StakeForCharity: Amount: %s is below MIN_RELAY_TX_FEE: %s\n",FormatMoney(nNet).c_str(),FormatMoney(MIN_RELAY_TX_FEE).c_str());
+                    printf("StakeForCharity: Amount: %s is below MIN_RELAY_TX_FEE: %s\n",FormatMoney(nNet).c_str(),FormatMoney(MIN_RELAY_TX_FEE_V2).c_str());
                     return false;
                 }
 
@@ -1763,8 +1763,11 @@ bool CWallet::GetStakeWeightFromValue(const int64_t nTime, const int64_t nValue,
 	int64_t nTimeWeight = GetWeight2(nTime, (int64_t)GetTime());
 	if (nTimeWeight < 0 )
 		nTimeWeight=0;
-	
-	CBigNum bnCoinDayWeight = CBigNum(nValue) * nTimeWeight / COIN / (24 * 60 * 60);
+	CBigNum bnCoinDayWeight;
+	if(nTime > FORK_TIME)
+		bnCoinDayWeight = CBigNum(nValue) * nTimeWeight * 100 / COIN / (24 * 60 * 60);
+	else
+		bnCoinDayWeight = CBigNum(nValue) * nTimeWeight / COIN / (24 * 60 * 60);
 	nWeight = bnCoinDayWeight.getuint64();
 	return true;
 }
@@ -1789,8 +1792,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
         CTxDB txdb("r");
         {
             nFeeRet = nTransactionFee;
-			if(fSplitBlock)
-				nFeeRet = 0.0125 * COIN;
+
             while (true)
             {
                 wtxNew.vin.clear();
@@ -1841,9 +1843,9 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64_t> >& vecSend, 
                 // if sub-cent change is required, the fee must be raised to at least MIN_TX_FEE
                 // or until nChange becomes zero
                 // NOTE: this depends on the exact behaviour of GetMinFee
-                if (nFeeRet < MIN_TX_FEE && nChange > 0 && nChange < CENT)
+                if (nFeeRet < MIN_TX_FEE_V2 && nChange > 0 && nChange < CENT)
                 {
-                    int64_t nMoveToFee = min(nChange, MIN_TX_FEE - nFeeRet);
+                    int64_t nMoveToFee = min(nChange, MIN_TX_FEE_V2 - nFeeRet);
                     nChange -= nMoveToFee;
                     nFeeRet += nMoveToFee;
                 }
@@ -1961,7 +1963,11 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nMinWeight, ui
         }
 
         int64_t nTimeWeight = GetWeight((int64_t)pcoin.first->nTime, (int64_t)GetTime());
-        CBigNum bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
+		CBigNum bnCoinDayWeight;
+		if(pcoin.first->nTime > FORK_TIME)
+			bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight * 100 / COIN / (24 * 60 * 60);
+		else
+			bnCoinDayWeight = CBigNum(pcoin.first->vout[pcoin.second].nValue) * nTimeWeight / COIN / (24 * 60 * 60);
 
         // Weight is greater than zero
         if (nTimeWeight > 0)
@@ -2178,7 +2184,18 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 			txNew.vout.push_back(CTxOut(0, scriptPubKeyOut));
 			
 			uint64_t nTotalSize = pcoin.first->vout[pcoin.second].nValue * (1+((txNew.nTime - block.GetBlockTime()) / (60*60*24)) * (MAX_MINT_PROOF_OF_STAKE / COIN / 365));
-			if (nTotalSize / 2 > nStakeSplitThreshold * COIN)
+			//presstab HyperStake
+			//if MultiSend is set to send in coinstake we will add our outputs here (values asigned further down)
+			if(fMultiSend && fMultiSendCoinStake)
+			{
+				for(unsigned int i = 0; i < vMultiSend.size(); i++)
+				{
+					CScript scriptPubKeyMultiSend;
+					scriptPubKeyMultiSend.SetDestination(CBitcoinAddress(vMultiSend[i].first).Get());
+					txNew.vout.push_back(CTxOut(0, scriptPubKeyMultiSend));
+				}
+			}
+			else if (nTotalSize / 2 > nStakeSplitThreshold * COIN)
 				txNew.vout.push_back(CTxOut(0, scriptPubKeyOut)); //split stake
 			if (fDebug && GetBoolArg("-printcoinstake"))
 				printf("CreateCoinStake : added kernel type=%d\n", whichType);
@@ -2228,13 +2245,15 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 		prevHash = pindexBest->GetBlockHash();
 	
     // Calculate coin age reward
+	int64_t nReward;
     {
         uint64_t nCoinAge;
         CTxDB txdb("r");
         if (!txNew.GetCoinAge(txdb, nCoinAge))
             return error("CreateCoinStake : failed to calculate coin age");
-
-        int64_t nReward = GetProofOfStakeReward(nCoinAge, nBits, txNew.nTime, nFees, nCredit, prevHash);
+		
+		int64_t nBonusMultiplier = 1;
+		nReward = GetProofOfStakeReward(nCoinAge, nBits, txNew.nTime, nFees, nCredit, prevHash, nBonusMultiplier);
         if (nReward <= 0)
             return false;
 
@@ -2242,7 +2261,18 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     }
 
     // Set output amount
-    if (txNew.vout.size() == 3)
+	if(fMultiSend && fMultiSendCoinStake)
+	{
+		uint64_t nMultiSendAmount = 0;
+		for(unsigned int i = 0; i < vMultiSend.size(); i++)
+		{
+			int nOut = 2 + i;
+			txNew.vout[nOut].nValue = nReward * vMultiSend[i].second / 100;
+			nMultiSendAmount += txNew.vout[nOut].nValue;
+		}
+		txNew.vout[1].nValue = nCredit - nMultiSendAmount;
+	}
+	else if (txNew.vout.size() == 3)
     {
         txNew.vout[1].nValue = (nCredit / 2 / CENT) * CENT;
         txNew.vout[2].nValue = nCredit - txNew.vout[1].nValue;

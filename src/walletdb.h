@@ -206,7 +206,12 @@ public:
 		}
 		return ret;
 	}
-
+	//presstab HyperStake
+	bool WriteMCoinStake(bool fMultiSendCoinStake)
+	{
+		nWalletDBUpdated++;
+		return Write(std::string("mcoinstake"), fMultiSendCoinStake, true);
+	}
 	//presstab HyperStake  
 	bool WriteHashDrift(unsigned int nHashDrift)  
 	{  

@@ -296,7 +296,7 @@ QString TransactionTableModel::formatTxStatus(const TransactionRecord *wtx) cons
         status = tr("Confirmed (%1 confirmations)").arg(wtx->status.depth);
         break;
     }
-    if(wtx->type == TransactionRecord::Generated  || wtx->type == TransactionRecord::StakeMint)
+    if(wtx->type == TransactionRecord::Generated  || wtx->type == TransactionRecord::StakeMint || wtx->type ==TransactionRecord::StakeMintBonus)
     {
         switch(wtx->status.maturity)
         {
@@ -363,6 +363,8 @@ QString TransactionTableModel::formatTxType(const TransactionRecord *wtx) const
         return tr("Payment to yourself");
     case TransactionRecord::StakeMint:
 		return tr("Minted");
+	case TransactionRecord::StakeMintBonus:
+		return tr("SuperBlock Minted");
     case TransactionRecord::Generated:
         return tr("Mined");
     default:
@@ -376,6 +378,7 @@ QVariant TransactionTableModel::txAddressDecoration(const TransactionRecord *wtx
     {
     case TransactionRecord::Generated:
     case TransactionRecord::StakeMint:
+	case TransactionRecord::StakeMintBonus:
 		{
 			QString str = BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), wtx->credit + wtx->debit);
 			return QIcon(":/icons/tx_mined");
@@ -407,6 +410,8 @@ QString TransactionTableModel::formatTxToAddress(const TransactionRecord *wtx, b
     case TransactionRecord::SendToSelf:
 		return lookupAddress(wtx->address, tooltip);
 	case TransactionRecord::StakeMint:
+		return lookupAddress(wtx->address, tooltip);
+	case TransactionRecord::StakeMintBonus:
 		return lookupAddress(wtx->address, tooltip);
     default:
         return tr("(n/a)");
@@ -449,7 +454,7 @@ QString TransactionTableModel::formatTxAmount(const TransactionRecord *wtx, bool
 
 QVariant TransactionTableModel::txStatusDecoration(const TransactionRecord *wtx) const
 {
-    if(wtx->type == TransactionRecord::Generated || wtx->type == TransactionRecord::StakeMint)
+    if(wtx->type == TransactionRecord::Generated || wtx->type == TransactionRecord::StakeMint || wtx->type == TransactionRecord::StakeMintBonus)
     {
         switch(wtx->status.maturity)
         {
@@ -588,7 +593,7 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         return QString::fromStdString(rec->getTxID());
     case ConfirmedRole:
         // Return True if transaction counts for balance
-        return rec->status.confirmed && !((rec->type == TransactionRecord::Generated || rec->type == TransactionRecord::StakeMint) &&
+        return rec->status.confirmed && !((rec->type == TransactionRecord::Generated || rec->type == TransactionRecord::StakeMint  || rec->type == TransactionRecord::StakeMintBonus) &&
                                           rec->status.maturity != TransactionStatus::Mature);
     case FormattedAmountRole:
         return formatTxAmount(rec, false);
